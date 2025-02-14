@@ -1,0 +1,6 @@
+@MiniTwitAPI_HostAddress = http://localhost:5244
+
+GET {{MiniTwitAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
