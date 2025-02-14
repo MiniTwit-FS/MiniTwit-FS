@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  minitwitapi:
+    image: minitwitapi:dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "32782:8080"
+      - "32783:8081"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=dev
+      - ConnectionStrings__DefaultConnection=Server=minitwitdb,1433;Database=MinitwitDev;User Id=sa;Password=Lukas175!;TrustServerCertificate=True;
+    depends_on:
+      - minitwitdb
+    networks:
+      - minitwit_network
+
+  minitwitdb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: minitwitdb
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Lukas175!
+    ports:
+      - "1433:1433"
+    networks:
+      - minitwit_network
+
+networks:
+  minitwit_network:
+    driver: bridge
