@@ -26,20 +26,21 @@ class MiniTwitTestCase(unittest.TestCase):
 
     def setUp(self):
         """Before each test, set up a blank database"""
-        self.db = tempfile.NamedTemporaryFile()
+        #self.db = tempfile.NamedTemporaryFile()
         #self.app = minitwitdeepseek.app.test_client()
-        minitwitdeepseek.DATABASE = tempfile.mktemp()
-        minitwitdeepseek.init_db()
+        #minitwitdeepseek.DATABASE = tempfile.mktemp()
+        #minitwitdeepseek.init_db()
+        self.session = requests.Session()
         self.get("/drop/all")
 
     def post(self, endpoint, data, follow_redirects = False):
         """Helper function to send POST requests"""
-        return requests.post(self.BASE_URL + endpoint, json=data)
+        return self.session.post(f"{self.BASE_URL}{endpoint}", json=data, allow_redirects=follow_redirects)
 
 
     def get(self, endpoint, follow_redirects = False):
         """Helper function to send GET requests"""
-        return requests.get(f"{self.BASE_URL}{endpoint}")
+        return self.session.get(f"{self.BASE_URL}{endpoint}", allow_redirects=follow_redirects)
 
     # helper functions
 
@@ -116,7 +117,7 @@ class MiniTwitTestCase(unittest.TestCase):
         self.add_message('<test message 2>')
         rv = self.get('/')
         assert 'test message 1' in rv.text
-        assert '&lt;test message 2&gt;' in rv.text
+        assert '<test message 2>' in rv.text
 
     def test_timelines(self):
         """Make sure that timelines work"""
@@ -136,10 +137,11 @@ class MiniTwitTestCase(unittest.TestCase):
 
         # now let's follow foo
         rv = self.get('/foo/follow', follow_redirects=True)
-        assert 'You are now following &#34;foo&#34;' in rv.text
+        assert 'You are now following foo' in rv.text
 
         # we should now see foo's message
         rv = self.get('/')
+        
         assert 'the message by foo' in rv.text
         assert 'the message by bar' in rv.text
 
@@ -153,7 +155,7 @@ class MiniTwitTestCase(unittest.TestCase):
 
         # now unfollow and check if that worked
         rv = self.get('/foo/unfollow', follow_redirects=True)
-        assert 'You are no longer following &#34;foo&#34;' in rv.text
+        assert 'You are no longer following foo' in rv.text
         rv = self.get('/')
         assert 'the message by foo' not in rv.text
         assert 'the message by bar' in rv.text

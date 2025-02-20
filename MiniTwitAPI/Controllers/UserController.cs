@@ -18,6 +18,7 @@ namespace MiniTwitAPI.Controllers
             _context = context;
         }
 
+        // Used to clear database for testing - might need to do something else
         [HttpGet("/drop/all")]
         public async Task<IActionResult> DropUsers()
         {
@@ -35,6 +36,39 @@ namespace MiniTwitAPI.Controllers
             return Ok("All users have been cleared.");
         }
 
+        // Get timeline for user, or public timeline if not logged in
+        [HttpGet("")]
+        public async Task<IActionResult> Timeline()
+        {
+            var sessionUsername = HttpContext.Session.GetString("Username");
+
+            if (sessionUsername == null)
+            {
+                return Ok(GetPublicMessages());
+            }
+
+            var userId = _context.Users.FirstOrDefault(u => u.Username == sessionUsername).Id;
+
+            var followedUserIds = _context.Followers
+                .Where(f => f.UserId == userId)
+                .Select(f => f.FollowsUserId)
+                .ToList();
+
+            var messages = _context.Messages.Where(m => m.UserId == userId || followedUserIds.Contains(m.UserId));
+
+            return Ok(messages);
+        }
+
+        // Get public timeline
+        [HttpGet("/public")]
+        public async Task<IActionResult> PublicTimeline()
+        {
+            var messages = GetPublicMessages();
+
+            return Ok(messages);
+        }
+
+        // Do login request
         [HttpPost("/login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
@@ -48,22 +82,23 @@ namespace MiniTwitAPI.Controllers
             if (user.PasswordHash == model.Password)
             {
                 HttpContext.Session.SetString("Username", model.Username);
-                Thread.Sleep(200);
                 return Ok("You were logged in");
             }
             else return BadRequest("Invalid password");
         }
 
+        // Logout
         [HttpGet("/logout")]
-        public IActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
             // Idk
             HttpContext.Session.SetString("Username", "");
             return Ok("You were logged out");
         }
 
-        [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest model)
+        // Register new user in DB
+        [HttpPost("/register")]
+        public async Task<IActionResult> RegisterUser([FromBody] RegisterRequest model)
         {
             if (string.IsNullOrEmpty(model.Username))
             {
@@ -107,17 +142,22 @@ namespace MiniTwitAPI.Controllers
             return Ok("You were successfully registered and can login now");
         }
 
+        // Register new message based on logged in user in DB
         [HttpPost("/add_message")]
         public async Task<IActionResult> AddMessage([FromBody] AddMessageRequest model)
         {
             var sessionUsername = HttpContext.Session.GetString("Username");
-
-            var userId = _context.Users.FirstOrDefault(u => u.Username == sessionUsername).Id;
-
-            var message = new Message 
+            if (sessionUsername == null)
             {
-            Text = model.Text,
-            UserId = userId
+                return BadRequest("You need to be logge in to create a message");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == sessionUsername);
+
+            var message = new Message
+            {
+                Text = model.Text,
+                UserId = user.Id
 
             };
 
@@ -127,51 +167,101 @@ namespace MiniTwitAPI.Controllers
             return Ok("Your message was recorded");
         }
 
-        [HttpGet("/")]
-        public async Task<IActionResult> Timeline([FromBody] AddMessageRequest model)
+        // Get timeline for user
+        [HttpGet("{username}")]
+        public async Task<IActionResult> GetUserTimeline(string username)
         {
+            var profileUser = _context.Users.FirstOrDefault(u => u.Username == username);
+
+            if (profileUser == null)
+            {
+                return NotFound();
+            }
+
+            bool followed = false;
             var sessionUsername = HttpContext.Session.GetString("Username");
 
-            var userId = _context.Users.FirstOrDefault(u => u.Username == sessionUsername).Id;
+            if (sessionUsername == null)
+            {
+                return BadRequest("You aren't logged in");
+            }
 
-            var messages = _context.Messages.Where(m => m.UserId == userId);
+            var user = _context.Users.FirstOrDefault(u => u.Username == sessionUsername);
+            if (user != null) followed = _context.Followers.Any(f => f.UserId == user.Id && f.FollowsUserId == profileUser.Id);
 
-            return Ok(messages);
+            var messages = _context.Messages
+                .Where(m => m.UserId == profileUser.Id)
+                .OrderByDescending(m => m.PublishedDate)
+                .ToList();
+
+            return Ok(new
+            {
+                ProfileUser = profileUser,
+                Messages = messages,
+                Followed = followed
+            });
         }
 
-        //[HttpGet("{username}")]
-        //public IActionResult Get(string username)
-        //{
-        //    var profileUser = _context.Users.FirstOrDefault(u => u.Username == username);
+        [HttpGet("{username}/follow")]
+        public async Task<IActionResult> FollowUser(string username)
+        {
+            var sessionUsername = HttpContext.Session.GetString("Username");
+            if (sessionUsername == null)
+            {
+                return Unauthorized("You need to be logged in to follow a user");
+            }
 
-        //    if (profileUser == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var user = _context.Users.FirstOrDefault(u => u.Username == sessionUsername);
 
-        //    // Check if the current user is following the profile user
-        //    bool followed = false;
-        //    if (User.Identity.IsAuthenticated)
-        //    {
-        //        var currentUserId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value); // Assuming you have user ID as a claim
-        //        followed = _context.Followers
-        //            .Any(f => f.UserId == currentUserId && f.FollowsUserId == profileUser.Id);
-        //    }
+            var followUser = _context.Users.FirstOrDefault(u => u.Username == username);
 
-        //    // Retrieve messages from the profile user
-        //    var messages = _context.Messages
-        //        .Where(m => m.UserId == profileUser.Id)
-        //        .OrderByDescending(m => m.PublishedDate)
-        //        .Take(10) // Limit to PER_PAGE equivalent
-        //        .ToList();
+            if (followUser == null)
+            {
+                return NotFound("Couldn't find user to follow");
+            }
 
-        //    // You can return the data in JSON format or HTML
-        //    return Ok(new
-        //    {
-        //        ProfileUser = profileUser,
-        //        Messages = messages,
-        //        Followed = followed
-        //    });
-        //}
+            var followModel = new Follower
+            {
+                UserId = user.Id,
+                FollowsUserId = followUser.Id
+            };
+
+            _context.Followers.Add(followModel);
+            await _context.SaveChangesAsync();
+
+            return Ok($"You are now following {followUser.Username}");
+        }
+
+        [HttpGet("{username}/unfollow")]
+        public async Task<IActionResult> UnFollowUser(string username)
+        {
+            var sessionUsername = HttpContext.Session.GetString("Username");
+            if (sessionUsername == null)
+            {
+                return Unauthorized("You need to be logged in to unfollow a user");
+            }
+
+            var user = _context.Users.FirstOrDefault(u => u.Username == sessionUsername);
+
+            var followUser = _context.Users.FirstOrDefault(u => u.Username == username);
+
+            if (followUser == null)
+            {
+                return NotFound("Couldn't find user to unfollow");
+            }
+
+            var followerEntity = _context.Followers.Single(f => f.UserId == user.Id && f.FollowsUserId == followUser.Id);
+            _context.Followers.Remove(followerEntity);
+            await _context.SaveChangesAsync();
+
+            return Ok($"You are no longer following {followUser.Username}");
+        }
+
+
+        // Function used to retrieve all public messages (to avoid code duplication)
+        private IOrderedQueryable<Message> GetPublicMessages()
+        {
+            return _context.Messages.OrderByDescending(m => m.PublishedDate);
+        }
     }
 }

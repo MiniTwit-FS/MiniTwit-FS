@@ -30,8 +30,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
     options.IdleTimeout = TimeSpan.FromMinutes(30);
 });
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
