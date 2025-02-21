@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTwitAPI", "MiniTwitAPI.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTwitClient", "..\MiniTwitClient\MiniTwitClient.csproj", "{036816EC-573F-4DFC-A45B-AB92A0B86D25}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTwitAPI.Tests", "..\MiniTwitAPI.Tests\MiniTwitAPI.Tests.csproj", "{5EDFD4BD-287F-49A9-99C3-2497265B93BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{036816EC-573F-4DFC-A45B-AB92A0B86D25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{036816EC-573F-4DFC-A45B-AB92A0B86D25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{036816EC-573F-4DFC-A45B-AB92A0B86D25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EDFD4BD-287F-49A9-99C3-2497265B93BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EDFD4BD-287F-49A9-99C3-2497265B93BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EDFD4BD-287F-49A9-99C3-2497265B93BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EDFD4BD-287F-49A9-99C3-2497265B93BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
