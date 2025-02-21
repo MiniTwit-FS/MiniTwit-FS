@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 

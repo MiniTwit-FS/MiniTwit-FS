@@ -117,7 +117,7 @@ class MiniTwitTestCase(unittest.TestCase):
         self.add_message('<test message 2>')
         rv = self.get('/')
         assert 'test message 1' in rv.text
-        assert '<test message 2>' in rv.text
+        assert '&lt;test message 2&gt;' in rv.text
 
     def test_timelines(self):
         """Make sure that timelines work"""
@@ -137,7 +137,8 @@ class MiniTwitTestCase(unittest.TestCase):
 
         # now let's follow foo
         rv = self.get('/foo/follow', follow_redirects=True)
-        assert 'You are now following foo' in rv.text
+        print("Received: " + rv.text)
+        assert 'You are now following &#34;foo&#34;' in rv.text
 
         # we should now see foo's message
         rv = self.get('/')
@@ -155,7 +156,7 @@ class MiniTwitTestCase(unittest.TestCase):
 
         # now unfollow and check if that worked
         rv = self.get('/foo/unfollow', follow_redirects=True)
-        assert 'You are no longer following foo' in rv.text
+        assert 'You are no longer following &#34;foo&#34;' in rv.text
         rv = self.get('/')
         assert 'the message by foo' not in rv.text
         assert 'the message by bar' in rv.text
