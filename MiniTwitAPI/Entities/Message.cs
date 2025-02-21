@@ -13,8 +13,8 @@ namespace MiniTwitAPI.Models
         [Required]
         public string Text { get; set; }
 
-        public int? PublishedDate { get; set; }
+        public DateTime? PublishedDate { get; set; }
 
-        public int? Flagged { get; set; }
+        public bool Flagged { get; set; }
     }
 }

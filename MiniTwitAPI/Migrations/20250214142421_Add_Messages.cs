@@ -14,12 +14,12 @@ namespace MiniTwitAPI.Migrations
                 name: "Messages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PublishedDate = table.Column<int>(type: "int", nullable: true),
-                    Flagged = table.Column<int>(type: "int", nullable: true)
+                    PublishedDate = table.Column<DateTime>(type: "datetime2", nullable: true),  // Use 'datetime2' type here
+                    Flagged = table.Column<bool>(type: "bit", nullable: false)  // Use 'bit' type here for bool
+
                 },
                 constraints: table =>
                 {

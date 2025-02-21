@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using MiniTwitAPI.Models;
-using System.Security.Claims;
+using System.Text;
+using System.Web;
 
 namespace MiniTwitAPI.Controllers
 {
@@ -54,7 +53,16 @@ namespace MiniTwitAPI.Controllers
                 .Select(f => f.FollowsUserId)
                 .ToList();
 
-            var messages = _context.Messages.Where(m => m.UserId == userId || followedUserIds.Contains(m.UserId));
+            var messages = _context.Messages
+                .Where(m => m.UserId == userId || followedUserIds.Contains(m.UserId))
+                .Select(m => new Message
+                {
+                    Id = m.Id,
+                    UserId = m.UserId,
+                    Text = HttpUtility.HtmlEncode(m.Text),
+                    PublishedDate = m.PublishedDate,
+                    Flagged = m.Flagged
+                });
 
             return Ok(messages);
         }
@@ -157,8 +165,9 @@ namespace MiniTwitAPI.Controllers
             var message = new Message
             {
                 Text = model.Text,
-                UserId = user.Id
-
+                UserId = user.Id,
+                PublishedDate = DateTime.Now,
+                Flagged = false,
             };
 
             _context.Messages.Add(message);
@@ -229,7 +238,7 @@ namespace MiniTwitAPI.Controllers
             _context.Followers.Add(followModel);
             await _context.SaveChangesAsync();
 
-            return Ok($"You are now following {followUser.Username}");
+            return Ok($"You are now following {HttpUtility.HtmlEncode($"\'{followUser.Username}\'")}");
         }
 
         [HttpGet("{username}/unfollow")]
@@ -240,7 +249,7 @@ namespace MiniTwitAPI.Controllers
             {
                 return Unauthorized("You need to be logged in to unfollow a user");
             }
-
+            
             var user = _context.Users.FirstOrDefault(u => u.Username == sessionUsername);
 
             var followUser = _context.Users.FirstOrDefault(u => u.Username == username);
@@ -254,14 +263,23 @@ namespace MiniTwitAPI.Controllers
             _context.Followers.Remove(followerEntity);
             await _context.SaveChangesAsync();
 
-            return Ok($"You are no longer following {followUser.Username}");
+            return Ok($"You are no longer following {HttpUtility.HtmlEncode($"\'{followUser.Username}\'")}");
         }
 
 
         // Function used to retrieve all public messages (to avoid code duplication)
-        private IOrderedQueryable<Message> GetPublicMessages()
+        private IQueryable<Message> GetPublicMessages()
         {
-            return _context.Messages.OrderByDescending(m => m.PublishedDate);
+            return _context.Messages
+                .OrderByDescending(m => m.PublishedDate)
+                .Select(m => new Message
+                {
+                    Id = m.Id,
+                    UserId = m.UserId,
+                    Text = HttpUtility.HtmlEncode(m.Text),
+                    PublishedDate = m.PublishedDate,
+                    Flagged = m.Flagged
+                });
         }
     }
 }
