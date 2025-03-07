@@ -4,7 +4,7 @@ steps:
     args:
       - 'build'
       - '-f'
-      - '/Dockerfile'  # Specify the custom Dockerfile location here
+      - 'MiniTwitAPI/Dockerfile'  # Specify the custom Dockerfile location here
       - '-t'
       - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API'
       - '.'
