@@ -10,12 +10,12 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# Copy project files and restore dependencies
-COPY ["MiniTwitAPI.csproj", "MiniTwitAPI/"]
+# Copy project file and restore dependencies
+COPY MiniTwitAPI.csproj ./
 RUN dotnet restore "MiniTwitAPI.csproj"
 
 # Copy the entire project and build it
-COPY . .
+COPY . .  
 RUN dotnet publish "MiniTwitAPI.csproj" -c Release -o /app/publish
 
 # Use the runtime image
