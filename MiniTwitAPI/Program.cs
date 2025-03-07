@@ -6,12 +6,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Load the correct appsettings based on the environment
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "prod"; // Default to "Production" if null
 
-
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // Base settings
     .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+Console.WriteLine($"[DEBUG] Using Connection String: {connectionString}");
 
 // Add services to the container.
 builder.Services.AddControllers(); // Add controllers for your API endpoints
