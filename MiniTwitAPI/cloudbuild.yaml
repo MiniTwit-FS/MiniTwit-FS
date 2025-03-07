@@ -4,18 +4,11 @@ steps:
     args:
       - 'build'
       - '-f'
-      - 'Dockerfile'  # Specify the custom Dockerfile location here
+      - '/Dockerfile'  # Specify the custom Dockerfile location here
       - '-t'
       - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API'
       - '.'
     id: 'Build API Docker Image'
-
-  # Step 3: Push the Docker images to Google Container Registry (GCR)
-  - name: 'gcr.io/cloud-builders/docker'
-    args:
-      - 'push'
-      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API'
-    id: 'Push API Docker Image'
 
 # Substitutions (this is optional)
 substitutions:
