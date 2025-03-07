@@ -17,20 +17,20 @@ steps:
       - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API$COMMIT_SHA'
     id: 'Push API Docker Image'
 
-  # Step 3: Deploy the Docker image to Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args:
-      - 'run'
-      - 'deploy'
-      - '${_SERVICE_NAME}'  # Cloud Run service name from substitutions
-      - '--image'
-      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API$COMMIT_SHA'
-      - '--region'
-      - '${_REGION}'  # Cloud region from substitutions
-      - '--platform'
-      - 'managed'
-      - '--allow-unauthenticated'  # Optional: Allows public access to your service
-    id: 'Deploy to Cloud Run'
+  # # Step 3: Deploy the Docker image to Cloud Run
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   args:
+  #     - 'run'
+  #     - 'deploy'
+  #     - '${_SERVICE_NAME}'  # Cloud Run service name from substitutions
+  #     - '--image'
+  #     - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API$COMMIT_SHA'
+  #     - '--region'
+  #     - '${_REGION}'  # Cloud region from substitutions
+  #     - '--platform'
+  #     - 'managed'
+  #     - '--allow-unauthenticated'  # Optional: Allows public access to your service
+  #   id: 'Deploy to Cloud Run'
 
 # Substitutions (this is optional)
 substitutions:
