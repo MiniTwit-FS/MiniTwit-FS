@@ -5,7 +5,12 @@ VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTwitAPI", "MiniTwitAPI.csproj", "{B27DCFBE-F33C-4AF5-8664-439A460CA5D2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniTwitClient", "..\MiniTwitClient\MiniTwitClient.csproj", "{036816EC-573F-4DFC-A45B-AB92A0B86D25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiniTwitClient", "..\MiniTwitClient\MiniTwitClient.csproj", "{036816EC-573F-4DFC-A45B-AB92A0B86D25}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{270EB64E-7781-4D1A-B276-2F5969EE95CC}"
+	ProjectSection(SolutionItems) = preProject
+		..\Dockerfile = ..\Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
