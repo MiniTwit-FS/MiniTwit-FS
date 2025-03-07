@@ -1,0 +1,23 @@
+steps:
+  # Step 1: Build the Docker image for the API
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API'
+      - '.'
+    id: 'Build API Docker Image'
+
+  # Step 3: Push the Docker images to Google Container Registry (GCR)
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API'
+    id: 'Push API Docker Image'
+
+# Substitutions (this is optional)
+substitutions:
+  _REGION: 'europe-west1'
+  _SERVICE_NAME: 'minitwitapi'
+
+timeout: '1200s' # Optional, increase timeout if needed
