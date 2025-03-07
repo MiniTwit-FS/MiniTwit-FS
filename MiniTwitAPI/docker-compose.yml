@@ -11,7 +11,7 @@ services:
       - "32783:8081"
     environment:
       - ASPNETCORE_ENVIRONMENT=dev
-      - ConnectionStrings__DefaultConnection=Server=minitwitdb,1433;Database=MinitwitDev;User Id=sa;Password=Lukas175!;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=tcp:34.38.158.201,1433;Database=minitwit-db;User Id=admin;Password=FJ251499;TrustServerCertificate=False;Encrypt=True;"
     depends_on:
       - minitwitdb
     networks:
