@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project files and restore dependencies
-COPY ["MinitwitApi/MinitwitApi.csproj MinitwitApi/"]
+COPY ["MinitwitApi/MinitwitApi.csproj", "MinitwitApi/"]
 RUN dotnet restore "MinitwitApi.csproj"
 
 # Copy the entire project and build it
