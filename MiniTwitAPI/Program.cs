@@ -4,14 +4,12 @@ using MiniTwitAPI;
 var builder = WebApplication.CreateBuilder(args);
 
 // Load the correct appsettings based on the environment
-var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-var temp = Environment.GetEnvironmentVariable("_ASPNETCORE_ENVIRONMENT");
+var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "prod"; // Default to "Production" if null
 
-Console.WriteLine("Environment key: " + environment);
-Console.WriteLine("Environment key 2: " + temp);
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true) // Base settings
     .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
