@@ -20,11 +20,7 @@ builder.Services.AddControllers(); // Add controllers for your API endpoints
 
 // Configure DbContext with retry logic for SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
-    sqlServerOptions => sqlServerOptions.EnableRetryOnFailure(
-        maxRetryCount: 5,           // Max number of retry attempts
-        maxRetryDelay: TimeSpan.FromSeconds(30), // Delay between retries
-        errorNumbersToAdd: null)));    // Additional SQL Server error numbers to include in retries (default is transient error codes)
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
