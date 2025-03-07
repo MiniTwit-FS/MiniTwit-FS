@@ -21,3 +21,6 @@ substitutions:
   _SERVICE_NAME: 'minitwitapi'
 
 timeout: '1200s' # Optional, increase timeout if needed
+
+options:
+  logging: CLOUD_LOGGING_ONLY
