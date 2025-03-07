@@ -9,18 +9,35 @@ steps:
       - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API2'
       - '.'
     id: 'Build API Docker Image'
+
+  # Step 2: Push the Docker image to Google Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
       - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API2'
     id: 'Push API Docker Image'
 
+  # Step 3: Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_SERVICE_NAME}'  # Cloud Run service name from substitutions
+      - '--image'
+      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API2'
+      - '--region'
+      - '${_REGION}'  # Cloud region from substitutions
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'  # Optional: Allows public access to your service
+    id: 'Deploy to Cloud Run'
+
 # Substitutions (this is optional)
 substitutions:
   _REGION: 'europe-west1'
   _SERVICE_NAME: 'minitwitapi'
 
-timeout: '1200s' # Optional, increase timeout if needed
+timeout: '1200s'  # Optional, increase timeout if needed
 
 options:
   logging: CLOUD_LOGGING_ONLY
