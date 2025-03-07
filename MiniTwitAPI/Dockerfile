@@ -11,12 +11,12 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project files and restore dependencies
-COPY ["../../MinitwitApi.csproj", "./"]
-RUN dotnet restore "../../MinitwitApi.csproj"
+COPY ["MinitwitApi.csproj", "./"]
+RUN dotnet restore "MinitwitApi.csproj"
 
 # Copy the entire project and build it
 COPY . .
-RUN dotnet publish "../../MinitwitApi.csproj" -c Release -o /app/publish
+RUN dotnet publish "MinitwitApi.csproj" -c Release -o /app/publish
 
 # Use the runtime image
 FROM base AS final
@@ -28,4 +28,4 @@ ENV ASPNETCORE_ENVIRONMENT=prod
 ENV ConnectionStrings__DefaultConnection="Server=minitwitdb,1433;Database=MinitwitDev;User Id=sa;Password=Lukas175!;TrustServerCertificate=True;"
 
 # Start the API
-ENTRYPOINT ["dotnet", "../../MinitwitApi.dll"]
+ENTRYPOINT ["dotnet", "MinitwitApi.dll"]
