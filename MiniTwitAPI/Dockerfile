@@ -25,7 +25,7 @@ COPY --from=build /app/publish .
 
 # Set environment variables
 ENV ASPNETCORE_ENVIRONMENT=prod
-ENV ConnectionStrings__DefaultConnection="Server=minitwitdb,1433;Database=MinitwitDev;User Id=sa;Password=Lukas175!;TrustServerCertificate=True;"
+ENV ConnectionStrings__DefaultConnection="Server=tcp:34.38.158.201,1433;Database=minitwit-db;User Id=admin;Password=FJ251499;TrustServerCertificate=False;Encrypt=True;"
 
 # Start the API
 ENTRYPOINT ["dotnet", "MiniTwitAPI.dll"]
