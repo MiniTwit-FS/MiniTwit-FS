@@ -5,6 +5,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Load the correct appsettings based on the environment
 var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+var temp = Environment.GetEnvironmentVariable("_ASPNETCORE_ENVIRONMENT");
+
+Console.WriteLine("Environment key: " + environment);
+Console.WriteLine("Environment key 2: " + temp);
 
 builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
