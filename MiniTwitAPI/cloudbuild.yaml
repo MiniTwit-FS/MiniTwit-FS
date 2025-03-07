@@ -6,13 +6,13 @@ steps:
       - '-f'
       - 'MiniTwitAPI/Dockerfile'  # Specify the custom Dockerfile location here
       - '-t'
-      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API2'
+      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API$COMMIT_SHA'
       - '.'
     id: 'Build API Docker Image'
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API2'
+      - 'gcr.io/sinuous-origin-452313-p2/github.com/lukski175/minitwit-fs:dockerimage-API$COMMIT_SHA'
     id: 'Push API Docker Image'
 
 # Substitutions (this is optional)
