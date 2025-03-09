@@ -25,13 +25,13 @@ COPY --from=build /app/publish .
 
 # Set environment variables
 ENV ASPNETCORE_ENVIRONMENT=prod
-ENV ConnectionStrings__DefaultConnection="Host=10.132.0.16;Port=3306;Database=minitwitdb;Username=postgres;Password=FJ251499;SslMode=Prefer;"
+ENV ConnectionStrings__DefaultConnection="Host=10.132.0.16;Port=5432;Database=minitwitdb;Username=postgres;Password=FJ251499;SslMode=Prefer;"
 ENV ENVIRONMENT=prod
 ENV DB_NAME=postgres
 ENV DB_USER=postgres
 ENV DB_PASS=FJ251499
 ENV INSTANCE_CONNECTION_NAME=sinuous-origin-452313-p2:europe-west1:minitwitdb
-ENV DB_PORT=3306
+ENV DB_PORT=5432
 ENV INSTANCE_HOST=10.132.0.16
 ENV DB_ROOT_CERT=certs/server-ca.pem
 ENV DB_CERT=certs/client-cert.pem
