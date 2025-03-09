@@ -16,7 +16,7 @@ namespace MiniTwitAPI
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
             var connectionString = config.GetConnectionString("DefaultConnection");
-            optionsBuilder.UseSqlServer(connectionString);
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
 
             return new AppDbContext(optionsBuilder.Options);
         }
