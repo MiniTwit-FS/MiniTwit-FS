@@ -16,7 +16,7 @@ RUN dotnet restore "MiniTwitAPI.csproj"
 
 # Copy the entire project and build it
 COPY . .  
-RUN dotnet publish "MiniTwitAPI/MiniTwitAPI.csproj" -c Release -o /app/publish
+RUN dotnet publish "MiniTwitAPI.csproj" -c Release -o /app/publish
 
 # Use the runtime image
 FROM base AS final
