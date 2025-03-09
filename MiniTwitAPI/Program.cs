@@ -23,7 +23,6 @@ builder.Services.AddControllers(); // Add controllers for your API endpoints
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
@@ -49,4 +48,12 @@ app.Lifetime.ApplicationStopping.Register(() =>
 });
 
 // Run the application
-app.Run();
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"[ERROR] Application startup failed: {ex.Message}");
+    Console.WriteLine($"[ERROR] Stack Trace: {ex.StackTrace}");
+}
