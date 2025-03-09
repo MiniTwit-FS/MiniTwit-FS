@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 using MiniTwitAPI;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +21,7 @@ Console.WriteLine($"[DEBUG] Using Connection String: {connectionString}");
 
 // Configure DbContext with retry logic for SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
