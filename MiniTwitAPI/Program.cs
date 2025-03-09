@@ -13,16 +13,16 @@ builder.Configuration
     .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine($"[DEBUG] Using Connection String: {connectionString}");
-
 // Add services to the container.
 builder.Services.AddControllers(); // Add controllers for your API endpoints
 
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Replace("{DB_PASSWORD}", dbPassword);
+Console.WriteLine($"[DEBUG] Using Connection String: {connectionString}");
+
 // Configure DbContext with retry logic for SQL Server
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -49,4 +49,12 @@ app.Lifetime.ApplicationStopping.Register(() =>
 });
 
 // Run the application
-app.Run();
+try
+{
+    app.Run();
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"[ERROR] Application startup failed: {ex.Message}");
+    Console.WriteLine($"[ERROR] Stack Trace: {ex.StackTrace}");
+}

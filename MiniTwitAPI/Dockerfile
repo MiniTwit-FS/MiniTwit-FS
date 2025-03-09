@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copy project file and restore dependencies
-COPY MiniTwitAPI/MiniTwitAPI.csproj ./
+COPY MiniTwitAPI.csproj ./
 RUN dotnet restore "MiniTwitAPI.csproj"
 
 # Copy the entire project and build it
@@ -22,22 +22,6 @@ RUN dotnet publish "MiniTwitAPI/MiniTwitAPI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=build /app/publish .
-
-# Set environment variables
-ENV ASPNETCORE_ENVIRONMENT=prod
-ENV ConnectionStrings__DefaultConnection="Host=10.26.144.3;Port=3306;Database=minitwitdb;Username=postgres;Password=FJ251499;SslMode=Prefer;"
-ENV ENVIRONMENT=prod
-ENV DB_NAME=postgres
-ENV DB_USER=postgres
-ENV DB_PASS=FJ251499
-ENV INSTANCE_CONNECTION_NAME=sinuous-origin-452313-p2:europe-west1:minitwitdb
-ENV DB_PORT=3306
-ENV INSTANCE_HOST=10.26.144.3
-ENV DB_ROOT_CERT=certs/server-ca.pem
-ENV DB_CERT=certs/client-cert.pem
-ENV DB_KEY=certs/client-key.pem
-ENV PRIVATE_IP=TRUE
-
 
 # Start the API
 ENTRYPOINT ["dotnet", "MiniTwitAPI.dll"]
