@@ -47,6 +47,16 @@ app.Lifetime.ApplicationStopping.Register(() =>
     Console.WriteLine("Application is shutting down...");
 });
 
+// Apply migrations
+if (environment == "prod")
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.Migrate();
+    }
+}
+
 // Run the application
 try
 {
