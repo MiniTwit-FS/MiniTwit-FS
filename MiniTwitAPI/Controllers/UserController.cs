@@ -80,6 +80,8 @@ namespace MiniTwitAPI.Controllers
         [HttpPost("/login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest model)
         {
+            if (model == null) return BadRequest();
+
             var user = _context.Users.FirstOrDefault(u => u.Username == model.Username);
 
             if (user == null)
@@ -155,12 +157,14 @@ namespace MiniTwitAPI.Controllers
         public async Task<IActionResult> AddMessage([FromBody] AddMessageRequest model)
         {
             var sessionUsername = HttpContext.Session.GetString("Username");
-            if (sessionUsername == null)
+            if (model == null || sessionUsername == null)
             {
-                return BadRequest("You need to be logge in to create a message");
+                return BadRequest("You need to be logged in to create a message");
             }
 
             var user = _context.Users.FirstOrDefault(u => u.Username == sessionUsername);
+
+            if (user == null) return NotFound("User couldn't be found");
 
             var message = new Message
             {
