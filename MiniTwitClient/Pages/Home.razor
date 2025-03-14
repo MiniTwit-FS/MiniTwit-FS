@@ -4,17 +4,11 @@
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
-<button onclick="@ButtonClick">Click me</button>
-<InputText @bind-Value="@InputString" placeholder="Input text here" />
 
-@for (int i = 0; i < 5; i++)
+@foreach (var m in Messages)
 {
-	<Tweet Username=@("Test " + i) />
+	<a>Message:</a>
+	<a>@m.Text</a>
 }
-
-<div class="bg-blue-500 text-white p-4 rounded-lg shadow-lg">
-	<h1 class="text-2xl font-bold">Tailwind CSS is Working!</h1>
-	<p class="mt-2">If you see this in a styled box, Tailwind is set up correctly.</p>
-</div>
 
 Welcome to your new app.

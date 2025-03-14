@@ -12,8 +12,6 @@ builder.Configuration
     .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-// Add services to the container.
-builder.Services.AddControllers(); // Add controllers for your API endpoints
 
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Replace("{DB_PASSWORD}", dbPassword);
@@ -32,13 +30,30 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddCors(options =>
+{
+	options.AddPolicy("AllowAll", policy =>
+	{
+		policy.AllowAnyOrigin()  // Allow client URL here
+			  .AllowAnyMethod()
+			  .AllowAnyHeader();  // Allow credentials (cookies, authentication)
+	});
+});
+
+
+// Add services to the container.
+builder.Services.AddControllers(); // Add controllers for your API endpoints
+
 var app = builder.Build();
+
+app.UseCors("AllowAll");
 
 // Middleware for handling HTTP requests
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers(); // Map controllers to handle requests
+
 
 // Gracefully shutdown (optional, helps when using Docker to shut down cleanly)
 app.Lifetime.ApplicationStopping.Register(() =>
