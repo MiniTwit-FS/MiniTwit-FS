@@ -1,22 +1,19 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.Models;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Web;
 
 namespace MiniTwitAPI.Controllers
 {
     [ApiController]
-    public class UserController : ControllerBase
+    public class MinitwitController : ControllerBase
     {
-        private readonly ILogger<UserController> _logger;
+        private readonly ILogger<MinitwitController> _logger;
         private readonly AppDbContext _context;
 
         private readonly string filePath = "./latest_processed_sim_action_id.txt";
 
-        public UserController(AppDbContext context, ILogger<UserController> logger)
+        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger)
         {
             _logger = logger;
             _context = context;

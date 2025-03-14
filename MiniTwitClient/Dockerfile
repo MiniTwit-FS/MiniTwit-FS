@@ -1,12 +1,4 @@
-# Use the official .NET SDK as the base image
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
-
-# Expose ports (matches the ones in docker-compose)
-EXPOSE 8080
-EXPOSE 8081
-
-# Use the .NET SDK to build the application
+# Build Stage
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
@@ -14,14 +6,22 @@ WORKDIR /src
 COPY MiniTwitClient.csproj ./
 RUN dotnet restore "MiniTwitClient.csproj"
 
-# Copy the entire project and build it
+# Copy everything else and build
 COPY . .  
 RUN dotnet publish "MiniTwitClient.csproj" -c Release -o /app/publish
 
-# Use the runtime image
-FROM base AS final
-WORKDIR /app
-COPY --from=build /app/publish .
+# Runtime Stage: Use Nginx to serve static files
+FROM nginx:alpine AS final
+WORKDIR /usr/share/nginx/html
 
-# Start the API
-ENTRYPOINT ["dotnet", "MiniTwitClient.dll"]
+# Remove default Nginx static content
+RUN rm -rf ./*
+
+# Copy Blazor WASM published files
+COPY --from=build /app/publish/wwwroot .
+
+# Expose ports
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
