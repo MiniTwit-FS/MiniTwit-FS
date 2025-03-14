@@ -96,11 +96,11 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("/msgs")]
-        public async Task<IActionResult> Messages([FromBody] MessagesRequest request)
+        public async Task<IActionResult> Messages([FromQuery] MessagesRequest request, [FromHeader] string Authorization)
         {
             UpdateLatest(request.Latest);
 
-            var notFromSim = NotFromSimulator(request.Authorization);
+            var notFromSim = NotFromSimulator(Authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
             var messages = _context.Messages.Where(m => !m.Flagged).OrderByDescending(m => m.PublishedDate).Take(request.NumberOfMessages);

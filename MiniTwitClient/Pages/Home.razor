@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using MiniTwitClient.Components;
 
 <PageTitle>Home</PageTitle>
 
@@ -6,9 +7,14 @@
 <button onclick="@ButtonClick">Click me</button>
 <InputText @bind-Value="@InputString" placeholder="Input text here" />
 
+@for (int i = 0; i < 5; i++)
+{
+	<Tweet Username=@("Test " + i) />
+}
+
 <div class="bg-blue-500 text-white p-4 rounded-lg shadow-lg">
-    <h1 class="text-2xl font-bold">Tailwind CSS is Working!</h1>
-    <p class="mt-2">If you see this in a styled box, Tailwind is set up correctly.</p>
+	<h1 class="text-2xl font-bold">Tailwind CSS is Working!</h1>
+	<p class="mt-2">If you see this in a styled box, Tailwind is set up correctly.</p>
 </div>
 
 Welcome to your new app.

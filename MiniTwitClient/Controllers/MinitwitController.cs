@@ -1,11 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Web;
+using MiniTwitClient.Models;
+using System.Net.Http.Json;
 
 namespace MiniTwitClient.Controllers
 {
-    [ApiController]
-    public class MinitwitController : ControllerBase
+    public class MinitwitController
     {
+        private readonly HttpClient _httpClient;
+
+        private static string ApiEndpoint = "https://minitwit-api-5ezat.ondigitalocean.app/api";
+        private static string Auth = "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
+
+        public MinitwitController(HttpClient httpClient, IConfiguration configuration)
+        {
+            _httpClient = httpClient;
+			_httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Auth);
+			ApiEndpoint = configuration["ApiBaseUrl"]; // Read from environment or default
+		}
+
+		public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
+        {
+            var response = await _httpClient.GetFromJsonAsync<List<Message>>($"{ApiEndpoint}/msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
+
+			return response;
+        }
+
+
+
+
+
+
+
+
+
+
 
         //// Used to clear database for testing - might need to do something else
         //[HttpGet("/drop/all")]
