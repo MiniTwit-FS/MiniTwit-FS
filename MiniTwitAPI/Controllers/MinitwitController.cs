@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.Models;
 using System.Text.RegularExpressions;
 
 namespace MiniTwitAPI.Controllers
 {
-    [ApiController]
+	[ApiController]
     public class MinitwitController : ControllerBase
     {
         private readonly ILogger<MinitwitController> _logger;
@@ -109,11 +110,11 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("/msgs/{username}")]
-        public async Task<IActionResult> UserMessages(string username, [FromBody] MessagesRequest request)
+        public async Task<IActionResult> UserMessages(string username, [FromBody] MessagesRequest request, [FromHeader] string Authorization)
         {
             UpdateLatest(request.Latest);
 
-            var notFromSim = NotFromSimulator(request.Authorization);
+            var notFromSim = NotFromSimulator(Authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
             Console.WriteLine("User: " + username);
