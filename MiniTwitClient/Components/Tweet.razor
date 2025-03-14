@@ -1,3 +1,15 @@
-﻿<h3>Tweet</h3>
+﻿<div class="bg-white border border-gray-200 rounded-lg shadow p-4 mb-4 flex">
+    <!-- Profile Picture -->
+    <img class="h-12 w-12 rounded-full object-cover mr-4"
+         src="https://t3.ftcdn.net/jpg/05/16/27/58/360_F_516275801_f3Fsp17x6HQK0xQgDQEELoTuERO4SsWV.jpg"
+         alt="User profile picture" />
 
-<a>@Username</a>
+    <!-- Tweet Content -->
+    <div class="flex-1">
+        <div class="flex justify-between items-center mb-1">
+            <a href="@Message.UserId" class="font-bold text-gray-800">@Message.UserId</a>
+            <span class="text-sm text-gray-500">@($"{Message.PublishedDate:dd MMM yyyy, HH:mm}")</span>
+        </div>
+        <p class="text-gray-700">@Message.Text</p>
+    </div>
+</div>

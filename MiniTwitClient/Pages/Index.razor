@@ -1,0 +1,14 @@
+﻿@page "/"
+@inject NavigationManager Nav
+
+<h3>Redirecting...</h3>
+
+@code {
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            Nav.NavigateTo("/public", false);
+        }
+    }
+}

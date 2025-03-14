@@ -1,0 +1,13 @@
+﻿@page "/{userId:int}"
+@using MiniTwitClient.Components
+
+<PageTitle>User @userId's Feed</PageTitle>
+
+<div class="max-w-4xl mx-auto px-8">
+    <h1 class="text-3xl font-bold mb-4">User @userId's Feed</h1>
+
+    @foreach (var message in Messages.Where(m => m.UserId == userId))
+    {
+        <Tweet Message="@message" />
+    }
+</div>
