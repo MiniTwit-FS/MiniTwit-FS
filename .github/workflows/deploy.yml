@@ -1,0 +1,34 @@
+name: Deploy to Droplet
+
+on:
+  push:
+    branches: [ main ]  # Trigger on pushes to main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.DROPLET_IP }}
+          username: ${{ secrets.DROPLET_USER }}
+          key: ${{ secrets.DROPLET_SSH_KEY }}
+          script: |
+            cd /MiniTwit-FS
+            git pull origin main
+            cd /MiniTwitAPI
+            docker build -t minitwit-api .
+            docker stop minitwit-container || true  # Gracefully stop if running
+            docker rm minitwit-container || true    # Remove old container
+            docker run -d \
+              --name minitwit-container \
+              --restart unless-stopped \
+              -p 80:8080 \
+              -e ASPNETCORE_URLS="http://+:8080" \
+              -e DB_CONNECTION_STRING="$DB_CONNECTION_STRING" \
+              -e ASPNETCORE_ENVIRONMENT="prod" \
+              minitwit-api
