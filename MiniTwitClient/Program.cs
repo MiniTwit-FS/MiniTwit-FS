@@ -17,8 +17,9 @@ builder.Services.AddScoped(sp => new HttpClient
 	BaseAddress = new Uri(apiEndpoint)
 });
 
-builder.Services.AddScoped<MinitwitController>();
-
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddJsonFile($"appsettings.{builder.HostEnvironment.Environment}.json", optional: false, reloadOnChange: false);
+
+builder.Services.AddScoped<MinitwitController>();
 
 await builder.Build().RunAsync();

@@ -112,7 +112,6 @@ var appLogger = app.Services.GetRequiredService<ILogger<Program>>();
 app.UseCors("AllowAll"); // Apply the CORS policy
 app.UseSession();
 app.UseHttpsRedirection();
-app.UseAuthorization();
 
 // Add a basic request logger middleware
 app.Use(async (context, next) =>
