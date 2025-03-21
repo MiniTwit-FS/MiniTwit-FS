@@ -1,14 +1,21 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MiniTwitClient.Controllers;
+using MiniTwitClient.Models;
 
 namespace MiniTwitClient.Pages
 {
     public partial class Home : ComponentBase
     {
-        private string InputString { get; set; }
+		[Inject] public MinitwitController controller { get; set; }
 
-        private void ButtonClick()
-        {
-            Console.WriteLine($"You clicked the button: {InputString}");
-        }
-    }
+        private List<Message> Messages { get; set; } = new List<Message>();
+
+		protected override async Task OnInitializedAsync()
+		{
+			Messages = await controller.GetPublicTimeline(new MessagesRequest());
+
+			StateHasChanged();
+		}
+	}
 }
+

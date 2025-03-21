@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -144,10 +145,20 @@ namespace MiniTwitAPI.Controllers
 
             try
             {
-                var messages = _context.Messages
-                    .Where(m => !m.Flagged)
-                    .OrderByDescending(m => m.PublishedDate)
-                    .Take(request.NumberOfMessages);
+            var messages = _context.Messages
+            .Include(m => m.User) // Include User data
+            .Where(m => !m.Flagged)
+            .OrderByDescending(m => m.PublishedDate)
+            .Take(request.NumberOfMessages)
+            .Select(m => new MessageDTO
+            {
+                Id = m.Id,
+                Text = m.Text,
+                PublishedDate = m.PublishedDate,
+                Flagged = m.Flagged,
+                Username = m.User.Username
+            })
+            .ToList();
 
                 _logger.LogDebug("Retrieved messages for global timeline");
                 return Ok(messages);
@@ -179,11 +190,20 @@ namespace MiniTwitAPI.Controllers
                     _logger.LogWarning("User not found: {Username}", username);
                     return NotFound("Couldn't find user");
                 }
-
-                var messages = _context.Messages
-                    .Where(m => !m.Flagged && m.UserId == user.Id)
-                    .OrderByDescending(m => m.PublishedDate)
-                    .Take(no);
+            var messages = _context.Messages
+            .Include(m => m.User) // Include User data
+            .Where(m => !m.Flagged && m.UserId == user.Id)
+            .OrderByDescending(m => m.PublishedDate)
+            .Take(no)
+            .Select(m => new MessageDTO
+            {
+                Id = m.Id,
+                Text = m.Text,
+                PublishedDate = m.PublishedDate,
+                Flagged = m.Flagged,
+                Username = m.User.Username
+            })
+            .ToList();
 
                 _logger.LogDebug("Retrieved {Count} messages for user {Username}", no, username);
                 return Ok(messages);
