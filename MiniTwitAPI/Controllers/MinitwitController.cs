@@ -135,13 +135,13 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("/msgs")]
-        public async Task<IActionResult> Messages([FromQuery] MessagesRequest request, [FromHeader] string Authorization)
+        public async Task<IActionResult> Messages([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            _logger.LogInformation("Messages endpoint called requesting {Count} messages", request.NumberOfMessages);
-            UpdateLatest(request.Latest);
-
-            var notFromSim = NotFromSimulator(Authorization);
+            _logger.LogInformation("Messages endpoint called requesting {Count} messages", no);
+            var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
 
             try
             {
@@ -149,7 +149,7 @@ namespace MiniTwitAPI.Controllers
             .Include(m => m.User) // Include User data
             .Where(m => !m.Flagged)
             .OrderByDescending(m => m.PublishedDate)
-            .Take(request.NumberOfMessages)
+            .Take(no)
             .Select(m => new MessageDTO
             {
                 Id = m.Id,
