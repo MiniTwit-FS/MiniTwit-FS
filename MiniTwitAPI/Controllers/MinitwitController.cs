@@ -166,10 +166,10 @@ namespace MiniTwitAPI.Controllers
             _logger.LogInformation("UserMessages endpoint called for user: {Username}, requesting {Count} messages",
                 username, no);
 
-            UpdateLatest(latest);
-
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
 
             try
             {
@@ -200,10 +200,11 @@ namespace MiniTwitAPI.Controllers
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("PostMessage endpoint called for user: {Username}", username);
-            UpdateLatest(latest);
 
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
 
             try
             {
