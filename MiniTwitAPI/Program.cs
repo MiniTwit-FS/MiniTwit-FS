@@ -92,9 +92,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.SetIsOriginAllowed(origin => true) // This effectively allows any origin.
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .AllowCredentials();
 
         logger.LogDebug("CORS policy 'AllowAll' configured");
     });
