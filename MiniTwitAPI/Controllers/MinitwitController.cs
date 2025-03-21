@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
 using System.Text.RegularExpressions;
 
 namespace MiniTwitAPI.Controllers
 {
-	[ApiController]
+    [ApiController]
     public class MinitwitController : ControllerBase
     {
         private readonly ILogger<MinitwitController> _logger;
@@ -104,13 +105,26 @@ namespace MiniTwitAPI.Controllers
             var notFromSim = NotFromSimulator(Authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
-            var messages = _context.Messages.Where(m => !m.Flagged).OrderByDescending(m => m.PublishedDate).Take(request.NumberOfMessages);
+            var messages = _context.Messages
+            .Include(m => m.User) // Include User data
+            .Where(m => !m.Flagged)
+            .OrderByDescending(m => m.PublishedDate)
+            .Take(request.NumberOfMessages)
+            .Select(m => new MessageDTO
+            {
+                Id = m.Id,
+                Text = m.Text,
+                PublishedDate = m.PublishedDate,
+                Flagged = m.Flagged,
+                Username = m.User.Username
+            })
+            .ToList();
 
             return Ok(messages);
         }
 
         [HttpGet("/msgs/{username}")]
-        public async Task<IActionResult> UserMessages(string username, [FromBody] MessagesRequest request, [FromHeader] string Authorization)
+        public async Task<IActionResult> UserMessages(string username, [FromQuery] MessagesRequest request, [FromHeader] string Authorization)
         {
             UpdateLatest(request.Latest);
 
@@ -121,7 +135,20 @@ namespace MiniTwitAPI.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) return NotFound("Couldn't find user");
 
-            var messages = _context.Messages.Where(m => !m.Flagged && m.UserId == user.Id).OrderByDescending(m => m.PublishedDate).Take(request.NumberOfMessages);
+            var messages = _context.Messages
+            .Include(m => m.User) // Include User data
+            .Where(m => !m.Flagged && m.UserId == user.Id)
+            .OrderByDescending(m => m.PublishedDate)
+            .Take(request.NumberOfMessages)
+            .Select(m => new MessageDTO
+            {
+                Id = m.Id,
+                Text = m.Text,
+                PublishedDate = m.PublishedDate,
+                Flagged = m.Flagged,
+                Username = m.User.Username
+            })
+            .ToList();
 
             return Ok(messages);
         }

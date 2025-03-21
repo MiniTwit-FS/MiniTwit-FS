@@ -1,19 +1,23 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MiniTwitClient.Controllers;
 using MiniTwitClient.Models;
 
 namespace MiniTwitClient.Pages
 {
     public partial class Username : ComponentBase
     {
-        [Parameter]
-        public int userId { get; set; }
+		[Inject] public MinitwitController controller { get; set; }
+
+		[Parameter] public string username { get; set; } = "not set";
 
         // Sample data. Replace with actual data retrieval from your backend.
-        private List<Message> Messages = new List<Message>
-    {
-        new Message { UserId = 1, Text = "Tweet from User 1", PublishedDate = DateTime.Now.AddMinutes(-10) },
-        new Message { UserId = 2, Text = "Tweet from User 2", PublishedDate = DateTime.Now.AddMinutes(-20) },
-        new Message { UserId = 1, Text = "Another tweet from User 1", PublishedDate = DateTime.Now.AddMinutes(-30) },
-    };
-    }
+        private List<Message> Messages = new List<Message>();
+
+		protected override async Task OnInitializedAsync()
+		{
+			Messages = await controller.GetUserTimeline(username, new MessagesRequest());
+
+			StateHasChanged();
+		}
+	}
 }

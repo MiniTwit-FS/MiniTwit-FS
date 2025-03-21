@@ -20,9 +20,6 @@ namespace MiniTwitClient.Controllers
 
 		public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
         {
-			Console.WriteLine("Authorization header: " + _httpClient.DefaultRequestHeaders.Authorization);
-			Console.WriteLine("API Endpoint: " + ApiEndpoint);
-
 			var response = await _httpClient.GetAsync($"{ApiEndpoint}/msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
 			
 			if (response.IsSuccessStatusCode)
@@ -38,7 +35,22 @@ namespace MiniTwitClient.Controllers
 			}
 		}
 
+		public async Task<List<Message>> GetUserTimeline(string username, MessagesRequest request)
+		{
+			var response = await _httpClient.GetAsync($"{ApiEndpoint}/msgs/{username}?no={request.NumberOfMessages}&latest={request.Latest}");
 
+			if (response.IsSuccessStatusCode)
+			{
+				var messages = await response.Content.ReadFromJsonAsync<List<Message>>();
+				return messages;
+			}
+			else
+			{
+				Console.WriteLine($"Error: {response.StatusCode}");
+				// Handle error based on status code
+				return null;
+			}
+		}
 
 
 
