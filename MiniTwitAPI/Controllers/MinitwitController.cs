@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 
 namespace MiniTwitAPI.Controllers
 {
-	[ApiController]
+    [ApiController]
     public class MinitwitController : ControllerBase
     {
         private readonly ILogger<MinitwitController> _logger;
@@ -19,6 +19,7 @@ namespace MiniTwitAPI.Controllers
         {
             _logger = logger;
             _context = context;
+            _logger.LogInformation("MinitwitController initialized");
         }
 
         private IActionResult UpdateLatest(int latest)
@@ -27,10 +28,12 @@ namespace MiniTwitAPI.Controllers
             {
                 try
                 {
+                    _logger.LogDebug("Updating latest processed action ID to: {LatestId}", latest);
                     System.IO.File.WriteAllText(filePath, latest.ToString());
                 }
                 catch (Exception ex)
                 {
+                    _logger.LogError(ex, "Failed to update latest value to {LatestId}", latest);
                     return NotFound("Failed to update latest value");
                 }
             }
@@ -44,32 +47,40 @@ namespace MiniTwitAPI.Controllers
         {
             if (authorization != "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh")
             {
+                _logger.LogWarning("Unauthorized access attempt with invalid authorization header");
                 return Forbid("You are not authorized to use this resource!");
             }
 
             return Ok();
         }
 
-
         [HttpGet("/latest")]
         public IActionResult GetLatest()
         {
+            _logger.LogInformation("GetLatest endpoint called");
             try
             {
                 string content = System.IO.File.ReadAllText(filePath);
                 if (int.TryParse(content, out int latestProcessedCommandId))
                 {
+                    _logger.LogDebug("Retrieved latest processed command ID: {LatestId}", latestProcessedCommandId);
                     return Ok(new { latest = latestProcessedCommandId });
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error reading latest processed command ID file");
+            }
 
+            _logger.LogDebug("No latest ID found, returning default value -1");
             return Ok(new { latest = -1 });
         }
 
         [HttpPost("/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest data, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
+            _logger.LogInformation("Register endpoint called for username: {Username}", data?.Username);
+
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
@@ -78,147 +89,269 @@ namespace MiniTwitAPI.Controllers
 
             // Validate request data
             if (string.IsNullOrWhiteSpace(data.Username))
+            {
+                _logger.LogWarning("Registration attempt with empty username");
                 return BadRequest("You have to enter a username");
+            }
 
             if (string.IsNullOrWhiteSpace(data.Email) || !Regex.IsMatch(data.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                _logger.LogWarning("Registration attempt with invalid email: {Email}", data.Email);
                 return BadRequest("You have to enter a valid email address");
+            }
 
             if (string.IsNullOrWhiteSpace(data.Password))
-                return BadRequest("You have to enter a password");
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == data.Username);
-            if (user != null) return BadRequest("The username is already taken");
-
-            await _context.Users.AddAsync(new User
             {
-                Username = data.Username,
-                Email = data.Email,
-                PasswordHash = HashPassword(data.Password),
-            });
-            await _context.SaveChangesAsync();
+                _logger.LogWarning("Registration attempt with empty password for user: {Username}", data.Username);
+                return BadRequest("You have to enter a password");
+            }
 
-            return NoContent();
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == data.Username);
+                if (user != null)
+                {
+                    _logger.LogWarning("Registration attempt with existing username: {Username}", data.Username);
+                    return BadRequest("The username is already taken");
+                }
+
+                await _context.Users.AddAsync(new User
+                {
+                    Username = data.Username,
+                    Email = data.Email,
+                    PasswordHash = HashPassword(data.Password),
+                });
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("User successfully registered: {Username}", data.Username);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error registering user: {Username}", data.Username);
+                return StatusCode(500, "An error occurred while registering the user");
+            }
         }
 
-        // !!! NOT DONE - Parameters are wrong !!!
         [HttpGet("/msgs")]
         public async Task<IActionResult> Messages([FromQuery] MessagesRequest request, [FromHeader] string Authorization)
         {
+            _logger.LogInformation("Messages endpoint called requesting {Count} messages", request.NumberOfMessages);
+            UpdateLatest(request.Latest);
+
             var notFromSim = NotFromSimulator(Authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
-            UpdateLatest(request.Latest);
+            try
+            {
+                var messages = _context.Messages
+                    .Where(m => !m.Flagged)
+                    .OrderByDescending(m => m.PublishedDate)
+                    .Take(request.NumberOfMessages);
 
-
-            var messages = _context.Messages.Where(m => !m.Flagged).OrderByDescending(m => m.PublishedDate).Take(request.NumberOfMessages);
-
-            return Ok(messages);
+                _logger.LogDebug("Retrieved messages for global timeline");
+                return Ok(messages);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving messages for global timeline");
+                return StatusCode(500, "An error occurred while retrieving messages");
+            }
         }
 
         [HttpGet("/msgs/{username}")]
-        public async Task<IActionResult> UserMessages(string username, 
+        public async Task<IActionResult> UserMessages(string username,
             [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            var notFromSim = NotFromSimulator(authorization);
-            if (notFromSim is ForbidResult) return notFromSim;
+            _logger.LogInformation("UserMessages endpoint called for user: {Username}, requesting {Count} messages",
+                username, no);
 
             UpdateLatest(latest);
 
+            var notFromSim = NotFromSimulator(authorization);
+            if (notFromSim is ForbidResult) return notFromSim;
 
-            Console.WriteLine("User: " + username);
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
-            if (user == null) return NotFound("Couldn't find user");
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found: {Username}", username);
+                    return NotFound("Couldn't find user");
+                }
 
-            var messages = _context.Messages.Where(m => !m.Flagged && m.UserId == user.Id).OrderByDescending(m => m.PublishedDate).Take(no);
+                var messages = _context.Messages
+                    .Where(m => !m.Flagged && m.UserId == user.Id)
+                    .OrderByDescending(m => m.PublishedDate)
+                    .Take(no);
 
-            return Ok(messages);
+                _logger.LogDebug("Retrieved {Count} messages for user {Username}", no, username);
+                return Ok(messages);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving messages for user {Username}", username);
+                return StatusCode(500, "An error occurred while retrieving user messages");
+            }
         }
 
         [HttpPost("/msgs/{username}")]
-        public async Task<IActionResult> PostMessage(string username, 
+        public async Task<IActionResult> PostMessage(string username,
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
+            _logger.LogInformation("PostMessage endpoint called for user: {Username}", username);
+            UpdateLatest(latest);
+
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
-            UpdateLatest(latest);
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
-            if (user == null) return NotFound("Couldn't find user");
-
-            await _context.Messages.AddAsync(new Message
+            try
             {
-                UserId = user.Id,
-                Text = request.Content,
-                PublishedDate = DateTime.Now,
-                Flagged = false,
-            });
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found when posting message: {Username}", username);
+                    return NotFound("Couldn't find user");
+                }
 
-            await _context.SaveChangesAsync();
+                await _context.Messages.AddAsync(new Message
+                {
+                    UserId = user.Id,
+                    Text = request.Content,
+                    PublishedDate = DateTime.Now,
+                    Flagged = false,
+                });
 
-            return NoContent();
+                await _context.SaveChangesAsync();
+                _logger.LogInformation("Message posted successfully for user: {Username}", username);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error posting message for user {Username}", username);
+                return StatusCode(500, "An error occurred while posting the message");
+            }
         }
 
         [HttpPost("/fllws/{username}")]
-        public async Task<IActionResult> Follow(string username, 
+        public async Task<IActionResult> Follow(string username,
             [FromBody] FollowRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            var notFromSim = NotFromSimulator(authorization);
-            if (notFromSim is ForbidResult) return notFromSim;
-
-            UpdateLatest(latest);
-
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
-            if (user == null) return NotFound("Couldn't find user");
-
+            _logger.LogInformation("Follow endpoint called for user: {Username}", username);
             if (request.Follow != null)
             {
-                var followUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Follow);
-                if (followUser == null) return NotFound("Couldn't find user to follow");
-
-                var alreadyFollows = await _context.Followers.AnyAsync(f => f.UserId == user.Id && f.FollowsUserId == followUser.Id);
-                if (!alreadyFollows)
-                {
-                    await _context.Followers.AddAsync(new Follower
-                    {
-                        UserId = user.Id,
-                        FollowsUserId = followUser.Id,
-                    });
-                    await _context.SaveChangesAsync();
-                    return NoContent();
-                }
+                _logger.LogDebug("User {Username} attempting to follow {TargetUsername}", username, request.Follow);
             }
             else if (request.Unfollow != null)
             {
-                var unfollowUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Unfollow);
-                if (unfollowUser == null) return NotFound("Couldn't find user to unfollow");
-
-                var followData = await _context.Followers.FirstOrDefaultAsync(f => f.UserId == user.Id && f.FollowsUserId == unfollowUser.Id);
-                if (followData != null)
-                {
-                    _context.Followers.Remove(followData);
-                    await _context.SaveChangesAsync();
-                    return NoContent();
-                }
+                _logger.LogDebug("User {Username} attempting to unfollow {TargetUsername}", username, request.Unfollow);
             }
 
-            return BadRequest();
+            UpdateLatest(latest);
+
+            var notFromSim = NotFromSimulator(authorization);
+            if (notFromSim is ForbidResult) return notFromSim;
+
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found in follow request: {Username}", username);
+                    return NotFound("Couldn't find user");
+                }
+
+                if (request.Follow != null)
+                {
+                    var followUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Follow);
+                    if (followUser == null)
+                    {
+                        _logger.LogWarning("Follow target not found: {TargetUsername}", request.Follow);
+                        return NotFound("Couldn't find user to follow");
+                    }
+
+                    var alreadyFollows = await _context.Followers.AnyAsync(f => f.UserId == user.Id && f.FollowsUserId == followUser.Id);
+                    if (!alreadyFollows)
+                    {
+                        await _context.Followers.AddAsync(new Follower
+                        {
+                            UserId = user.Id,
+                            FollowsUserId = followUser.Id,
+                        });
+                        await _context.SaveChangesAsync();
+                        _logger.LogInformation("User {Username} now follows {TargetUsername}", username, request.Follow);
+                        return NoContent();
+                    }
+                    else
+                    {
+                        _logger.LogDebug("User {Username} already follows {TargetUsername}", username, request.Follow);
+                    }
+                }
+                else if (request.Unfollow != null)
+                {
+                    var unfollowUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Unfollow);
+                    if (unfollowUser == null)
+                    {
+                        _logger.LogWarning("Unfollow target not found: {TargetUsername}", request.Unfollow);
+                        return NotFound("Couldn't find user to unfollow");
+                    }
+
+                    var followData = await _context.Followers.FirstOrDefaultAsync(f => f.UserId == user.Id && f.FollowsUserId == unfollowUser.Id);
+                    if (followData != null)
+                    {
+                        _context.Followers.Remove(followData);
+                        await _context.SaveChangesAsync();
+                        _logger.LogInformation("User {Username} unfollowed {TargetUsername}", username, request.Unfollow);
+                        return NoContent();
+                    }
+                    else
+                    {
+                        _logger.LogDebug("User {Username} was not following {TargetUsername}", username, request.Unfollow);
+                    }
+                }
+
+                _logger.LogWarning("Invalid follow/unfollow request from user {Username}", username);
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error processing follow/unfollow request for user {Username}", username);
+                return StatusCode(500, "An error occurred while processing follow request");
+            }
         }
 
-        // !!! NOT DONE - Parameters are wrong !!!
         [HttpGet("/fllws/{username}")]
         public async Task<IActionResult> Followers(string username, FollowersRequest request)
         {
+            _logger.LogInformation("Followers endpoint called for user: {Username}, requesting {Count} followers",
+                username, request.NumberOfFollowers);
+
             UpdateLatest(request.Latest);
 
             var notFromSim = NotFromSimulator(request.Authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
-            if (user == null) return NotFound("Couldn't find user");
+            try
+            {
+                var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
+                if (user == null)
+                {
+                    _logger.LogWarning("User not found in followers request: {Username}", username);
+                    return NotFound("Couldn't find user");
+                }
 
-            var follows = _context.Followers.Where(f => f.UserId == user.Id).Take(request.NumberOfFollowers);
-            return Ok(follows);
+                var follows = _context.Followers
+                    .Where(f => f.UserId == user.Id)
+                    .Take(request.NumberOfFollowers);
+
+                _logger.LogDebug("Retrieved followers for user {Username}", username);
+                return Ok(follows);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving followers for user {Username}", username);
+                return StatusCode(500, "An error occurred while retrieving followers");
+            }
         }
     }
 }
