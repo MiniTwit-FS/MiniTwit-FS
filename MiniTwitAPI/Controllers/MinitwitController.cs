@@ -104,10 +104,11 @@ namespace MiniTwitAPI.Controllers
         [HttpGet("/msgs")]
         public async Task<IActionResult> Messages([FromQuery] MessagesRequest request, [FromHeader] string Authorization)
         {
-            UpdateLatest(request.Latest);
-
             var notFromSim = NotFromSimulator(Authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(request.Latest);
+
 
             var messages = _context.Messages.Where(m => !m.Flagged).OrderByDescending(m => m.PublishedDate).Take(request.NumberOfMessages);
 
@@ -118,10 +119,11 @@ namespace MiniTwitAPI.Controllers
         public async Task<IActionResult> UserMessages(string username, 
             [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            UpdateLatest(latest);
-
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
+
 
             Console.WriteLine("User: " + username);
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
@@ -136,10 +138,10 @@ namespace MiniTwitAPI.Controllers
         public async Task<IActionResult> PostMessage(string username, 
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            UpdateLatest(latest);
-
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) return NotFound("Couldn't find user");
@@ -161,10 +163,10 @@ namespace MiniTwitAPI.Controllers
         public async Task<IActionResult> Follow(string username, 
             [FromBody] FollowRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            UpdateLatest(latest);
-
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
 
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
             if (user == null) return NotFound("Couldn't find user");
