@@ -4,7 +4,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UseBlazorWebAssembly>true</UseBlazorWebAssembly>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Images\MiniTwitLogo.jpg" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.8" />
@@ -13,7 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Components\" />
+    <None Update="appsettings.dev.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.prod.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

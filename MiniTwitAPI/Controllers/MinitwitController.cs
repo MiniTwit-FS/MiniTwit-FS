@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -134,20 +135,30 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("/msgs")]
-        public async Task<IActionResult> Messages([FromQuery] MessagesRequest request, [FromHeader] string Authorization)
+        public async Task<IActionResult> Messages([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            _logger.LogInformation("Messages endpoint called requesting {Count} messages", request.NumberOfMessages);
-            UpdateLatest(request.Latest);
-
-            var notFromSim = NotFromSimulator(Authorization);
+            _logger.LogInformation("Messages endpoint called requesting {Count} messages", no);
+            var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
 
             try
             {
-                var messages = _context.Messages
-                    .Where(m => !m.Flagged)
-                    .OrderByDescending(m => m.PublishedDate)
-                    .Take(request.NumberOfMessages);
+            var messages = _context.Messages
+            .Include(m => m.User) // Include User data
+            .Where(m => !m.Flagged)
+            .OrderByDescending(m => m.PublishedDate)
+            .Take(no)
+            .Select(m => new MessageDTO
+            {
+                Id = m.Id,
+                Text = m.Text,
+                PublishedDate = m.PublishedDate,
+                Flagged = m.Flagged,
+                Username = m.User.Username
+            })
+            .ToList();
 
                 _logger.LogDebug("Retrieved messages for global timeline");
                 return Ok(messages);
@@ -179,11 +190,20 @@ namespace MiniTwitAPI.Controllers
                     _logger.LogWarning("User not found: {Username}", username);
                     return NotFound("Couldn't find user");
                 }
-
-                var messages = _context.Messages
-                    .Where(m => !m.Flagged && m.UserId == user.Id)
-                    .OrderByDescending(m => m.PublishedDate)
-                    .Take(no);
+            var messages = _context.Messages
+            .Include(m => m.User) // Include User data
+            .Where(m => !m.Flagged && m.UserId == user.Id)
+            .OrderByDescending(m => m.PublishedDate)
+            .Take(no)
+            .Select(m => new MessageDTO
+            {
+                Id = m.Id,
+                Text = m.Text,
+                PublishedDate = m.PublishedDate,
+                Flagged = m.Flagged,
+                Username = m.User.Username
+            })
+            .ToList();
 
                 _logger.LogDebug("Retrieved {Count} messages for user {Username}", no, username);
                 return Ok(messages);
