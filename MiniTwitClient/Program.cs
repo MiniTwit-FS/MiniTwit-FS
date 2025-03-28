@@ -1,38 +1,31 @@
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MiniTwitClient;
 using MiniTwitClient.Controllers;
-using System;
+using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+var js = builder.Services.BuildServiceProvider().GetRequiredService<IJSRuntime>();
 
-// Determine the correct config file based on the host
-string configFile = builder.HostEnvironment.IsDevelopment() ? "appsettings.dev.json" : "appsettings.prod.json";
+var appConfig = await js.InvokeAsync<Config>("eval", "window.appConfig");
 
-// Load configuration files
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-builder.Configuration.AddJsonFile(configFile, optional: false, reloadOnChange: false);
+string apiEndpoint = appConfig?.ApiEndpoint ?? "https://localhost:7297"; // Fallback if not set
+Console.WriteLine("api: " + apiEndpoint);
 
-// Read API base URL from the loaded configuration
-string apiEndpoint = builder.Configuration["API_ENDPOINT"] ?? "https://localhost:7297";
-
-// Register HttpClient with the correct API endpoint
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(apiEndpoint)
 });
 
-// Register HttpClient with the API endpoint
-builder.Services.AddScoped(sp => new HttpClient
-{
-	BaseAddress = new Uri(apiEndpoint)
-});
-
-
 builder.Services.AddScoped<MinitwitController>();
 
+
 await builder.Build().RunAsync();
+
+public class Config
+{
+    public string ApiEndpoint { get; set; }
+}

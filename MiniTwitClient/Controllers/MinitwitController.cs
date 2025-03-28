@@ -8,24 +8,19 @@ namespace MiniTwitClient.Controllers
     public class MinitwitController
     {
         private readonly HttpClient _httpClient;
+        private static string _auth = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
 
-        private readonly string _apiEndpoint;
-        private const string Auth = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh"; // Base64 Auth
-
-        public MinitwitController(HttpClient httpClient, IConfiguration configuration)
+        // Injecting HttpClient into the controller
+        public MinitwitController(HttpClient httpClient)
         {
             _httpClient = httpClient;
-
-            // Read API endpoint from the loaded configuration
-            _apiEndpoint = configuration["API_ENDPOINT"] ?? "https://localhost:7297";
-
-            _httpClient.BaseAddress = new Uri(_apiEndpoint);
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Auth);
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _auth);
+            Console.WriteLine("Controller endpoint: " + httpClient.BaseAddress);
         }
 
         public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
         {
-			var response = await _httpClient.GetAsync($"{_apiEndpoint}/msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
+			var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}/msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
 			
 			if (response.IsSuccessStatusCode)
 			{
@@ -42,7 +37,7 @@ namespace MiniTwitClient.Controllers
 
 		public async Task<List<Message>> GetUserTimeline(string username, MessagesRequest request)
 		{
-			var response = await _httpClient.GetAsync($"{_apiEndpoint}/msgs/{username}?no={request.NumberOfMessages}&latest={request.Latest}");
+			var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}/msgs/{username}?no={request.NumberOfMessages}&latest={request.Latest}");
 
 			if (response.IsSuccessStatusCode)
 			{

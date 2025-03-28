@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -28,5 +28,20 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+
+  <!-- Remove this section -->
+  <!-- <ItemGroup>
+    <Content Include="wwwroot\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup> -->
+
+  <Target Name="PostPublish" AfterTargets="Publish">
+    <Exec Command="node $(ProjectDir)inject-config.js" />
+  </Target>
+
+  <Target Name="PreBuild" BeforeTargets="Build">
+    <!-- Ensure inject-config.js is run locally during the build process -->
+    <Exec Command="node $(ProjectDir)inject-config.js" />
+  </Target>
+
 
 </Project>
