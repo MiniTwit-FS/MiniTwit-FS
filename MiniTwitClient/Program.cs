@@ -8,8 +8,23 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-// Fetch the API endpoint from the environment variable or fallback to a default value (localhost in dev)
-string apiEndpoint = Environment.GetEnvironmentVariable("API_ENDPOINT") ?? "https://localhost:7297";
+var http = new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) };
+
+// Determine the correct config file based on the host
+string configFile = builder.HostEnvironment.IsDevelopment() ? "appsettings.dev.json" : "appsettings.prod.json";
+
+// Load configuration files
+builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
+builder.Configuration.AddJsonFile(configFile, optional: false, reloadOnChange: false);
+
+// Read API base URL from the loaded configuration
+string apiEndpoint = builder.Configuration["API_ENDPOINT"] ?? "https://localhost:7297";
+
+// Register HttpClient with the correct API endpoint
+builder.Services.AddScoped(sp => new HttpClient
+{
+    BaseAddress = new Uri(apiEndpoint)
+});
 
 // Register HttpClient with the API endpoint
 builder.Services.AddScoped(sp => new HttpClient
@@ -17,8 +32,6 @@ builder.Services.AddScoped(sp => new HttpClient
 	BaseAddress = new Uri(apiEndpoint)
 });
 
-builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnChange: false);
-builder.Configuration.AddJsonFile($"appsettings.{builder.HostEnvironment.Environment}.json", optional: true, reloadOnChange: false);
 
 builder.Services.AddScoped<MinitwitController>();
 

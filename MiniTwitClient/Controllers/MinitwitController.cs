@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniTwitClient.Models;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 
 namespace MiniTwitClient.Controllers
@@ -8,19 +9,23 @@ namespace MiniTwitClient.Controllers
     {
         private readonly HttpClient _httpClient;
 
-        private static string ApiEndpoint = "https://minitwit-api-5ezat.ondigitalocean.app/api";
-        private static string Auth = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
+        private readonly string _apiEndpoint;
+        private const string Auth = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh"; // Base64 Auth
 
         public MinitwitController(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-			_httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Auth);
-			ApiEndpoint = configuration["API_ENDPOINT"] ?? "https://localhost:7297"; // Read from environment or default
-		}
 
-		public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
+            // Read API endpoint from the loaded configuration
+            _apiEndpoint = configuration["API_ENDPOINT"] ?? "https://localhost:7297";
+
+            _httpClient.BaseAddress = new Uri(_apiEndpoint);
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Auth);
+        }
+
+        public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
         {
-			var response = await _httpClient.GetAsync($"{ApiEndpoint}/msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
+			var response = await _httpClient.GetAsync($"{_apiEndpoint}/msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
 			
 			if (response.IsSuccessStatusCode)
 			{
@@ -37,7 +42,7 @@ namespace MiniTwitClient.Controllers
 
 		public async Task<List<Message>> GetUserTimeline(string username, MessagesRequest request)
 		{
-			var response = await _httpClient.GetAsync($"{ApiEndpoint}/msgs/{username}?no={request.NumberOfMessages}&latest={request.Latest}");
+			var response = await _httpClient.GetAsync($"{_apiEndpoint}/msgs/{username}?no={request.NumberOfMessages}&latest={request.Latest}");
 
 			if (response.IsSuccessStatusCode)
 			{
