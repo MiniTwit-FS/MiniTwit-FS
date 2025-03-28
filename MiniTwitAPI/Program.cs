@@ -23,7 +23,7 @@ builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
 // Setup file logging if configured
 if (builder.Configuration.GetSection("Logging:File").Exists())
 {
-    var logPath = builder.Configuration["Logging:File:Path"] ?? "logs/minitwit-api-log.txt";
+    var logPath = builder.Configuration["Logging:File:Path"] ?? "logs/minitwit-api-log.log";
     var logDir = Path.GetDirectoryName(logPath);
     if (!string.IsNullOrEmpty(logDir) && !Directory.Exists(logDir))
     {
