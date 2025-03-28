@@ -20,7 +20,7 @@ jobs:
           script: |
             cd ~/MiniTwit-FS
             git pull origin main
-            cd /MiniTwitAPI
+            cd ~/MiniTwit-FS/MiniTwitAPI
             docker build -t minitwit-api .
             docker stop minitwit-container || true  # Gracefully stop if running
             docker rm minitwit-container || true    # Remove old container
