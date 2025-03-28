@@ -31,4 +31,5 @@ jobs:
               -e ASPNETCORE_URLS="http://+:8080" \
               -e DB_CONNECTION_STRING="$DB_CONNECTION_STRING" \
               -e ASPNETCORE_ENVIRONMENT="prod" \
+              -e DATABASE_URL="${minitwit-db.DATABASE_URL}" \
               minitwit-api
