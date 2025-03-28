@@ -18,7 +18,7 @@ jobs:
           username: ${{ secrets.DROPLET_USER }}
           key: ${{ secrets.DROPLET_SSH_KEY }}
           script: |
-            cd /MiniTwit-FS
+            cd ~/MiniTwit-FS
             git pull origin main
             cd /MiniTwitAPI
             docker build -t minitwit-api .
