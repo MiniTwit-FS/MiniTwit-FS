@@ -31,7 +31,7 @@ namespace MiniTwitClient.Controllers
 			{
 				Console.WriteLine($"Error: {response.StatusCode}");
 				// Handle error based on status code
-				return null;
+				return new List<Message>();
 			}
 		}
 
