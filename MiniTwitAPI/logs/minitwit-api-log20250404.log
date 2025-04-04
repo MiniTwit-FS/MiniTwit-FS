@@ -1,0 +1,13 @@
+2025-04-04 16:20:50.877 +02:00 [INF] Application starting. Environment: dev
+2025-04-04 16:20:51.100 +02:00 [INF] Configuring CORS policies
+2025-04-04 16:20:51.107 +02:00 [INF] Building application
+2025-04-04 16:20:51.483 +02:00 [INF] Starting web host
+2025-04-04 16:20:51.855 +02:00 [INF] Now listening on: https://localhost:7297
+2025-04-04 16:20:51.977 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-04 16:20:51.979 +02:00 [INF] Hosting environment: dev
+2025-04-04 16:20:51.980 +02:00 [INF] Content root path: C:\Programming\MiniTwit-FS\MiniTwitAPI
+2025-04-04 16:20:51.982 +02:00 [INF] Application started successfully
+2025-04-04 16:20:59.921 +02:00 [INF] MinitwitController initialized
+2025-04-04 16:20:59.927 +02:00 [INF] GetLatest endpoint called
+2025-04-04 16:20:59.928 +02:00 [DBG] Retrieved latest processed command ID: 7984
+2025-04-04 16:20:59.954 +02:00 [INF] Request GET /latest completed in 520.5996ms with status 200
