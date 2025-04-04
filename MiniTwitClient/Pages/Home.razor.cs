@@ -16,6 +16,15 @@ namespace MiniTwitClient.Pages
 
 			StateHasChanged();
 		}
-	}
+
+		private async Task PostMessage()
+        {
+            // Create a new message object
+            //await controller.PostMessage(newMessage);
+            // Refresh the messages after posting
+            Messages = await controller.GetPublicTimeline(new MessagesRequest());
+            StateHasChanged();
+        }
+    }
 }
 
