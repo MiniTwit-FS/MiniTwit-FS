@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
-using System.Net;
 using System.Text.RegularExpressions;
 
 namespace MiniTwitAPI.Controllers
@@ -372,6 +370,21 @@ namespace MiniTwitAPI.Controllers
             {
                 _logger.LogError(ex, "Error retrieving followers for user {Username}", username);
                 return StatusCode(500, "An error occurred while retrieving followers");
+            }
+        }
+
+        [HttpPost("/login")]
+        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username && u.PasswordHash == request.Password);
+
+            if (user != null)
+            {
+                return Ok("You have been logged in");
+            }
+            else
+            {
+                return NotFound("User not found");
             }
         }
     }

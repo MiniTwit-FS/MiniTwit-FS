@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MiniTwitClient.Models;
-using System.Net.Http.Headers;
+using MiniTwitClient.Pages;
 using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MiniTwitClient.Controllers
 {
@@ -52,11 +55,39 @@ namespace MiniTwitClient.Controllers
 			}
 		}
 
+		public async Task<bool> Register(RegisterRequest data)
+		{
+            var jsonContent = JsonSerializer.Serialize(data);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+            var response = await _httpClient.PostAsync($"{_httpClient.BaseAddress}/register", content);
 
+			return response.IsSuccessStatusCode;
+        }
+        public async Task<bool> Login(LoginRequest request)
+		{
+            var jsonContent = JsonSerializer.Serialize(request);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
+            var response = await _httpClient.PostAsync($"{_httpClient.BaseAddress}/login", content);
 
+			return response.IsSuccessStatusCode;
+        }
 
+		public async Task<bool> PostMessage(string username, AddMessageRequest request)
+		{
+            var jsonContent = JsonSerializer.Serialize(request);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync($"{_httpClient.BaseAddress}/msgs/{username}", content);
+
+			return response.IsSuccessStatusCode;
+        }
+
+		public async Task<bool> FollowUser(string myUser, string followUser)
+		{
+			return false;
+		}
 
 
 
