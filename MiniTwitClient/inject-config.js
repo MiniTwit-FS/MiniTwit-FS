@@ -9,10 +9,14 @@ const environment = process.env.NODE_ENV || 'dev';
 
 // Determine the correct appsettings file based on the environment
 const appSettingsFile = 'appsettings.' + environment + '.json';
+console.log("Appsetting file: " + appSettingsFile);
 const appSettingsPath = path.join(__dirname, appSettingsFile);
+console.log("app path:" + appSettingsPath);
 
 // Path to the index.html that will be modified
+//var indexPath = '';
 const indexPath = path.join(__dirname, 'wwwroot', 'index.html');
+//else indexPath = path.join(__dirname, 'dist', 'wwwroot', 'index.html');
 
 // Check if the correct appsettings file exists
 if (!fs.existsSync(appSettingsPath)) {

@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "MiniTwitClient",
   "resources": {
-    "hash": "sha256-NvrvaGhGRA2jrAdhWS0i8MdKxgb3ojeBQHUQj+xKeLQ=",
+    "hash": "sha256-6MvBxzGviMQMNcHCJwAc4JaufzDey3osjfhp7n0UUwQ=",
     "jsModuleNative": {
       "dotnet.native.8.0.8.8jg3cez62i.js": "sha256-juC5sA7gHTLXFEhAKgdM2/RavswpwCtDfjYGsAz2FXg="
     },
@@ -54,7 +54,7 @@
       "Microsoft.JSInterop.wasm": "sha256-YAuov+N9Jt7hvJRt9QsxNvhTGrzE64Y3sfAZ6hP1Z/A=",
       "Microsoft.JSInterop.WebAssembly.wasm": "sha256-sLSiCKh0RQEV/2cl05tr7wOLWzExQfPZovvpqYLJduQ=",
       "Microsoft.Net.Http.Headers.wasm": "sha256-jfXK+cfJd/PteHB+5Bay/NDY9b9VLvVw6G/Bm262Lpo=",
-      "MiniTwitClient.wasm": "sha256-Ypal639gfUw9bpjmU0mQ2hg4qJyQcCw7+YIUk5SO41g=",
+      "MiniTwitClient.wasm": "sha256-Nifh4uU9NbQYYE22+3RSIKH+m+x2lNkix2IYCc3LNJM=",
       "netstandard.wasm": "sha256-TznwJ6d2zUbR2NX6gsoNdLOB/01aGYRR3M2/38ntMLs=",
       "Newtonsoft.Json.wasm": "sha256-DBfpbduzEP2lTeFZddrFGuNDOcOwgBPZwFsTYJEFsSA=",
       "System.AppContext.wasm": "sha256-DmfRZ89bcILWN3A8gzAvpttPiHLzlitd55MOjJglWpA=",

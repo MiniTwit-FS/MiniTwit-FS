@@ -38,8 +38,10 @@
     <Exec Command="node $(ProjectDir)inject-config.js" />
   </Target>
 
+
+
   <Target Name="PreBuild" BeforeTargets="Build">
-    <!-- Ensure inject-config.js is run locally during the build process -->
+    <!-- Ensure wwwroot is copied to the dist folder before building -->
     <Exec Command="node $(ProjectDir)inject-config.js" />
   </Target>
 
