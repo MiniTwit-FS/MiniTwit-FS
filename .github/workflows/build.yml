@@ -19,7 +19,7 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ./MiniTwitClient/MiniTwitClient.csproj
 
       - name: Remove existing dist folder
         run: Remove-Item -Recurse -Force ./MiniTwitClient/dist
