@@ -9,9 +9,7 @@ const environment = process.env.NODE_ENV || 'dev';
 
 // Determine the correct appsettings file based on the environment
 const appSettingsFile = 'appsettings.' + environment + '.json';
-console.log("Appsetting file: " + appSettingsFile);
 const appSettingsPath = path.join(__dirname, appSettingsFile);
-console.log("app path:" + appSettingsPath);
 
 // Path to the index.html that will be modified
 //var indexPath = '';
@@ -40,9 +38,12 @@ if (!fs.existsSync(indexPath)) {
 const indexFile = fs.readFileSync(indexPath, 'utf8');
 
 // Replace the placeholder in index.html with the actual API endpoint
-const updatedIndex = indexFile.replace('{{API_ENDPOINT}}', apiEndpoint);
+const newIndexFile = indexFile.replace(
+    /window\.appConfig\s*=\s*{\s*apiEndpoint:\s*["'].*?["']\s*};/,
+    `window.appConfig = { apiEndpoint: "${apiEndpoint}" };`
+);
 
 // Write the updated content back to index.html
-fs.writeFileSync(indexPath, updatedIndex);
+fs.writeFileSync(indexPath, newIndexFile);
 
 console.log(`Successfully injected API endpoint: ${apiEndpoint} for ${environment} environment`);
