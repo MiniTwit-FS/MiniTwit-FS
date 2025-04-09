@@ -17,11 +17,6 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // Configure logging with providers
-/*builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));*/
-
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .CreateLogger();
@@ -40,11 +35,6 @@ if (builder.Configuration.GetSection("Serilog").Exists())
 }
 
 var logger = new SerilogLoggerFactory(Log.Logger).CreateLogger("Program");
-
-/*var logger = LoggerFactory.Create(config => {
-    config.AddConsole();
-    config.AddConfiguration(builder.Configuration.GetSection("Logging"));
-}).CreateLogger("Program");*/
 
 logger.LogInformation("Application starting. Environment: {Environment}", environment);
 
