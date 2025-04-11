@@ -14,7 +14,7 @@ public class MiniTwitClientTests
     {
         var httpClient = new HttpClient
         {
-            BaseAddress = new Uri("https://localhost:7297")
+            BaseAddress = new Uri("https://localhost:7192")
         };
 
         _controller = new MinitwitController(httpClient);
@@ -53,9 +53,9 @@ public class MiniTwitClientTests
         return await _controller.Logout();
     }
 
-    private async Task<HttpResponseMessage> AddMessage(string username, string text)
+    private async Task<HttpResponseMessage> AddMessage(string text)
     {
-        var response = await _controller.PostMessage(username, new AddMessageRequest()
+        var response = await _controller.PostMessage(new AddMessageRequest()
         {
             Content = text
         });
@@ -84,17 +84,17 @@ public class MiniTwitClientTests
         return await _controller.GetMyTimeline(new MessagesRequest());
     }
 
-    private async Task<HttpResponseMessage> Follow(string myUser, string followUser)
+    private async Task<HttpResponseMessage> Follow(string followUser)
     {
-        return await _controller.FollowChange(myUser, new FollowRequest()
+        return await _controller.FollowChange(new FollowRequest()
         {
             Follow = followUser
         });
     }
 
-    private async Task<HttpResponseMessage> Unfollow(string myUser, string followUser)
+    private async Task<HttpResponseMessage> Unfollow(string followUser)
     {
-        return await _controller.FollowChange(myUser, new FollowRequest()
+        return await _controller.FollowChange(new FollowRequest()
         {
             Unfollow = followUser
         });
@@ -142,8 +142,8 @@ public class MiniTwitClientTests
     public async Task TestMessageRecording()
     {
         await RegisterAndLogin("foo", "default");
-        await AddMessage("foo", "test message 1");
-        await AddMessage("foo", "<test message 2>"); 
+        await AddMessage("test message 1");
+        await AddMessage("<test message 2>"); 
         var messages = (await GetTimeline("foo")).Select(m => m.Text);
         Assert.Contains("test message 1", messages);
         Assert.Contains("&lt;test message 2&gt;", messages);
@@ -153,10 +153,10 @@ public class MiniTwitClientTests
     public async Task TestTimelines()
     {
         await RegisterAndLogin("foo", "default");
-        await AddMessage("foo", "the message by foo");
+        await AddMessage("the message by foo");
         await Logout();
         await RegisterAndLogin("bar", "default");
-        await AddMessage("bar", "the message by bar");
+        await AddMessage("the message by bar");
 
         var messages = (await GetPublic()).Select(m => m.Text);
         Assert.Contains("the message by foo", messages);
@@ -168,7 +168,7 @@ public class MiniTwitClientTests
         Assert.Contains("the message by bar", messages);
 
         // now let's follow foo
-        var rv = await Follow("bar", "foo");
+        var rv = await Follow("foo");
         var content = await rv.Content.ReadAsStringAsync();
         Assert.Contains("You are now following &#34;foo&#34;", content);
 
@@ -187,7 +187,7 @@ public class MiniTwitClientTests
         Assert.DoesNotContain("the message by bar", messages);
 
         // now unfollow and check if that worked
-        rv = await Unfollow("bar", "foo");
+        rv = await Unfollow("foo");
         content = await rv.Content.ReadAsStringAsync();
         Assert.Contains("You are no longer following &#34;foo&#34;", content);
 
