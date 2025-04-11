@@ -37,9 +37,9 @@ namespace MiniTwitClient.Controllers
 			}
 		}
 
-        public async Task<List<Message>> GetMyTimeline(MessagesRequest request, string user)
+        public async Task<List<Message>> GetMyTimeline(MessagesRequest request)
         {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}?username={user}");
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -87,25 +87,25 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);
         }
 
-		public async Task<HttpResponseMessage> PostMessage(string username, AddMessageRequest request)
+		public async Task<HttpResponseMessage> PostMessage(AddMessageRequest request)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}msgs/{username}", content);
+            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}msgs", content);
         }
 
-		public async Task<HttpResponseMessage> FollowChange(string myUser, FollowRequest request)
+		public async Task<HttpResponseMessage> FollowChange(FollowRequest request)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}fllws/{myUser}", content);
+            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}fllws", content);
         }
 
-        public async Task<bool> Follows(string user, string toFollow)
+        public async Task<bool> Follows(string toFollow)
         {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}fllws/{user}?followUser={toFollow}");
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}fllws/{toFollow}");
             if (response.IsSuccessStatusCode)
             {
                 return await response.Content.ReadFromJsonAsync<bool>();

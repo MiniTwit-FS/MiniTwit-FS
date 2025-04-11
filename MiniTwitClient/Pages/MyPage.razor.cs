@@ -23,7 +23,7 @@ namespace MiniTwitClient.Pages
                 return;
             }
 
-            Messages = await Controller.GetMyTimeline(new MessagesRequest(), UserState.Username);
+            Messages = await Controller.GetMyTimeline(new MessagesRequest());
 
 			StateHasChanged();
 		}

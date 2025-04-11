@@ -169,7 +169,7 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Timeline([FromQuery] string username, [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
+        public async Task<IActionResult> Timeline([FromHeader] string username, [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
             _logger.LogInformation("Timeline endpoint called requesting {Count} messages", no);
             var notFromSim = NotFromSimulator(authorization);
@@ -230,7 +230,7 @@ namespace MiniTwitAPI.Controllers
                     _logger.LogWarning("User not found: {Username}", username);
                     return NotFound("Couldn't find user");
                 }
-                
+
                 var messages = _context.Messages
                 .Where(m => !m.Flagged && m.UserId == user.Id)
                 .OrderByDescending(m => m.PublishedDate)
@@ -255,8 +255,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/msgs/{username}")]
-        public async Task<IActionResult> PostMessage(string username,
+        [HttpPost("/msgs")]
+        public async Task<IActionResult> PostMessage([FromHeader] string username,
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("PostMessage endpoint called for user: {Username}", username);
@@ -296,8 +296,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/fllws/{username}")]
-        public async Task<IActionResult> Follow(string username,
+        [HttpPost("/fllws")]
+        public async Task<IActionResult> Follow([FromHeader] string username,
             [FromBody] FollowRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("Follow endpoint called for user: {Username}", username);
@@ -388,8 +388,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpGet("/fllws/{username}")]
-        public async Task<IActionResult> Follows(string username, string followUser)
+        [HttpGet("/fllws/{followUser}")]
+        public async Task<IActionResult> Follows([FromHeader] string username, string followUser)
         {
             try
             {
@@ -432,7 +432,20 @@ namespace MiniTwitAPI.Controllers
             {
                 return BadRequest("Invalid password");
             }
-            else return Ok("You have been logged in");
+            else return Ok("You were logged in");
+        }
+
+        [HttpGet("/logout")]
+        public async Task<IActionResult> Logout([FromHeader] string username)
+        {
+            if (username != null)
+            {
+                return Ok("You were logged out");
+            }
+            else
+            {
+                return BadRequest("You are not logged in");
+            }
         }
     }
 }
