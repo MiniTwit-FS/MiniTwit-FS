@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
 using MiniTwitAPI.Extentions;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,28 +19,24 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 // Configure logging with providers
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Logging.AddDebug();
-builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 // Setup file logging if configured
-if (builder.Configuration.GetSection("Logging:File").Exists())
+if (builder.Configuration.GetSection("Serilog").Exists())
 {
-    var logPath = builder.Configuration["Logging:File:Path"] ?? "logs/minitwit-api-log.log";
+    var logPath = builder.Configuration["Serilog:WriteTo:1:Args:path"] ?? "logs/minitwit-api-log.log";
     var logDir = Path.GetDirectoryName(logPath);
     if (!string.IsNullOrEmpty(logDir) && !Directory.Exists(logDir))
     {
         Directory.CreateDirectory(logDir);
     }
-
-    builder.Logging.AddFile(builder.Configuration.GetSection("Logging:File"));
 }
 
-var logger = LoggerFactory.Create(config => {
-    config.AddConsole();
-    config.AddConfiguration(builder.Configuration.GetSection("Logging"));
-}).CreateLogger("Program");
+var logger = new SerilogLoggerFactory(Log.Logger).CreateLogger("Program");
 
 logger.LogInformation("Application starting. Environment: {Environment}", environment);
 
