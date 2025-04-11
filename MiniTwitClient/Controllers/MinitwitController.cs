@@ -22,7 +22,7 @@ namespace MiniTwitClient.Controllers
 
         public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
         {
-			var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}msgs/?no={request.NumberOfMessages}&latest={request.Latest}");
+			var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}msgs/?no={request.NumberOfMessages}");
 			
 			if (response.IsSuccessStatusCode)
 			{
@@ -32,14 +32,31 @@ namespace MiniTwitClient.Controllers
 			else
 			{
 				Console.WriteLine($"Error: {response.StatusCode}");
-				// Handle error based on status code
-				return new List<Message>();
+                // Handle error based on status code
+                return [];
 			}
 		}
 
-		public async Task<List<Message>> GetUserTimeline(string username, MessagesRequest request)
+        public async Task<List<Message>> GetMyTimeline(MessagesRequest request, string user)
+        {
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}?username={user}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var messages = await response.Content.ReadFromJsonAsync<List<Message>>();
+                return messages;
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+                // Handle error based on status code
+                return [];
+            }
+        }
+
+        public async Task<List<Message>> GetUserTimeline(string username, MessagesRequest request)
 		{
-			var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}msgs/{username}?no={request.NumberOfMessages}&latest={request.Latest}");
+			var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}msgs/{username}?no={request.NumberOfMessages}");
 
 			if (response.IsSuccessStatusCode)
 			{
@@ -50,7 +67,7 @@ namespace MiniTwitClient.Controllers
 			{
 				Console.WriteLine($"Error: {response.StatusCode}");
 				// Handle error based on status code
-				return null;
+				return [];
 			}
 		}
 
@@ -70,26 +87,30 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);
         }
 
-		public async Task<Message> PostMessage(string username, AddMessageRequest request)
+		public async Task<HttpResponseMessage> PostMessage(string username, AddMessageRequest request)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{_httpClient.BaseAddress}msgs/{username}", content);
-
-			if (response.IsSuccessStatusCode)
-			{
-				var responseContent = await response.Content.ReadAsStringAsync();
-				var message = JsonSerializer.Deserialize<Message>(responseContent);
-
-				return message;
-			}
-			else return null;
+            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}msgs/{username}", content);
         }
 
-		public async Task<bool> FollowUser(string myUser, string followUser)
+		public async Task<HttpResponseMessage> FollowChange(string myUser, FollowRequest request)
 		{
-			return false;
-		}
-	}
+            var jsonContent = JsonSerializer.Serialize(request);
+            var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}fllws/{myUser}", content);
+        }
+
+        public async Task<bool> Follows(string user, string toFollow)
+        {
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}fllws/{user}?followUser={toFollow}");
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<bool>();
+            }
+            else return false;
+        }
+    }
 }

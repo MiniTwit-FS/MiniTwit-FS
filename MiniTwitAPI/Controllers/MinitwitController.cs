@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace MiniTwitAPI.Controllers
@@ -167,6 +168,48 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
+        [HttpGet("")]
+        public async Task<IActionResult> Timeline([FromQuery] string username, [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
+        {
+            _logger.LogInformation("Timeline endpoint called requesting {Count} messages", no);
+            var notFromSim = NotFromSimulator(authorization);
+            if (notFromSim is ForbidResult) return notFromSim;
+
+            UpdateLatest(latest);
+
+            try
+            {
+                var user = _context.Users.FirstOrDefault(u => u.Username == username);
+
+                if (user == null) return BadRequest("Couldn't find user");
+
+                var followersIds = _context.Followers.Where(f => f.UserId == user.Id).Select(f => f.FollowsUserId);
+
+                var messages = _context.Messages
+                    .Where(m => m.UserId == user.Id || followersIds.Contains(m.UserId))
+                    .OrderByDescending(m => m.PublishedDate)
+                    .Take(no)
+                    .Select(m => new MessageDTO
+                    {
+                        Id = m.Id,
+                        Text = m.Text,
+                        PublishedDate = m.PublishedDate,
+                        Flagged = m.Flagged,
+                        Username = _context.Users.First(u => u.Id == m.UserId).Username
+                    })
+                    .ToList();
+
+
+                _logger.LogDebug("Retrieved messages for personal timeline");
+                return Ok(messages);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error retrieving messages for personal timeline");
+                return NotFound("An error occurred while retrieving messages");
+            }
+        }
+
         [HttpGet("/msgs/{username}")]
         public async Task<IActionResult> UserMessages(string username,
             [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
@@ -290,6 +333,11 @@ namespace MiniTwitAPI.Controllers
                         return NotFound("Couldn't find user to follow");
                     }
 
+                    if (user == followUser)
+                    {
+                        return BadRequest("Can't follow yourself");
+                    }
+
                     var alreadyFollows = await _context.Followers.AnyAsync(f => f.UserId == user.Id && f.FollowsUserId == followUser.Id);
                     if (!alreadyFollows)
                     {
@@ -341,30 +389,27 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("/fllws/{username}")]
-        public async Task<IActionResult> Followers(string username, FollowersRequest request)
+        public async Task<IActionResult> Follows(string username, string followUser)
         {
-            _logger.LogInformation("Followers endpoint called for user: {Username}, requesting {Count} followers",
-                username, request.NumberOfFollowers);
-
-            UpdateLatest(request.Latest);
-
-            var notFromSim = NotFromSimulator(request.Authorization);
-            if (notFromSim is ForbidResult) return notFromSim;
-
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (user == null)
                 {
-                    _logger.LogWarning("User not found in followers request: {Username}", username);
+                    _logger.LogWarning("User not found in follows request: {Username}", username);
+                    return NotFound("Couldn't find user");
+                }
+
+                var userToFollow = await _context.Users.FirstOrDefaultAsync(u => u.Username == followUser);
+                if (userToFollow == null)
+                {
+                    _logger.LogWarning("User not found in follows request: {Username}", username);
                     return NotFound("Couldn't find user");
                 }
 
                 var follows = _context.Followers
-                    .Where(f => f.UserId == user.Id)
-                    .Take(request.NumberOfFollowers);
+                    .Any(f => f.UserId == user.Id && f.FollowsUserId == userToFollow.Id);
 
-                _logger.LogDebug("Retrieved followers for user {Username}", username);
                 return Ok(follows);
             }
             catch (Exception ex)

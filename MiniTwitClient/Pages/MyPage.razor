@@ -1,0 +1,14 @@
+﻿@page "/"
+@using MiniTwitClient.Components;
+
+<PageTitle>My Page</PageTitle>
+
+
+<div class="max-w-4xl mx-auto px-8">
+    <h1 class="text-3xl font-bold mb-4">My Page</h1>
+
+    @foreach (var message in Messages)
+    {
+        <Tweet Message="@message" />
+    }
+</div>

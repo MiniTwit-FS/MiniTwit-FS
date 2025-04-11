@@ -4,7 +4,32 @@
 <PageTitle>User @username Feed</PageTitle>
 
 <div class="max-w-4xl mx-auto px-8">
-    <h1 class="text-3xl font-bold mb-4">User @username's Feed</h1>
+    <h1 class="text-3xl font-bold mb-4">
+        @($"{username}'s Feed")</h1>
+
+    @if (UserState.IsLoggedIn)
+    {
+        <div class="mb-4">
+        @if (!Follows)
+        {
+            <div class="mt-4">
+                <button @onclick=Follow 
+                class="flex w-32 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Follow
+                </button>
+            </div>
+        }
+        else
+        {
+            <div class="mt-4">
+                <button @onclick=Unfollow 
+                class="flex w-32 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Unfollow
+                </button>
+            </div>
+        }
+        </div>
+    }
 
     @foreach (var message in Messages)
     {
