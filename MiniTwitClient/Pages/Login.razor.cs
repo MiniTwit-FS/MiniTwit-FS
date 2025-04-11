@@ -1,5 +1,4 @@
-﻿using Blazored.Toast.Services;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using MiniTwitClient.Authentication;
 using MiniTwitClient.Controllers;
 using MiniTwitClient.Models;
