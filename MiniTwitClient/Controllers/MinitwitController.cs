@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MiniTwitClient.Extentions;
 using MiniTwitClient.Models;
 using MiniTwitClient.Pages;
 using System.Net.Http.Json;
@@ -73,7 +74,11 @@ namespace MiniTwitClient.Controllers
 
         public async Task<HttpResponseMessage> Register(RegisterRequest data)
         {
-            var jsonContent = JsonSerializer.Serialize(data);
+            var jsonContent = JsonSerializer.Serialize(new RegisterRequest {
+                Username = data.Username,
+                Email = data.Email,
+                Password = data.Password.Sha256Hash()
+            });
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}register", content);
@@ -81,7 +86,7 @@ namespace MiniTwitClient.Controllers
 
         public async Task<HttpResponseMessage> Login(LoginRequest request)
 		{
-            var jsonContent = JsonSerializer.Serialize(request);
+            var jsonContent = JsonSerializer.Serialize(new LoginRequest { Username = request.Username, Password = request.Password.Sha256Hash()});
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);

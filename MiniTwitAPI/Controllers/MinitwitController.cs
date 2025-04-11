@@ -41,8 +41,6 @@ namespace MiniTwitAPI.Controllers
             return Ok(latest);
         }
 
-        private string HashPassword(string password) => password;
-
         private IActionResult NotFromSimulator(string authorization)
         {
             if (authorization != "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh")
@@ -119,7 +117,7 @@ namespace MiniTwitAPI.Controllers
                 {
                     Username = data.Username,
                     Email = data.Email,
-                    PasswordHash = HashPassword(data.Password),
+                    PasswordHash = data.Password
                 });
                 await _context.SaveChangesAsync();
 
