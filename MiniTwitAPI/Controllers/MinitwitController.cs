@@ -1,8 +1,5 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.JSInterop;
 using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
 using System.Linq;
@@ -13,8 +10,6 @@ namespace MiniTwitAPI.Controllers
     [ApiController]
     public class MinitwitController : ControllerBase
     {
-        [Inject] private SessionStorageService SessionStorage { get; set; }
-
         private readonly ILogger<MinitwitController> _logger;
         private readonly AppDbContext _context;
 
@@ -174,7 +169,7 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Timeline([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
+        public async Task<IActionResult> Timeline([FromQuery] string username, [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
             _logger.LogInformation("Timeline endpoint called requesting {Count} messages", no);
             var notFromSim = NotFromSimulator(authorization);
@@ -184,7 +179,6 @@ namespace MiniTwitAPI.Controllers
 
             try
             {
-                var username = await SessionStorage.GetItemAsync("username");
                 var user = _context.Users.FirstOrDefault(u => u.Username == username);
 
                 if (user == null) return BadRequest("Couldn't find user");
@@ -236,7 +230,7 @@ namespace MiniTwitAPI.Controllers
                     _logger.LogWarning("User not found: {Username}", username);
                     return NotFound("Couldn't find user");
                 }
-
+                
                 var messages = _context.Messages
                 .Where(m => !m.Flagged && m.UserId == user.Id)
                 .OrderByDescending(m => m.PublishedDate)
@@ -438,34 +432,7 @@ namespace MiniTwitAPI.Controllers
             {
                 return BadRequest("Invalid password");
             }
-            else
-            {
-                var username = await SessionStorage.GetItemAsync("username");
-                if (username != null)
-                {
-                    await SessionStorage.SetItemAsync("username", request.Username);
-                    return Ok("You were logged in");
-                }
-                else
-                {
-                    return BadRequest("You are already logged in");
-                }
-            }
-        }
-
-        [HttpGet("/logout")]
-        public async Task<IActionResult> Logout()
-        {
-            var username = await SessionStorage.GetItemAsync("username");
-            if (username != null)
-            {
-                await SessionStorage.RemoveItemAsync("username");
-                return Ok("You were logged out");
-            }
-            else
-            {
-                return BadRequest("You are not logged in");
-            }
+            else return Ok("You have been logged in");
         }
     }
 }
