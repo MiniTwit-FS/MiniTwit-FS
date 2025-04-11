@@ -23,8 +23,11 @@ jobs:
       - name: Install dependencies
         run: dotnet restore ./MiniTwitClient/MiniTwitClient.csproj
 
-      - name: Remove existing dist folder
-        run: Remove-Item -Recurse -Force ./MiniTwitClient/dist
+      - name: Remove existing dist folder if it exists
+        run: |
+          if (Test-Path ./MiniTwitClient/dist) {
+            Remove-Item -Recurse -Force ./MiniTwitClient/dist
+          }
         shell: pwsh
 
       - name: Build project
