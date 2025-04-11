@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using MiniTwitClient.Authentication;
-using MiniTwitClient.Controllers;
+using static System.Net.WebRequestMethods;
 
 namespace MiniTwitClient.Layout
 {
@@ -8,11 +8,11 @@ namespace MiniTwitClient.Layout
     {
         [Inject] public UserState UserState { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
-        [Inject] public MinitwitController Controller { get; set; }
+        [Inject] public HttpClient _client { get; set; }
 
-        public async Task Logout()
+        public void Logout()
         {
-            await Controller.Logout();
+            _client.DefaultRequestHeaders.Remove("Username");
             UserState.LogOut();
         }
 

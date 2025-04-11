@@ -10,6 +10,7 @@ namespace MiniTwitClient.Pages
         [Inject] public MinitwitController Controller { get; set; }
         [Inject] public UserState UserState { get; set; }
         [Inject] public NavigationManager Navigation { get; set; } = default!;
+        [Inject] public HttpClient _client { get; set; }
 
         public LoginRequest LoginRequest { get; set; } = new LoginRequest();
 
@@ -19,6 +20,8 @@ namespace MiniTwitClient.Pages
 
             if (login.IsSuccessStatusCode)
             {
+                _client.DefaultRequestHeaders.Add("Username", LoginRequest.Username);
+
                 UserState.LogIn(LoginRequest.Username);
                 Navigation.NavigateTo($"/public");
             }

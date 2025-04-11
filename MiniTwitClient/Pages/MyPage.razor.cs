@@ -11,7 +11,7 @@ namespace MiniTwitClient.Pages
         [Inject] public UserState UserState { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
 
-        private MessagesRequest MessagesRequest { get; set; } = new MessagesRequest();
+        private AddMessageRequest AddMessageRequest { get; set; } = new AddMessageRequest();
 
         private List<Message> Messages { get; set; } = new List<Message>();
 
@@ -23,7 +23,7 @@ namespace MiniTwitClient.Pages
                 return;
             }
 
-            Messages = await Controller.GetMyTimeline(MessagesRequest);
+            Messages = await Controller.GetMyTimeline(new MessagesRequest());
 
 			StateHasChanged();
 		}

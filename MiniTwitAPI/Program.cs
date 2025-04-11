@@ -88,8 +88,6 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddScoped<SessionStorageService>();
-
 logger.LogInformation("Configuring CORS policies");
 builder.Services.AddCors(options =>
 {

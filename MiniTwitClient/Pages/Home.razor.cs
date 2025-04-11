@@ -23,7 +23,7 @@ namespace MiniTwitClient.Pages
 
 		private async Task PostMessage()
         {
-            await Controller.PostMessage(userState.Username, AddMessageRequest);
+            await Controller.PostMessage(AddMessageRequest);
 
             // Refresh the messages after posting
             Messages = await Controller.GetPublicTimeline(new MessagesRequest());

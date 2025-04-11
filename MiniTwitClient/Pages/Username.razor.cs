@@ -31,7 +31,7 @@ namespace MiniTwitClient.Pages
                     return;
                 }
 
-                Follows = await controller.Follows(UserState.Username, username);
+                Follows = await controller.Follows(username);
             }
 
             Messages = await controller.GetUserTimeline(username, new MessagesRequest());
@@ -41,24 +41,24 @@ namespace MiniTwitClient.Pages
 
 		private async Task Follow()
 		{
-            await controller.FollowChange(UserState.Username, new FollowRequest()
+            await controller.FollowChange(new FollowRequest()
             {
                 Follow = username
             });
 
-            Follows = await controller.Follows(UserState.Username, username);
+            Follows = await controller.Follows(username);
 
             StateHasChanged();
         }
 
         private async Task Unfollow()
         {
-            await controller.FollowChange(UserState.Username, new FollowRequest()
+            await controller.FollowChange(new FollowRequest()
             {
                 Unfollow = username
             });
 
-            Follows = await controller.Follows(UserState.Username, username);
+            Follows = await controller.Follows(username);
 
             StateHasChanged();
         }

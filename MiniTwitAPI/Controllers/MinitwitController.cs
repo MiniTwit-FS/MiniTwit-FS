@@ -1,8 +1,5 @@
-﻿using Azure.Core;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.JSInterop;
 using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Models;
 using System.Linq;
@@ -13,8 +10,6 @@ namespace MiniTwitAPI.Controllers
     [ApiController]
     public class MinitwitController : ControllerBase
     {
-        [Inject] private SessionStorageService SessionStorage { get; set; }
-
         private readonly ILogger<MinitwitController> _logger;
         private readonly AppDbContext _context;
 
@@ -174,7 +169,7 @@ namespace MiniTwitAPI.Controllers
         }
 
         [HttpGet("")]
-        public async Task<IActionResult> Timeline([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
+        public async Task<IActionResult> Timeline([FromHeader] string username, [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
             _logger.LogInformation("Timeline endpoint called requesting {Count} messages", no);
             var notFromSim = NotFromSimulator(authorization);
@@ -184,7 +179,6 @@ namespace MiniTwitAPI.Controllers
 
             try
             {
-                var username = await SessionStorage.GetItemAsync("username");
                 var user = _context.Users.FirstOrDefault(u => u.Username == username);
 
                 if (user == null) return BadRequest("Couldn't find user");
@@ -261,8 +255,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/msgs/{username}")]
-        public async Task<IActionResult> PostMessage(string username,
+        [HttpPost("/msgs")]
+        public async Task<IActionResult> PostMessage([FromHeader] string username,
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("PostMessage endpoint called for user: {Username}", username);
@@ -302,8 +296,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/fllws/{username}")]
-        public async Task<IActionResult> Follow(string username,
+        [HttpPost("/fllws")]
+        public async Task<IActionResult> Follow([FromHeader] string username,
             [FromBody] FollowRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("Follow endpoint called for user: {Username}", username);
@@ -394,8 +388,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpGet("/fllws/{username}")]
-        public async Task<IActionResult> Follows(string username, string followUser)
+        [HttpGet("/fllws/{followUser}")]
+        public async Task<IActionResult> Follows([FromHeader] string username, string followUser)
         {
             try
             {
@@ -438,28 +432,14 @@ namespace MiniTwitAPI.Controllers
             {
                 return BadRequest("Invalid password");
             }
-            else
-            {
-                var username = await SessionStorage.GetItemAsync("username");
-                if (username != null)
-                {
-                    await SessionStorage.SetItemAsync("username", request.Username);
-                    return Ok("You were logged in");
-                }
-                else
-                {
-                    return BadRequest("You are already logged in");
-                }
-            }
+            else return Ok("You were logged in");
         }
 
         [HttpGet("/logout")]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout([FromHeader] string username)
         {
-            var username = await SessionStorage.GetItemAsync("username");
             if (username != null)
             {
-                await SessionStorage.RemoveItemAsync("username");
                 return Ok("You were logged out");
             }
             else
