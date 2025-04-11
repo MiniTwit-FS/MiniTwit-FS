@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'MiniTwitClient/**'  # Only trigger when something inside this folder changes
 
 jobs:
   build:
