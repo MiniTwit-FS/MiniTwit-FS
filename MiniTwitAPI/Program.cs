@@ -1,7 +1,9 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
+using MiniTwitAPI.Extentions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -175,6 +177,23 @@ if (environment == "prod")
     catch (Exception ex)
     {
         logger.LogError(ex, "An error occurred while applying database migrations");
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+    var unhashedUsers = db.Users.Where(u => !u.IsPasswordHashed).ToList();
+    if (unhashedUsers.Any())
+    {
+        foreach (var user in unhashedUsers)
+        {
+            user.PasswordHash = user.PasswordHash.Sha256Hash(); // ← Your hashing method
+            user.IsPasswordHashed = true;
+        }
+
+        db.SaveChanges();
     }
 }
 

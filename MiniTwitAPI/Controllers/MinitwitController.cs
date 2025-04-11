@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.DTOs;
+using MiniTwitAPI.Extentions;
 using MiniTwitAPI.Models;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -40,6 +42,8 @@ namespace MiniTwitAPI.Controllers
 
             return Ok(latest);
         }
+
+        private string HashPassword(string password) => password.Sha256Hash();
 
         private IActionResult NotFromSimulator(string authorization)
         {
@@ -117,7 +121,7 @@ namespace MiniTwitAPI.Controllers
                 {
                     Username = data.Username,
                     Email = data.Email,
-                    PasswordHash = data.Password
+                    PasswordHash = HashPassword(data.Password)
                 });
                 await _context.SaveChangesAsync();
 
@@ -426,7 +430,7 @@ namespace MiniTwitAPI.Controllers
             {
                 return NotFound("Invalid username");
             }
-            else if (user.PasswordHash != request.Password)
+            else if (user.PasswordHash != HashPassword(request.Password))
             {
                 return BadRequest("Invalid password");
             }

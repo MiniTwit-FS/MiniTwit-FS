@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace MiniTwitClient.Extentions
+namespace MiniTwitAPI.Extentions
 {
     public static class StringExtensions
     {
