@@ -37,9 +37,9 @@ namespace MiniTwitClient.Controllers
 			}
 		}
 
-        public async Task<List<Message>> GetMyTimeline(MessagesRequest request, string user)
+        public async Task<List<Message>> GetMyTimeline(MessagesRequest request)
         {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}?username={user}");
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}?no={request.NumberOfMessages}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -87,7 +87,12 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);
         }
 
-		public async Task<HttpResponseMessage> PostMessage(string username, AddMessageRequest request)
+        public async Task<HttpResponseMessage> Logout()
+        {
+            return await _httpClient.GetAsync($"{_httpClient.BaseAddress}logout");
+        }
+
+        public async Task<HttpResponseMessage> PostMessage(string username, AddMessageRequest request)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
