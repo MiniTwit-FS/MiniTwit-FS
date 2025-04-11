@@ -20,7 +20,7 @@ public class MiniTwitClientTests
         _controller = new MinitwitController(httpClient);
     }
 
-    private async Task<HttpResponseMessage> Register(string username, string password, string password2 = null, string email = null)
+    private async Task<HttpResponseMessage> Register(string username, string password, string? password2 = null, string? email = null)
     {
         if (password2 == null) password2 = password;
         if (email == null) email = $"{username}@example.com";
@@ -50,7 +50,7 @@ public class MiniTwitClientTests
 
     private async Task<HttpResponseMessage> Logout()
     {
-        throw new NotImplementedException();
+        return await _controller.Logout();
     }
 
     private async Task<HttpResponseMessage> AddMessage(string username, string text)
@@ -81,7 +81,7 @@ public class MiniTwitClientTests
 
     private async Task<List<Message>> GetTimeline(string username)
     {
-        return await _controller.GetMyTimeline(new MessagesRequest(), username);
+        return await _controller.GetMyTimeline(new MessagesRequest());
     }
 
     private async Task<HttpResponseMessage> Follow(string myUser, string followUser)
