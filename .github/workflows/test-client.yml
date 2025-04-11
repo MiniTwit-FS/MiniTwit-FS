@@ -1,0 +1,23 @@
+name: Test Web Client
+
+on:
+  workflow_call:
+
+jobs:
+  test:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install dependencies
+        run: dotnet restore ./MiniTwitClient/MiniTwitClient.csproj
+
+      - name: Run unit tests
+        run: dotnet test ./MiniTwitClient.Tests/MiniTwitClient.Tests.csproj --no-restore --verbosity normal
