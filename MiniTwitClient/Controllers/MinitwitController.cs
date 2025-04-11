@@ -86,6 +86,11 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);
         }
 
+        public async Task<HttpResponseMessage> Logout()
+        {
+            return await _httpClient.GetAsync($"{_httpClient.BaseAddress}logout");
+        }
+
 		public async Task<HttpResponseMessage> PostMessage(AddMessageRequest request)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
