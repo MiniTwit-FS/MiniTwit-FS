@@ -123,7 +123,7 @@ namespace MiniTwitAPI.Controllers
                 await _context.SaveChangesAsync();
 
                 _logger.LogInformation("User successfully registered: {Username}", data.Username);
-                return NoContent();
+                return Ok("You were successfully registered and can login now");
             }
             catch (Exception ex)
             {
@@ -143,20 +143,19 @@ namespace MiniTwitAPI.Controllers
 
             try
             {
-            var messages = _context.Messages
-            .Include(m => m.User) // Include User data
-            .Where(m => !m.Flagged)
-            .OrderByDescending(m => m.PublishedDate)
-            .Take(no)
-            .Select(m => new MessageDTO
-            {
-                Id = m.Id,
-                Text = m.Text,
-                PublishedDate = m.PublishedDate,
-                Flagged = m.Flagged,
-                Username = m.User.Username
-            })
-            .ToList();
+                var messages = _context.Messages
+                .Where(m => !m.Flagged)
+                .OrderByDescending(m => m.PublishedDate)
+                .Take(no)
+                .Select(m => new MessageDTO
+                {
+                    Id = m.Id,
+                    Text = m.Text,
+                    PublishedDate = m.PublishedDate,
+                    Flagged = m.Flagged,
+                    Username = _context.Users.First(u => u.Id == m.UserId).Username
+                })
+                .ToList();
 
                 _logger.LogDebug("Retrieved messages for global timeline");
                 return Ok(messages);
@@ -164,7 +163,7 @@ namespace MiniTwitAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error retrieving messages for global timeline");
-                return StatusCode(500, "An error occurred while retrieving messages");
+                return NotFound("An error occurred while retrieving messages");
             }
         }
 
@@ -188,20 +187,20 @@ namespace MiniTwitAPI.Controllers
                     _logger.LogWarning("User not found: {Username}", username);
                     return NotFound("Couldn't find user");
                 }
-            var messages = _context.Messages
-            .Include(m => m.User) // Include User data
-            .Where(m => !m.Flagged && m.UserId == user.Id)
-            .OrderByDescending(m => m.PublishedDate)
-            .Take(no)
-            .Select(m => new MessageDTO
-            {
-                Id = m.Id,
-                Text = m.Text,
-                PublishedDate = m.PublishedDate,
-                Flagged = m.Flagged,
-                Username = m.User.Username
-            })
-            .ToList();
+                
+                var messages = _context.Messages
+                .Where(m => !m.Flagged && m.UserId == user.Id)
+                .OrderByDescending(m => m.PublishedDate)
+                .Take(no)
+                .Select(m => new MessageDTO
+                {
+                    Id = m.Id,
+                    Text = m.Text,
+                    PublishedDate = m.PublishedDate,
+                    Flagged = m.Flagged,
+                    Username = username
+                })
+                .ToList();
 
                 _logger.LogDebug("Retrieved {Count} messages for user {Username}", no, username);
                 return Ok(messages);
@@ -233,17 +232,19 @@ namespace MiniTwitAPI.Controllers
                     return NotFound("Couldn't find user");
                 }
 
-                await _context.Messages.AddAsync(new Message
+                var msg = new Message
                 {
                     UserId = user.Id,
                     Text = request.Content,
                     PublishedDate = DateTime.Now,
                     Flagged = false,
-                });
+                };
+
+                await _context.Messages.AddAsync(msg);
 
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Message posted successfully for user: {Username}", username);
-                return NoContent();
+                return Ok(msg);
             }
             catch (Exception ex)
             {
@@ -376,16 +377,17 @@ namespace MiniTwitAPI.Controllers
         [HttpPost("/login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username && u.PasswordHash == request.Password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
 
-            if (user != null)
+            if (user == null)
             {
-                return Ok("You have been logged in");
+                return NotFound("Invalid username");
             }
-            else
+            else if (user.PasswordHash != request.Password)
             {
-                return NotFound("User not found");
+                return BadRequest("Invalid password");
             }
+            else return Ok("You have been logged in");
         }
     }
 }

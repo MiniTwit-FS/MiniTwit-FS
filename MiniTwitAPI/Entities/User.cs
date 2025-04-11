@@ -16,7 +16,5 @@ namespace MiniTwitAPI.Models
 
         [Required]
         public string PasswordHash { get; set; }
-
-        public List<Message> Messages { get; set; } = new();
     }
 }

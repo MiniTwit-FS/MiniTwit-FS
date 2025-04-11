@@ -16,7 +16,5 @@ namespace MiniTwitAPI.Models
         public DateTime? PublishedDate { get; set; }
 
         public bool Flagged { get; set; }
-
-        public User User { get; set; } = null!;
     }
 }

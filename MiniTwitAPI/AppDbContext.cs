@@ -12,11 +12,6 @@ namespace MiniTwitAPI
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.User)  // Message has one User
-                .WithMany(u => u.Messages) // User has many Messages
-                .HasForeignKey(m => m.UserId); // Foreign key
-
             base.OnModelCreating(modelBuilder);
         }
     }

@@ -40,8 +40,9 @@ var logger = LoggerFactory.Create(config => {
 
 logger.LogInformation("Application starting. Environment: {Environment}", environment);
 
+
 // Add services to the container.
-builder.Services.AddControllers(); // Add controllers for your API endpoints
+builder.Services.AddControllers();
 
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Replace("{DB_PASSWORD}", dbPassword);

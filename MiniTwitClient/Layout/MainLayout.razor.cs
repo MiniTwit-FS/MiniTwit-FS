@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Components;
+using MiniTwitClient.Authentication;
 
 namespace MiniTwitClient.Layout
 {
     public partial class MainLayout : LayoutComponentBase
     {
-        private bool IsDropdownOpen = false;
+        [Inject] public UserState UserState { get; set; }
 
-        private void ToggleDropdown()
+        public void Logout()
         {
-            IsDropdownOpen = !IsDropdownOpen;
-        }
-
-        private void CloseDropdown()
-        {
-            IsDropdownOpen = false;
+            UserState.LogOut();
         }
     }
 }
