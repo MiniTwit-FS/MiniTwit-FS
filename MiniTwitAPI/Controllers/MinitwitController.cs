@@ -6,6 +6,9 @@ using MiniTwitAPI.Extentions;
 using MiniTwitAPI.Models;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
+using Microsoft.AspNetCore.SignalR;
+using MiniTwitAPI.Hubs;
 
 namespace MiniTwitAPI.Controllers
 {
@@ -14,14 +17,16 @@ namespace MiniTwitAPI.Controllers
     {
         private readonly ILogger<MinitwitController> _logger;
         private readonly AppDbContext _context;
+        private readonly LogHub _logHub;
 
         private readonly string filePath = "./latest_processed_sim_action_id.txt";
+        private readonly string logFilePath = "./logs/minitwit-api-log";
 
-        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger)
+        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger, LogHub logHub)
         {
             _logger = logger;
             _context = context;
-            _logger.LogInformation("MinitwitController initialized");
+            _logHub = logHub;
         }
 
         private IActionResult UpdateLatest(int latest)
@@ -30,12 +35,12 @@ namespace MiniTwitAPI.Controllers
             {
                 try
                 {
-                    _logger.LogDebug("Updating latest processed action ID to: {LatestId}", latest);
+                    _logger.RLogDebug($"Updating latest processed action ID to: {latest}", _logHub);
                     System.IO.File.WriteAllText(filePath, latest.ToString());
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Failed to update latest value to {LatestId}", latest);
+                    _logger.RLogError(ex, $"Failed to update latest value to {latest}", _logHub);
                     return NotFound("Failed to update latest value");
                 }
             }
@@ -49,7 +54,7 @@ namespace MiniTwitAPI.Controllers
         {
             if (authorization != "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh")
             {
-                _logger.LogWarning("Unauthorized access attempt with invalid authorization header");
+                _logger.RLogWarning("Unauthorized access attempt with invalid authorization header", _logHub);
                 return Forbid("You are not authorized to use this resource!");
             }
 
@@ -59,29 +64,29 @@ namespace MiniTwitAPI.Controllers
         [HttpGet("/latest")]
         public IActionResult GetLatest()
         {
-            _logger.LogInformation("GetLatest endpoint called");
+            _logger.RLogInformation("GetLatest endpoint called", _logHub);
             try
             {
                 string content = System.IO.File.ReadAllText(filePath);
                 if (int.TryParse(content, out int latestProcessedCommandId))
                 {
-                    _logger.LogDebug("Retrieved latest processed command ID: {LatestId}", latestProcessedCommandId);
+                    _logger.RLogDebug($"Retrieved latest processed command ID: {latestProcessedCommandId}", _logHub);
                     return Ok(new { latest = latestProcessedCommandId });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error reading latest processed command ID file");
+                _logger.RLogError(ex, "Error reading latest processed command ID file", _logHub);
             }
 
-            _logger.LogDebug("No latest ID found, returning default value -1");
+            _logger.RLogDebug("No latest ID found, returning default value -1", _logHub);
             return Ok(new { latest = -1 });
         }
 
         [HttpPost("/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest data, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            _logger.LogInformation("Register endpoint called for username: {Username}", data?.Username);
+            _logger.RLogInformation($"Register endpoint called for username: {data?.Username}", _logHub);
 
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
@@ -92,19 +97,19 @@ namespace MiniTwitAPI.Controllers
             // Validate request data
             if (string.IsNullOrWhiteSpace(data.Username))
             {
-                _logger.LogWarning("Registration attempt with empty username");
+                _logger.RLogWarning("Registration attempt with empty username", _logHub);
                 return BadRequest("You have to enter a username");
             }
 
             if (string.IsNullOrWhiteSpace(data.Email) || !Regex.IsMatch(data.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                _logger.LogWarning("Registration attempt with invalid email: {Email}", data.Email);
+                _logger.RLogWarning($"Registration attempt with invalid email: {data.Email}", _logHub);
                 return BadRequest("You have to enter a valid email address");
             }
 
             if (string.IsNullOrWhiteSpace(data.Password))
             {
-                _logger.LogWarning("Registration attempt with empty password for user: {Username}", data.Username);
+                _logger.RLogWarning($"Registration attempt with empty password for user: {data.Username}", _logHub);
                 return BadRequest("You have to enter a password");
             }
 
@@ -113,7 +118,7 @@ namespace MiniTwitAPI.Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == data.Username);
                 if (user != null)
                 {
-                    _logger.LogWarning("Registration attempt with existing username: {Username}", data.Username);
+                    _logger.RLogWarning($"Registration attempt with existing username: {data.Username}", _logHub);
                     return BadRequest("The username is already taken");
                 }
 
@@ -138,7 +143,7 @@ namespace MiniTwitAPI.Controllers
         [HttpGet("/msgs")]
         public async Task<IActionResult> Messages([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            _logger.LogInformation("Messages endpoint called requesting {Count} messages", no);
+            _logger.RLogInformation($"Messages endpoint called requesting {no} messages", _logHub);
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
@@ -160,7 +165,7 @@ namespace MiniTwitAPI.Controllers
                 })
                 .ToList();
 
-                _logger.LogDebug("Retrieved messages for global timeline");
+                _logger.RLogDebug("Retrieved messages for global timeline", _logHub);
                 return Ok(messages);
             }
             catch (Exception ex)
@@ -349,7 +354,7 @@ namespace MiniTwitAPI.Controllers
                             FollowsUserId = followUser.Id,
                         });
                         await _context.SaveChangesAsync();
-                        _logger.LogInformation("User {Username} now follows {TargetUsername}", username, request.Follow);
+                        _logger.RLogInformation($"User {username} now follows {request.Follow}", _logHub);
                         return NoContent();
                     }
                     else
@@ -447,6 +452,69 @@ namespace MiniTwitAPI.Controllers
             else
             {
                 return BadRequest("You are not logged in");
+            }
+        }
+
+        [HttpGet("/logs")]
+        public IActionResult GetLogs(string date, int page = 1, int pageSize = 100)
+        {
+            try
+            {
+                var logs = GetLogsFromFile(date, page, pageSize);
+                return Ok(logs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error reading log file", details = ex.Message });
+            }
+        }
+
+        private List<string> GetLogsFromFile(string date, int page, int pageSize)
+        {
+            var lines = new List<string>();
+            try
+            {
+                // Open the file with exclusive read access, using a FileStream to handle concurrency
+                using (var fileStream = new FileStream(logFilePath + date + ".log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    var totalLines = new List<string>();
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        totalLines.Add(line);
+                    }
+
+                    // Reverse to get the most recent log entries first
+                    totalLines.Reverse();
+
+                    // Paginate the results
+                    var paginatedLines = totalLines.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+                    return paginatedLines;
+                }
+            }
+            catch (IOException ex)
+            {
+                _logger.LogError(ex, "Error reading log file");
+                throw new Exception("Error reading the log file. It might be locked by another process.");
+            }
+        }
+
+
+        // Helper method to fetch the next set of logs when the user scrolls up
+        [HttpGet("/more-logs")]
+        public IActionResult FetchMoreLogs(string date, int currentPage, int pageSize = 100)
+        {
+            try
+            {
+                var nextPage = currentPage + 1;
+                var moreLogs = GetLogsFromFile(date, nextPage, pageSize);
+                return Ok(moreLogs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error fetching more logs", details = ex.Message });
             }
         }
     }

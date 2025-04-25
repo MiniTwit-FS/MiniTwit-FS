@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using MiniTwitAPI.Extentions;
 using Serilog;
 using Serilog.Extensions.Logging;
+using MiniTwitAPI.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -88,6 +89,8 @@ builder.Services.AddSession(options =>
 });
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddSignalR();
+
 logger.LogInformation("Configuring CORS policies");
 builder.Services.AddCors(options =>
 {
@@ -100,7 +103,17 @@ builder.Services.AddCors(options =>
 
         logger.LogDebug("CORS policy 'AllowAll' configured");
     });
+
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("https://localhost:7192") // Replace with client port
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
 });
+
+builder.Services.AddSingleton<LogHub>();
 
 logger.LogInformation("Building application");
 var app = builder.Build();
@@ -113,6 +126,7 @@ var appLogger = app.Services.GetRequiredService<ILogger<Program>>();
 app.UseCors("AllowAll"); // Apply the CORS policy
 app.UseSession();
 app.UseHttpsRedirection();
+app.MapHub<LogHub>("/logHub"); // Map the hub to a URL
 
 // Add a basic request logger middleware
 app.Use(async (context, next) =>

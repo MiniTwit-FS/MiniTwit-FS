@@ -13,10 +13,13 @@ namespace MiniTwitClient.Controllers
         private readonly HttpClient _httpClient;
         private static string _auth = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
 
+        public Uri address;
+
         public MinitwitController(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _auth);
+            address = httpClient.BaseAddress;
             Console.WriteLine("Controller endpoint: " + httpClient.BaseAddress);
         }
 
@@ -120,6 +123,30 @@ namespace MiniTwitClient.Controllers
                 return await response.Content.ReadFromJsonAsync<bool>();
             }
             else return false;
+        }
+
+        public async Task<List<string>> GetLogs(string date, int currentPage, int pageSize)
+        {
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}logs?date={date}&page={currentPage}&pageSize={pageSize}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var logs = await response.Content.ReadFromJsonAsync<List<string>>();
+                return logs;
+            }
+            else return null;
+        }
+
+        public async Task<List<string>> GetMoreLogs(string date, int currentPage, int pageSize)
+        {
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}more-logs?date={date}&page={currentPage}&pageSize={pageSize}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var logs = await response.Content.ReadFromJsonAsync<List<string>>();
+                return logs;
+            }
+            else return null;
         }
     }
 }
