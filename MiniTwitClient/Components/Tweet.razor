@@ -8,7 +8,14 @@
     <div class="flex-1">
         <div class="flex justify-between items-center mb-1">
             <a href="@Message.Username" class="font-bold text-gray-800">@Message.Username</a>
-            <span class="text-sm text-gray-500">@($"{Message.PublishedDate:dd MMM yyyy, HH:mm}")</span>
+            <span class="text-sm text-gray-500">
+                @(
+                    Message.PublishedDate?
+                    .ToLocalTime()
+                    .ToString("dd MMM yyyy, HH:mm")
+                    ?? "–"
+                    )
+            </span>
         </div>
         <p class="text-gray-700">@Message.Text</p>
     </div>
