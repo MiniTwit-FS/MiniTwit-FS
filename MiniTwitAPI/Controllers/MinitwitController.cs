@@ -286,7 +286,7 @@ namespace MiniTwitAPI.Controllers
                 {
                     UserId = user.Id,
                     Text = request.Content,
-                    PublishedDate = DateTime.Now,
+                    PublishedDate = DateTime.UtcNow,
                     Flagged = false,
                 };
 
