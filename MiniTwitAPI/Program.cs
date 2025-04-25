@@ -194,7 +194,7 @@ using (var scope = app.Services.CreateScope())
         db.SaveChanges();
     }
 }
-
+Console.WriteLine();
 // Run the application
 try
 {
