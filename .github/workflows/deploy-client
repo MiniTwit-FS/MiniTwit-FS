@@ -1,0 +1,19 @@
+name: Deploy Client
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'MiniTwitClient/dist/**'
+      - '.github/workflows/deploy-client.yml'
+
+jobs:
+  deploy:
+    if: github.actor == 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy frontend to DigitalOcean
+        uses: digitalocean/app_action@v1.1.5
+        with:
+          app_name: minitwit-app
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
