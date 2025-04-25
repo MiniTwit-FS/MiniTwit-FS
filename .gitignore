@@ -52,3 +52,7 @@ secrets.json
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# Ignore logger
+MiniTwitAPI/logs/
+
