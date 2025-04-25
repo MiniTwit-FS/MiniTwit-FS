@@ -6,7 +6,6 @@ on:
       
 jobs:
   deploy:
-    if: github.actor == 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy frontend to DigitalOcean
