@@ -2,6 +2,8 @@ name: Deploy API
 
 on:
   push:
+    branches:
+      - main
     paths:
       - 'MiniTwitAPI/**'
       - '.github/workflows/deploy-api.yml'
