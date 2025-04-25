@@ -39,7 +39,7 @@ namespace MiniTwitClient.Controllers
 
         public async Task<List<Message>> GetMyTimeline(MessagesRequest request)
         {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}");
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}?no={request.NumberOfMessages}");
 
             if (response.IsSuccessStatusCode)
             {

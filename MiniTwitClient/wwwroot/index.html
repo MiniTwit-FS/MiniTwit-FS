@@ -33,6 +33,20 @@
 </html>
 
 <script>
-    window.appConfig = { apiEndpoint: "https://minitwit-api-5ezat.ondigitalocean.app/api" };
+    window.appConfig = { apiEndpoint: "https://localhost:7297" };
+
+
+    window.initializeScrollListener = (dotNetHelper) => {
+        window.onscroll = () => {
+            const scrollTop = window.scrollY;
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+
+            if (scrollTop + windowHeight >= documentHeight - 10) {
+                // Call the .NET method if near the bottom
+                dotNetHelper.invokeMethodAsync('OnReachedBottom');
+            }
+        };
+    };
 </script>
 
