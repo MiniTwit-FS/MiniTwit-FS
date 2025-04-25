@@ -44,5 +44,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add MiniTwitClient/dist
-          git commit -m "Auto-build client and update dist folder [skip ci]" || echo "No changes to commit"
+          git commit -m "Auto-build client and update dist folder"
           git push origin main
