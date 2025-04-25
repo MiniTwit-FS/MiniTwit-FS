@@ -6,7 +6,9 @@ on:
 
 jobs:
   deploy:
+    if: github.actor != 'github-actions[bot]'  # Prevent infinite loops
     runs-on: ubuntu-latest
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
