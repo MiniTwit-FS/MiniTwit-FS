@@ -1,0 +1,17 @@
+name: Deploy API
+
+on:
+  push:
+    paths:
+      - 'MiniTwitAPI/**'
+      - '.github/workflows/deploy-api.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy API to DigitalOcean
+        uses: digitalocean/app_action@v1.1.5
+        with:
+          app_name: minitwit-app
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
