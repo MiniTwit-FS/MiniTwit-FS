@@ -1,7 +1,7 @@
 ﻿@page "/{username}"
 @using MiniTwitClient.Components
-
-<PageTitle>User @username Feed</PageTitle>
+@using MiniTwitClient.Shared
+<AppPageTitle Text="@($"User {username}'s Feed")" />
 
 <div class="max-w-4xl mx-auto px-8">
     <h1 class="text-3xl font-bold mb-4">
