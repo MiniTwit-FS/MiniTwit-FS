@@ -1,4 +1,4 @@
-name: Build Web Client
+name: Build and Commit Web Client
 
 on:
   push:
@@ -7,18 +7,21 @@ on:
 
 jobs:
   build:
+    if: github.actor != 'github-actions[bot]'  # Prevent infinite loops
     runs-on: windows-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
 
-      - name: Install dependencies
+      - name: Restore dependencies
         run: dotnet restore ./MiniTwitClient/MiniTwitClient.csproj
 
       - name: Remove existing dist folder if it exists
@@ -33,3 +36,11 @@ jobs:
           $env:NODE_ENV="prod"
           dotnet publish ./MiniTwitClient -c Release -r win-x64 -o ./MiniTwitClient/dist
         shell: pwsh
+
+      - name: Commit and push dist folder
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add MiniTwitClient/dist
+          git commit -m "Auto-build client and update dist folder [skip ci]" || echo "No changes to commit"
+          git push origin main
