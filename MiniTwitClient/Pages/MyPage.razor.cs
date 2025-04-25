@@ -42,10 +42,10 @@ namespace MiniTwitClient.Pages
                 return;
 
             _isLoading = true;
+            StateHasChanged();
             try
             {
                 Console.WriteLine("Reached bottom!");
-
                 messageIndex++;
                 Messages = await Controller.GetMyTimeline(new MessagesRequest
                 {
