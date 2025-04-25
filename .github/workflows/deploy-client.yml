@@ -4,10 +4,7 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'MiniTwitClient/**'
-      - '.github/workflows/deploy-client.yml'
-
+      
 jobs:
   deploy:
     if: github.actor == 'github-actions[bot]'
