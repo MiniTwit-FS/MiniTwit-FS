@@ -1,23 +1,22 @@
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MiniTwitClient.Controllers;
 using MiniTwitClient.Models;
+using MiniTwitClient.Tests.ClientTest;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 using Xunit;
 
-public class MiniTwitClientTests
+public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>
 {
     private readonly MinitwitController _controller;
 
-    public MiniTwitClientTests()
+    public MiniTwitClientTests(MinitwitTestFactory<Program> factory)
     {
-        var httpClient = new HttpClient
-        {
-            BaseAddress = new Uri("https://localhost:7192")
-        };
+        var _client = factory.CreateClient();
 
-        _controller = new MinitwitController(httpClient);
+        _controller = new MinitwitController(_client);
     }
 
     private async Task<HttpResponseMessage> Register(string username, string password, string? password2 = null, string? email = null)

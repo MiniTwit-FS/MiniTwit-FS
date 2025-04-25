@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.DTOs;
+using MiniTwitAPI.Entities;
 using MiniTwitAPI.Models;
 using System.Linq;
 using System.Text.RegularExpressions;

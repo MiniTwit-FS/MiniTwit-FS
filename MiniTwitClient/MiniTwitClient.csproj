@@ -33,21 +33,16 @@
     </None>
   </ItemGroup>
 
-  <!-- Remove this section -->
-  <!-- <ItemGroup>
-    <Content Include="wwwroot\**" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup> -->
+  <PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+  </PropertyGroup>
 
   <Target Name="PostPublish" AfterTargets="Publish">
     <Exec Command="node $(ProjectDir)inject-config.js" />
   </Target>
 
-
-
   <Target Name="PreBuild" BeforeTargets="Build">
-    <!-- Ensure wwwroot is copied to the dist folder before building -->
     <Exec Command="node $(ProjectDir)inject-config.js" />
   </Target>
-
 
 </Project>
