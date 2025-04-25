@@ -1,9 +1,8 @@
 name: Deploy Client
 
 on:
-  push:
-    branches:
-      - main
+  repository_dispatch:
+    types: [deploy-client]
       
 jobs:
   deploy:

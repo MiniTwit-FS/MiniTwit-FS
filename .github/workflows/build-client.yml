@@ -46,3 +46,10 @@ jobs:
           git add MiniTwitClient/dist
           git commit -m "Auto-build client and update dist folder"
           git push origin main
+        
+      - name: Trigger deploy-client workflow
+        if: success()
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          event-type: deploy-client
