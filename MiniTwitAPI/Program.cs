@@ -1,6 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiniTwitAPI;
-using Microsoft.Extensions.Logging;
 using System.Text;
 using MiniTwitAPI.Extentions;
 using MiniTwitAPI.Hubs;
