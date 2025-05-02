@@ -1,7 +1,11 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using MiniTwitAPI.Extentions;
+using MiniTwitAPI.Hubs;
+using Serilog.Extensions.Logging;
+using Serilog;
 
 namespace MiniTwitAPI;
 
@@ -21,28 +25,24 @@ public class Program
             .AddEnvironmentVariables();
 
         // Configure logging with providers
-        builder.Logging.ClearProviders();
-        builder.Logging.AddConsole();
-        builder.Logging.AddDebug();
-        builder.Logging.AddConfiguration(builder.Configuration.GetSection("Logging"));
+        Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
+            .CreateLogger();
+
+        builder.Host.UseSerilog();
 
         // Setup file logging if configured
-        if (builder.Configuration.GetSection("Logging:File").Exists())
+        if (builder.Configuration.GetSection("Serilog").Exists())
         {
-            var logPath = builder.Configuration["Logging:File:Path"] ?? "logs/minitwit-api-log.log";
+            var logPath = builder.Configuration["Serilog:WriteTo:1:Args:path"] ?? "logs/minitwit-api-log.log";
             var logDir = Path.GetDirectoryName(logPath);
             if (!string.IsNullOrEmpty(logDir) && !Directory.Exists(logDir))
             {
                 Directory.CreateDirectory(logDir);
             }
-
-            builder.Logging.AddFile(builder.Configuration.GetSection("Logging:File"));
         }
 
-        var logger = LoggerFactory.Create(config => {
-            config.AddConsole();
-            config.AddConfiguration(builder.Configuration.GetSection("Logging"));
-        }).CreateLogger("Program");
+        var logger = new SerilogLoggerFactory(Log.Logger).CreateLogger("Program");
 
         logger.LogInformation("Application starting. Environment: {Environment}", environment);
 
@@ -97,6 +97,8 @@ public class Program
         });
         builder.Services.AddHttpContextAccessor();
 
+        builder.Services.AddSignalR();
+
         logger.LogInformation("Configuring CORS policies");
         builder.Services.AddCors(options =>
         {
@@ -108,6 +110,14 @@ public class Program
                        .AllowCredentials();
 
                 logger.LogDebug("CORS policy 'AllowAll' configured");
+            });
+
+            options.AddDefaultPolicy(policy =>
+            {
+                policy.WithOrigins("https://localhost:7192") // Replace with client port
+                      .AllowAnyHeader()
+                      .AllowAnyMethod()
+                      .AllowCredentials();
             });
         });
 
@@ -122,6 +132,7 @@ public class Program
         app.UseCors("AllowAll"); // Apply the CORS policy
         app.UseSession();
         app.UseHttpsRedirection();
+        app.MapHub<LogHub>("/logHub"); // Map the hub to a URL
 
         // Add a basic request logger middleware
         app.Use(async (context, next) =>
@@ -184,6 +195,23 @@ public class Program
             catch (Exception ex)
             {
                 logger.LogError(ex, "An error occurred while applying database migrations");
+            }
+        }
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+            var unhashedUsers = db.Users.Where(u => !u.IsPasswordHashed).ToList();
+            if (unhashedUsers.Any())
+            {
+                foreach (var user in unhashedUsers)
+                {
+                    user.PasswordHash = user.PasswordHash.Sha256Hash(); // ← Your hashing method
+                    user.IsPasswordHashed = true;
+                }
+
+                db.SaveChanges();
             }
         }
 

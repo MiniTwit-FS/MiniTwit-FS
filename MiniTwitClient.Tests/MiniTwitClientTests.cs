@@ -83,12 +83,12 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, 
         return await _controller.Logout();
     }
 
-    private async Task<HttpResponseMessage> AddMessage(string text)
+    private async Task<HttpResponseMessage> AddMessage(string text, string username)
     {
         var response = await _controller.PostMessage(new AddMessageRequest()
         {
             Content = text
-        });
+        }, username);
         var content = await response.Content.ReadAsStringAsync();
 
         if (!string.IsNullOrEmpty(text))
@@ -114,20 +114,20 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, 
         return await _controller.GetMyTimeline(new MessagesRequest());
     }
 
-    private async Task<HttpResponseMessage> Follow(string followUser)
+    private async Task<HttpResponseMessage> Follow(string followUser, string username)
     {
         return await _controller.FollowChange(new FollowRequest()
         {
             Follow = followUser
-        });
+        }, username);
     }
 
-    private async Task<HttpResponseMessage> Unfollow(string followUser)
+    private async Task<HttpResponseMessage> Unfollow(string followUser, string username)
     {
         return await _controller.FollowChange(new FollowRequest()
         {
             Unfollow = followUser
-        });
+        }, username);
     }
 
     [Fact]
@@ -174,8 +174,8 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, 
     {
         await RegisterAndLogin("foo", "default");
         SetHeader("username", "foo");
-        await AddMessage("test message 1");
-        await AddMessage("<test message 2>"); 
+        await AddMessage("test message 1", "foo");
+        await AddMessage("<test message 2>", "foo"); 
         var messages = (await GetTimeline("foo")).Select(m => m.Text);
         Assert.Contains("test message 1", messages);
         Assert.Contains("<test message 2>", messages);
@@ -186,11 +186,11 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, 
     {
         await RegisterAndLogin("foo", "default");
         SetHeader("username", "foo");
-        await AddMessage("the message by foo");
+        await AddMessage("the message by foo", "foo");
         await Logout();
         await RegisterAndLogin("bar", "default");
         SetHeader("username", "bar");
-        await AddMessage("the message by bar");
+        await AddMessage("the message by bar", "bar");
 
         var messages = (await GetPublic()).Select(m => m.Text);
         Assert.Contains("the message by foo", messages);
@@ -202,7 +202,7 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, 
         Assert.Contains("the message by bar", messages);
 
         // now let's follow foo
-        var rv = await Follow("foo");
+        var rv = await Follow("foo", "bar");
         var content = await rv.Content.ReadAsStringAsync();
         Assert.Contains("You are now following foo", content);
 
@@ -221,7 +221,7 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, 
         Assert.DoesNotContain("the message by bar", messages);
 
         // now unfollow and check if that worked
-        rv = await Unfollow("foo");
+        rv = await Unfollow("foo", "bar");
         content = await rv.Content.ReadAsStringAsync();
         Assert.Contains("You are no longer following foo", content);
 
