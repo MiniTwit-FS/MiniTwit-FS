@@ -1,0 +1,574 @@
+2025-04-11 16:08:00.523 +02:00 [INF] Application starting. Environment: dev
+2025-04-11 16:08:00.582 +02:00 [INF] Configuring CORS policies
+2025-04-11 16:08:00.584 +02:00 [INF] Building application
+2025-04-11 16:08:01.212 +02:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-04-11 16:08:01.608 +02:00 [ERR] Failed executing DbCommand (38ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE NOT (`u`.`IsPasswordHashed`)
+2025-04-11 16:08:01.637 +02:00 [ERR] An exception occurred while iterating over the results of a query for context type 'MiniTwitAPI.AppDbContext'.
+MySqlConnector.MySqlException (0x80004005): Table 'minitwit_dev.Users' doesn't exist
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in /_/src/MySqlConnector/MySqlCommand.cs:line 290
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.InitializeReader(Enumerator enumerator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.<>c.<MoveNext>b__21_0(DbContext _, Enumerator enumerator)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.MoveNext()
+MySqlConnector.MySqlException (0x80004005): Table 'minitwit_dev.Users' doesn't exist
+   at MySqlConnector.Core.ServerSession.ReceiveReplyAsync(IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/ServerSession.cs:line 1081
+   at MySqlConnector.Core.ResultSet.ReadResultSetHeaderAsync(IOBehavior ioBehavior) in /_/src/MySqlConnector/Core/ResultSet.cs:line 37
+   at MySqlConnector.MySqlDataReader.ActivateResultSet(CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 131
+   at MySqlConnector.MySqlDataReader.InitAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, IDictionary`2 cachedProcedures, IMySqlCommand command, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlDataReader.cs:line 487
+   at MySqlConnector.Core.CommandExecutor.ExecuteReaderAsync(CommandListPosition commandListPosition, ICommandPayloadCreator payloadCreator, CommandBehavior behavior, Activity activity, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/Core/CommandExecutor.cs:line 56
+   at MySqlConnector.MySqlCommand.ExecuteReaderAsync(CommandBehavior behavior, IOBehavior ioBehavior, CancellationToken cancellationToken) in /_/src/MySqlConnector/MySqlCommand.cs:line 357
+   at MySqlConnector.MySqlCommand.ExecuteDbDataReader(CommandBehavior behavior) in /_/src/MySqlConnector/MySqlCommand.cs:line 290
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReader(RelationalCommandParameterObject parameterObject)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.InitializeReader(Enumerator enumerator)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.<>c.<MoveNext>b__21_0(DbContext _, Enumerator enumerator)
+   at Pomelo.EntityFrameworkCore.MySql.Storage.Internal.MySqlExecutionStrategy.Execute[TState,TResult](TState state, Func`3 operation, Func`3 verifySucceeded)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.Enumerator.MoveNext()
+2025-04-11 16:09:54.549 +02:00 [INF] Application starting. Environment: dev
+2025-04-11 16:09:54.588 +02:00 [INF] Configuring CORS policies
+2025-04-11 16:09:54.589 +02:00 [INF] Building application
+2025-04-11 16:09:55.073 +02:00 [WRN] Sensitive data logging is enabled. Log entries and exception messages may include sensitive application data; this mode should only be enabled during development.
+2025-04-11 16:09:55.419 +02:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE NOT (`u`.`IsPasswordHashed`)
+2025-04-11 16:09:55.438 +02:00 [INF] Starting web host
+2025-04-11 16:09:55.542 +02:00 [INF] Now listening on: https://localhost:7297
+2025-04-11 16:09:55.612 +02:00 [INF] Application started. Press Ctrl+C to shut down.
+2025-04-11 16:09:55.614 +02:00 [INF] Hosting environment: dev
+2025-04-11 16:09:55.615 +02:00 [INF] Content root path: C:\Programming\MiniTwit-FS\MiniTwitAPI
+2025-04-11 16:09:55.616 +02:00 [INF] Application started successfully
+2025-04-11 16:10:06.179 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:06.196 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:06.270 +02:00 [INF] Executed DbCommand (19ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:06.274 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:06.285 +02:00 [INF] Request GET /msgs/ completed in 173.3157ms with status 200
+2025-04-11 16:10:14.558 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:14.578 +02:00 [INF] Register endpoint called for username: darling
+2025-04-11 16:10:14.652 +02:00 [INF] Executed DbCommand (5ms) [Parameters=[@__data_Username_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__data_Username_0
+LIMIT 1
+2025-04-11 16:10:14.763 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@p0='mail2@gmail.com' (Nullable = false) (Size = 4000), @p1='True', @p2='a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3' (Nullable = false) (Size = 4000), @p3='darling' (Nullable = false) (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Users` (`Email`, `IsPasswordHashed`, `PasswordHash`, `Username`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Users`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:10:14.791 +02:00 [INF] User successfully registered: darling
+2025-04-11 16:10:14.795 +02:00 [INF] Request POST /register completed in 290.5499ms with status 200
+2025-04-11 16:10:18.858 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:18.869 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Username_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__request_Username_0
+LIMIT 1
+2025-04-11 16:10:18.876 +02:00 [INF] Request POST /login completed in 68.6184ms with status 200
+2025-04-11 16:10:19.007 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:19.009 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:19.015 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:19.018 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:19.019 +02:00 [INF] Request GET /msgs/ completed in 65.5503ms with status 200
+2025-04-11 16:10:22.468 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:22.472 +02:00 [INF] PostMessage endpoint called for user: darling
+2025-04-11 16:10:22.480 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:10:22.504 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[@p0='False', @p1='2025-04-11T16:10:22.4843212+02:00' (Nullable = true) (DbType = DateTime), @p2='hej' (Nullable = false) (Size = 4000), @p3='1'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Messages` (`Flagged`, `PublishedDate`, `Text`, `UserId`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Messages`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:10:22.518 +02:00 [INF] Message posted successfully for user: darling
+2025-04-11 16:10:22.524 +02:00 [INF] Request POST /msgs completed in 110.6555ms with status 200
+2025-04-11 16:10:22.587 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:22.588 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:22.592 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:22.600 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:22.601 +02:00 [INF] Request GET /msgs/ completed in 63.3059ms with status 200
+2025-04-11 16:10:24.708 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:24.710 +02:00 [INF] PostMessage endpoint called for user: darling
+2025-04-11 16:10:24.714 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:10:24.726 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='False', @p1='2025-04-11T16:10:24.7226764+02:00' (Nullable = true) (DbType = DateTime), @p2='test' (Nullable = false) (Size = 4000), @p3='1'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Messages` (`Flagged`, `PublishedDate`, `Text`, `UserId`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Messages`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:10:24.738 +02:00 [INF] Message posted successfully for user: darling
+2025-04-11 16:10:24.739 +02:00 [INF] Request POST /msgs completed in 84.5273ms with status 200
+2025-04-11 16:10:24.818 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:24.820 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:24.826 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:24.831 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:24.833 +02:00 [INF] Request GET /msgs/ completed in 67.3163ms with status 200
+2025-04-11 16:10:29.068 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:29.070 +02:00 [INF] Request GET /logout completed in 62.5694ms with status 200
+2025-04-11 16:10:30.138 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:30.139 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:30.145 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:30.149 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:30.150 +02:00 [INF] Request GET /msgs/ completed in 63.1784ms with status 200
+2025-04-11 16:10:37.948 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:37.949 +02:00 [INF] Register endpoint called for username: lukas
+2025-04-11 16:10:37.953 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__data_Username_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__data_Username_0
+LIMIT 1
+2025-04-11 16:10:37.960 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='mail@gmail.com' (Nullable = false) (Size = 4000), @p1='True', @p2='a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3' (Nullable = false) (Size = 4000), @p3='lukas' (Nullable = false) (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Users` (`Email`, `IsPasswordHashed`, `PasswordHash`, `Username`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Users`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:10:37.974 +02:00 [INF] User successfully registered: lukas
+2025-04-11 16:10:37.976 +02:00 [INF] Request POST /register completed in 83.4806ms with status 200
+2025-04-11 16:10:41.148 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:41.154 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Username_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__request_Username_0
+LIMIT 1
+2025-04-11 16:10:41.158 +02:00 [INF] Request POST /login completed in 65.1135ms with status 200
+2025-04-11 16:10:41.267 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:41.269 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:41.273 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:41.275 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:41.276 +02:00 [INF] Request GET /msgs/ completed in 57.664ms with status 200
+2025-04-11 16:10:45.907 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:45.910 +02:00 [INF] PostMessage endpoint called for user: lukas
+2025-04-11 16:10:45.913 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:10:45.920 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='False', @p1='2025-04-11T16:10:45.9173706+02:00' (Nullable = true) (DbType = DateTime), @p2='yo' (Nullable = false) (Size = 4000), @p3='2'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Messages` (`Flagged`, `PublishedDate`, `Text`, `UserId`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Messages`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:10:45.931 +02:00 [INF] Message posted successfully for user: lukas
+2025-04-11 16:10:45.933 +02:00 [INF] Request POST /msgs completed in 74.9315ms with status 200
+2025-04-11 16:10:45.987 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:45.989 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:45.994 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:46.001 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:46.002 +02:00 [INF] Request GET /msgs/ completed in 63.4002ms with status 200
+2025-04-11 16:10:49.428 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:49.429 +02:00 [INF] PostMessage endpoint called for user: lukas
+2025-04-11 16:10:49.433 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:10:49.438 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='False', @p1='2025-04-11T16:10:49.4359447+02:00' (Nullable = true) (DbType = DateTime), @p2='er' (Nullable = false) (Size = 4000), @p3='2'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Messages` (`Flagged`, `PublishedDate`, `Text`, `UserId`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Messages`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:10:49.454 +02:00 [INF] Message posted successfully for user: lukas
+2025-04-11 16:10:49.456 +02:00 [INF] Request POST /msgs completed in 82.7813ms with status 200
+2025-04-11 16:10:49.517 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:49.518 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:10:49.522 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:10:49.524 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:10:49.526 +02:00 [INF] Request GET /msgs/ completed in 59.6844ms with status 200
+2025-04-11 16:10:50.818 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:10:50.822 +02:00 [INF] Request GET /logout completed in 60.6995ms with status 200
+2025-04-11 16:11:00.118 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:00.120 +02:00 [INF] Register endpoint called for username: adrian
+2025-04-11 16:11:00.125 +02:00 [INF] Executed DbCommand (3ms) [Parameters=[@__data_Username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__data_Username_0
+LIMIT 1
+2025-04-11 16:11:00.133 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='mail@gmail.com' (Nullable = false) (Size = 4000), @p1='True', @p2='a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3' (Nullable = false) (Size = 4000), @p3='adrian' (Nullable = false) (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Users` (`Email`, `IsPasswordHashed`, `PasswordHash`, `Username`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Users`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:11:00.142 +02:00 [INF] User successfully registered: adrian
+2025-04-11 16:11:00.143 +02:00 [INF] Request POST /register completed in 80.3244ms with status 200
+2025-04-11 16:11:03.008 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:03.013 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__request_Username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__request_Username_0
+LIMIT 1
+2025-04-11 16:11:03.016 +02:00 [INF] Request POST /login completed in 69.5161ms with status 200
+2025-04-11 16:11:03.147 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:03.148 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:11:03.153 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:11:03.155 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:11:03.156 +02:00 [INF] Request GET /msgs/ completed in 76.66ms with status 200
+2025-04-11 16:11:07.098 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:07.099 +02:00 [INF] PostMessage endpoint called for user: adrian
+2025-04-11 16:11:07.102 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:07.107 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='False', @p1='2025-04-11T16:11:07.1050320+02:00' (Nullable = true) (DbType = DateTime), @p2='gg' (Nullable = false) (Size = 4000), @p3='3'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Messages` (`Flagged`, `PublishedDate`, `Text`, `UserId`)
+VALUES (@p0, @p1, @p2, @p3);
+SELECT `Id`
+FROM `Messages`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:11:07.116 +02:00 [INF] Message posted successfully for user: adrian
+2025-04-11 16:11:07.117 +02:00 [INF] Request POST /msgs completed in 74.6442ms with status 200
+2025-04-11 16:11:07.178 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:07.179 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:11:07.182 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:11:07.185 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:11:07.186 +02:00 [INF] Request GET /msgs/ completed in 63.5638ms with status 200
+2025-04-11 16:11:10.488 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:10.493 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:10.503 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__followUser_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__followUser_0
+LIMIT 1
+2025-04-11 16:11:10.517 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__user_Id_0='3', @__userToFollow_Id_1='2'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `Followers` AS `f`
+    WHERE (`f`.`UserId` = @__user_Id_0) AND (`f`.`FollowsUserId` = @__userToFollow_Id_1))
+2025-04-11 16:11:10.525 +02:00 [INF] Request GET /fllws/lukas completed in 104.5735ms with status 200
+2025-04-11 16:11:10.618 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:10.621 +02:00 [INF] UserMessages endpoint called for user: lukas, requesting 100 messages
+2025-04-11 16:11:10.625 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:10.633 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_2='lukas' (Size = 4000), @__user_Id_0='2', @__p_1='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, @__username_2 AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`) AND (`m`.`UserId` = @__user_Id_0)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_1
+2025-04-11 16:11:10.635 +02:00 [DBG] Retrieved 100 messages for user lukas
+2025-04-11 16:11:10.636 +02:00 [INF] Request GET /msgs/lukas completed in 71.7073ms with status 200
+2025-04-11 16:11:12.048 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:12.052 +02:00 [INF] Follow endpoint called for user: adrian
+2025-04-11 16:11:12.054 +02:00 [DBG] User adrian attempting to follow lukas
+2025-04-11 16:11:12.058 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:12.065 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Follow_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__request_Follow_0
+LIMIT 1
+2025-04-11 16:11:12.075 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__8__locals1_user_Id_0='3', @__followUser_Id_1='2'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `Followers` AS `f`
+    WHERE (`f`.`UserId` = @__8__locals1_user_Id_0) AND (`f`.`FollowsUserId` = @__followUser_Id_1))
+2025-04-11 16:11:12.086 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='2', @p1='3'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Followers` (`FollowsUserId`, `UserId`)
+VALUES (@p0, @p1);
+SELECT `Id`
+FROM `Followers`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:11:12.095 +02:00 [INF] User adrian now follows lukas
+2025-04-11 16:11:12.097 +02:00 [INF] Request POST /fllws completed in 101.9784ms with status 204
+2025-04-11 16:11:12.158 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:12.162 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:12.167 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__followUser_0='lukas' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__followUser_0
+LIMIT 1
+2025-04-11 16:11:12.172 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__user_Id_0='3', @__userToFollow_Id_1='2'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `Followers` AS `f`
+    WHERE (`f`.`UserId` = @__user_Id_0) AND (`f`.`FollowsUserId` = @__userToFollow_Id_1))
+2025-04-11 16:11:12.175 +02:00 [INF] Request GET /fllws/lukas completed in 69.3189ms with status 200
+2025-04-11 16:11:13.218 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:13.220 +02:00 [INF] Timeline endpoint called requesting 100 messages
+2025-04-11 16:11:13.226 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:13.245 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__user_Id_0='3', @__p_1='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE (`m`.`UserId` = @__user_Id_0) OR `m`.`UserId` IN (
+    SELECT `f`.`FollowsUserId`
+    FROM `Followers` AS `f`
+    WHERE `f`.`UserId` = @__user_Id_0
+)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_1
+2025-04-11 16:11:13.248 +02:00 [DBG] Retrieved messages for personal timeline
+2025-04-11 16:11:13.249 +02:00 [INF] Request GET / completed in 87.7082ms with status 200
+2025-04-11 16:11:15.318 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:15.320 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:11:15.323 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:11:15.326 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:11:15.327 +02:00 [INF] Request GET /msgs/ completed in 61.0275ms with status 200
+2025-04-11 16:11:16.378 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:16.382 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:16.388 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__followUser_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__followUser_0
+LIMIT 1
+2025-04-11 16:11:16.395 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__user_Id_0='3', @__userToFollow_Id_1='1'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `Followers` AS `f`
+    WHERE (`f`.`UserId` = @__user_Id_0) AND (`f`.`FollowsUserId` = @__userToFollow_Id_1))
+2025-04-11 16:11:16.400 +02:00 [INF] Request GET /fllws/darling completed in 82.8584ms with status 200
+2025-04-11 16:11:16.487 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:16.488 +02:00 [INF] UserMessages endpoint called for user: darling, requesting 100 messages
+2025-04-11 16:11:16.492 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:16.499 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_2='darling' (Size = 4000), @__user_Id_0='1', @__p_1='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, @__username_2 AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`) AND (`m`.`UserId` = @__user_Id_0)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_1
+2025-04-11 16:11:16.503 +02:00 [DBG] Retrieved 100 messages for user darling
+2025-04-11 16:11:16.506 +02:00 [INF] Request GET /msgs/darling completed in 71.6986ms with status 200
+2025-04-11 16:11:17.058 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:17.060 +02:00 [INF] Follow endpoint called for user: adrian
+2025-04-11 16:11:17.061 +02:00 [DBG] User adrian attempting to follow darling
+2025-04-11 16:11:17.064 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:17.068 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__request_Follow_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__request_Follow_0
+LIMIT 1
+2025-04-11 16:11:17.072 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__8__locals1_user_Id_0='3', @__followUser_Id_1='1'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `Followers` AS `f`
+    WHERE (`f`.`UserId` = @__8__locals1_user_Id_0) AND (`f`.`FollowsUserId` = @__followUser_Id_1))
+2025-04-11 16:11:17.077 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@p0='1', @p1='3'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO `Followers` (`FollowsUserId`, `UserId`)
+VALUES (@p0, @p1);
+SELECT `Id`
+FROM `Followers`
+WHERE ROW_COUNT() = 1 AND `Id` = LAST_INSERT_ID();
+2025-04-11 16:11:17.085 +02:00 [INF] User adrian now follows darling
+2025-04-11 16:11:17.086 +02:00 [INF] Request POST /fllws completed in 84.5029ms with status 204
+2025-04-11 16:11:17.147 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:17.151 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:17.158 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__followUser_0='darling' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__followUser_0
+LIMIT 1
+2025-04-11 16:11:17.167 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__user_Id_0='3', @__userToFollow_Id_1='1'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM `Followers` AS `f`
+    WHERE (`f`.`UserId` = @__user_Id_0) AND (`f`.`FollowsUserId` = @__userToFollow_Id_1))
+2025-04-11 16:11:17.171 +02:00 [INF] Request GET /fllws/darling completed in 78.6931ms with status 200
+2025-04-11 16:11:19.167 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:19.169 +02:00 [INF] Timeline endpoint called requesting 100 messages
+2025-04-11 16:11:19.172 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__username_0='adrian' (Size = 4000)], CommandType='"Text"', CommandTimeout='30']
+SELECT `u`.`Id`, `u`.`Email`, `u`.`IsPasswordHashed`, `u`.`PasswordHash`, `u`.`Username`
+FROM `Users` AS `u`
+WHERE `u`.`Username` = @__username_0
+LIMIT 1
+2025-04-11 16:11:19.177 +02:00 [INF] Executed DbCommand (2ms) [Parameters=[@__user_Id_0='3', @__p_1='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE (`m`.`UserId` = @__user_Id_0) OR `m`.`UserId` IN (
+    SELECT `f`.`FollowsUserId`
+    FROM `Followers` AS `f`
+    WHERE `f`.`UserId` = @__user_Id_0
+)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_1
+2025-04-11 16:11:19.180 +02:00 [DBG] Retrieved messages for personal timeline
+2025-04-11 16:11:19.181 +02:00 [INF] Request GET / completed in 62.417ms with status 200
+2025-04-11 16:11:27.887 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:27.889 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:11:27.892 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:11:27.896 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:11:27.897 +02:00 [INF] Request GET /msgs/ completed in 55.3169ms with status 200
+2025-04-11 16:11:31.217 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:31.218 +02:00 [INF] Request GET /logout completed in 56.1137ms with status 200
+2025-04-11 16:11:32.268 +02:00 [INF] MinitwitController initialized
+2025-04-11 16:11:32.269 +02:00 [INF] Messages endpoint called requesting 100 messages
+2025-04-11 16:11:32.272 +02:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='100'], CommandType='"Text"', CommandTimeout='30']
+SELECT `m`.`Id`, `m`.`Text`, `m`.`PublishedDate`, `m`.`Flagged`, (
+    SELECT `u`.`Username`
+    FROM `Users` AS `u`
+    WHERE `u`.`Id` = `m`.`UserId`
+    LIMIT 1) AS `Username`
+FROM `Messages` AS `m`
+WHERE NOT (`m`.`Flagged`)
+ORDER BY `m`.`PublishedDate` DESC
+LIMIT @__p_0
+2025-04-11 16:11:32.274 +02:00 [DBG] Retrieved messages for global timeline
+2025-04-11 16:11:32.275 +02:00 [INF] Request GET /msgs/ completed in 64.8255ms with status 200

@@ -13,7 +13,7 @@ var js = builder.Services.BuildServiceProvider().GetRequiredService<IJSRuntime>(
 
 var appConfig = await js.InvokeAsync<Config>("eval", "window.appConfig");
 
-string apiEndpoint = appConfig?.ApiEndpoint ?? "https://localhost:7297"; // Fallback if not set
+string apiEndpoint = appConfig?.ApiEndpoint + "/" ?? "https://localhost:7297"; // Fallback if not set
 
 builder.Services.AddSingleton(sp => new HttpClient
 {

@@ -4,6 +4,7 @@
     {
         public string? Username { get; private set; }
         public bool IsLoggedIn => !string.IsNullOrEmpty(Username);
+        public bool IsAdmin => Username != null && Username.Equals("helgeandmircea");
 
         public void LogIn(string username)
         {

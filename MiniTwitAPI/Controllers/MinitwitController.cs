@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.DTOs;
 using MiniTwitAPI.Entities;
+using MiniTwitAPI.Extentions;
 using MiniTwitAPI.Models;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.IO;
+using Microsoft.AspNetCore.SignalR;
+using MiniTwitAPI.Hubs;
 
 namespace MiniTwitAPI.Controllers
 {
@@ -13,14 +18,16 @@ namespace MiniTwitAPI.Controllers
     {
         private readonly ILogger<MinitwitController> _logger;
         private readonly AppDbContext _context;
+        private readonly IHubContext<LogHub> _hubContext;
 
         private readonly string filePath = "./latest_processed_sim_action_id.txt";
+        private readonly string logFilePath = "./logs/minitwit-api-log";
 
-        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger)
+        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger, IHubContext<LogHub> hubContext)
         {
             _logger = logger;
             _context = context;
-            _logger.LogInformation("MinitwitController initialized");
+            _hubContext = hubContext;
         }
 
         private IActionResult UpdateLatest(int latest)
@@ -29,12 +36,12 @@ namespace MiniTwitAPI.Controllers
             {
                 try
                 {
-                    _logger.LogDebug("Updating latest processed action ID to: {LatestId}", latest);
+                    _logger.RLogDebug($"Updating latest processed action ID to: {latest}", _hubContext);
                     System.IO.File.WriteAllText(filePath, latest.ToString());
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Failed to update latest value to {LatestId}", latest);
+                    _logger.RLogError(ex, $"Failed to update latest value to {latest}", _hubContext);
                     return NotFound("Failed to update latest value");
                 }
             }
@@ -42,13 +49,13 @@ namespace MiniTwitAPI.Controllers
             return Ok(latest);
         }
 
-        private string HashPassword(string password) => password;
+        private string HashPassword(string password) => password.Sha256Hash();
 
         private IActionResult NotFromSimulator(string authorization)
         {
             if (authorization != "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh")
             {
-                _logger.LogWarning("Unauthorized access attempt with invalid authorization header");
+                _logger.RLogWarning("Unauthorized access attempt with invalid authorization header", _hubContext);
                 return Forbid("You are not authorized to use this resource!");
             }
 
@@ -58,29 +65,29 @@ namespace MiniTwitAPI.Controllers
         [HttpGet("/latest")]
         public IActionResult GetLatest()
         {
-            _logger.LogInformation("GetLatest endpoint called");
+            _logger.RLogInformation("GetLatest endpoint called", _hubContext);
             try
             {
                 string content = System.IO.File.ReadAllText(filePath);
                 if (int.TryParse(content, out int latestProcessedCommandId))
                 {
-                    _logger.LogDebug("Retrieved latest processed command ID: {LatestId}", latestProcessedCommandId);
+                    _logger.RLogDebug($"Retrieved latest processed command ID: {latestProcessedCommandId}", _hubContext);
                     return Ok(new { latest = latestProcessedCommandId });
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error reading latest processed command ID file");
+                _logger.RLogError(ex, "Error reading latest processed command ID file", _hubContext);
             }
 
-            _logger.LogDebug("No latest ID found, returning default value -1");
+            _logger.RLogDebug("No latest ID found, returning default value -1", _hubContext);
             return Ok(new { latest = -1 });
         }
 
         [HttpPost("/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest data, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            _logger.LogInformation("Register endpoint called for username: {Username}", data?.Username);
+            _logger.RLogInformation($"Register endpoint called for username: {data?.Username}", _hubContext);
 
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
@@ -91,19 +98,19 @@ namespace MiniTwitAPI.Controllers
             // Validate request data
             if (string.IsNullOrWhiteSpace(data.Username))
             {
-                _logger.LogWarning("Registration attempt with empty username");
+                _logger.RLogWarning("Registration attempt with empty username", _hubContext);
                 return BadRequest("You have to enter a username");
             }
 
             if (string.IsNullOrWhiteSpace(data.Email) || !Regex.IsMatch(data.Email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
             {
-                _logger.LogWarning("Registration attempt with invalid email: {Email}", data.Email);
+                _logger.RLogWarning($"Registration attempt with invalid email: {data.Email}", _hubContext);
                 return BadRequest("You have to enter a valid email address");
             }
 
             if (string.IsNullOrWhiteSpace(data.Password))
             {
-                _logger.LogWarning("Registration attempt with empty password for user: {Username}", data.Username);
+                _logger.RLogWarning($"Registration attempt with empty password for user: {data.Username}", _hubContext);
                 return BadRequest("You have to enter a password");
             }
 
@@ -112,7 +119,7 @@ namespace MiniTwitAPI.Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == data.Username);
                 if (user != null)
                 {
-                    _logger.LogWarning("Registration attempt with existing username: {Username}", data.Username);
+                    _logger.RLogWarning($"Registration attempt with existing username: {data.Username}", _hubContext);
                     return BadRequest("The username is already taken");
                 }
 
@@ -120,16 +127,16 @@ namespace MiniTwitAPI.Controllers
                 {
                     Username = data.Username,
                     Email = data.Email,
-                    PasswordHash = HashPassword(data.Password),
+                    PasswordHash = HashPassword(data.Password)
                 });
                 await _context.SaveChangesAsync();
 
-                _logger.LogInformation("User successfully registered: {Username}", data.Username);
+                _logger.RLogInformation($"User successfully registered: {data.Username}", _hubContext);
                 return Ok("You were successfully registered and can login now");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error registering user: {Username}", data.Username);
+                _logger.RLogError(ex, $"Error registering user: {data.Username}", _hubContext);
                 return StatusCode(500, "An error occurred while registering the user");
             }
         }
@@ -137,7 +144,7 @@ namespace MiniTwitAPI.Controllers
         [HttpGet("/msgs")]
         public async Task<IActionResult> Messages([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            _logger.LogInformation("Messages endpoint called requesting {Count} messages", no);
+            _logger.RLogInformation($"Messages endpoint called requesting {no} messages", _hubContext);
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
@@ -159,12 +166,12 @@ namespace MiniTwitAPI.Controllers
                 })
                 .ToList();
 
-                _logger.LogDebug("Retrieved messages for global timeline");
+                _logger.RLogDebug("Retrieved messages for global timeline", _hubContext);
                 return Ok(messages);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving messages for global timeline");
+                _logger.RLogError(ex, "Error retrieving messages for global timeline", _hubContext);
                 return NotFound("An error occurred while retrieving messages");
             }
         }
@@ -172,7 +179,7 @@ namespace MiniTwitAPI.Controllers
         [HttpGet("")]
         public async Task<IActionResult> Timeline([FromHeader] string username, [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            _logger.LogInformation("Timeline endpoint called requesting {Count} messages", no);
+            _logger.RLogInformation($"Timeline endpoint called requesting {no} messages", _hubContext);
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
 
@@ -201,12 +208,12 @@ namespace MiniTwitAPI.Controllers
                     .ToList();
 
 
-                _logger.LogDebug("Retrieved messages for personal timeline");
+                _logger.RLogDebug("Retrieved messages for personal timeline", _hubContext);
                 return Ok(messages);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving messages for personal timeline");
+                _logger.RLogError(ex, "Error retrieving messages for personal timeline", _hubContext);
                 return NotFound("An error occurred while retrieving messages");
             }
         }
@@ -215,8 +222,7 @@ namespace MiniTwitAPI.Controllers
         public async Task<IActionResult> UserMessages(string username,
             [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
-            _logger.LogInformation("UserMessages endpoint called for user: {Username}, requesting {Count} messages",
-                username, no);
+            _logger.RLogInformation($"UserMessages endpoint called for user: {username}, requesting {no} messages", _hubContext);
 
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
@@ -228,7 +234,7 @@ namespace MiniTwitAPI.Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (user == null)
                 {
-                    _logger.LogWarning("User not found: {Username}", username);
+                    _logger.RLogWarning($"User not found: {username}", _hubContext);
                     return NotFound("Couldn't find user");
                 }
 
@@ -246,21 +252,21 @@ namespace MiniTwitAPI.Controllers
                 })
                 .ToList();
 
-                _logger.LogDebug("Retrieved {Count} messages for user {Username}", no, username);
+                _logger.RLogDebug($"Retrieved {no} messages for user {username}", _hubContext);
                 return Ok(messages);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving messages for user {Username}", username);
+                _logger.RLogError(ex, $"Error retrieving messages for user {username}", _hubContext);
                 return StatusCode(500, "An error occurred while retrieving user messages");
             }
         }
 
-        [HttpPost("/msgs")]
-        public async Task<IActionResult> PostMessage([FromHeader] string username,
+        [HttpPost("/msgs/{username}")]
+        public async Task<IActionResult> PostMessage(string username,
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            _logger.LogInformation("PostMessage endpoint called for user: {Username}", username);
+            _logger.RLogInformation($"PostMessage endpoint called for user: {username}", _hubContext);
 
             var notFromSim = NotFromSimulator(authorization);
             if (notFromSim is ForbidResult) return notFromSim;
@@ -272,7 +278,7 @@ namespace MiniTwitAPI.Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (user == null)
                 {
-                    _logger.LogWarning("User not found when posting message: {Username}", username);
+                    _logger.RLogWarning($"User not found when posting message: {username}", _hubContext);
                     return NotFound("Couldn't find user");
                 }
 
@@ -280,35 +286,36 @@ namespace MiniTwitAPI.Controllers
                 {
                     UserId = user.Id,
                     Text = request.Content,
-                    PublishedDate = DateTime.Now,
+                    PublishedDate = DateTime.UtcNow,
                     Flagged = false,
                 };
 
                 await _context.Messages.AddAsync(msg);
 
                 await _context.SaveChangesAsync();
-                _logger.LogInformation("Message posted successfully for user: {Username}", username);
+                _logger.RLogInformation($"Message posted successfully for user: {username}", _hubContext);
                 return Ok("Your message was recorded");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error posting message for user {Username}", username);
+                _logger.RLogError(ex, $"Error posting message for user {username}", _hubContext);
                 return StatusCode(500, "An error occurred while posting the message");
             }
         }
 
-        [HttpPost("/fllws")]
-        public async Task<IActionResult> Follow([FromHeader] string username,
+        [HttpPost("/fllws/{username}")]
+        public async Task<IActionResult> Follow(string username,
             [FromBody] FollowRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
-            _logger.LogInformation("Follow endpoint called for user: {Username}", username);
+            _logger.RLogInformation($"Follow endpoint called for user: {username}", _hubContext);
+
             if (request.Follow != null)
             {
-                _logger.LogDebug("User {Username} attempting to follow {TargetUsername}", username, request.Follow);
+                _logger.RLogDebug($"User {username} attempting to follow {request.Follow}", _hubContext);
             }
             else if (request.Unfollow != null)
             {
-                _logger.LogDebug("User {Username} attempting to unfollow {TargetUsername}", username, request.Unfollow);
+                _logger.RLogDebug($"User {username} attempting to unfollow {request.Unfollow}", _hubContext);
             }
 
             UpdateLatest(latest);
@@ -321,7 +328,7 @@ namespace MiniTwitAPI.Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (user == null)
                 {
-                    _logger.LogWarning("User not found in follow request: {Username}", username);
+                    _logger.RLogWarning($"User not found in follow request: {username}", _hubContext);
                     return NotFound("Couldn't find user");
                 }
 
@@ -330,7 +337,7 @@ namespace MiniTwitAPI.Controllers
                     var followUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Follow);
                     if (followUser == null)
                     {
-                        _logger.LogWarning("Follow target not found: {TargetUsername}", request.Follow);
+                        _logger.RLogWarning($"Follow target not found: {request.Follow}", _hubContext);
                         return NotFound("Couldn't find user to follow");
                     }
 
@@ -348,12 +355,12 @@ namespace MiniTwitAPI.Controllers
                             FollowsUserId = followUser.Id,
                         });
                         await _context.SaveChangesAsync();
-                        _logger.LogInformation("User {Username} now follows {TargetUsername}", username, request.Follow);
+                        _logger.RLogInformation($"User {username} now follows {request.Follow}", _hubContext);
                         return Ok($"You are now following {request.Follow}");
                     }
                     else
                     {
-                        _logger.LogDebug("User {Username} already follows {TargetUsername}", username, request.Follow);
+                        _logger.RLogDebug($"User {username} already follows {request.Follow}", _hubContext);
                     }
                 }
                 else if (request.Unfollow != null)
@@ -361,7 +368,7 @@ namespace MiniTwitAPI.Controllers
                     var unfollowUser = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Unfollow);
                     if (unfollowUser == null)
                     {
-                        _logger.LogWarning("Unfollow target not found: {TargetUsername}", request.Unfollow);
+                        _logger.RLogWarning($"Unfollow target not found: {request.Unfollow}", _hubContext);
                         return NotFound("Couldn't find user to unfollow");
                     }
 
@@ -370,21 +377,21 @@ namespace MiniTwitAPI.Controllers
                     {
                         _context.Followers.Remove(followData);
                         await _context.SaveChangesAsync();
-                        _logger.LogInformation("User {Username} unfollowed {TargetUsername}", username, request.Unfollow);
+                        _logger.RLogInformation($"User {username} unfollowed {request.Unfollow}", _hubContext);
                         return Ok($"You are no longer following {request.Unfollow}");
                     }
                     else
                     {
-                        _logger.LogDebug("User {Username} was not following {TargetUsername}", username, request.Unfollow);
+                        _logger.RLogDebug($"User {username} was not following {request.Unfollow}", _hubContext);
                     }
                 }
 
-                _logger.LogWarning("Invalid follow/unfollow request from user {Username}", username);
+                _logger.RLogWarning($"Invalid follow/unfollow request from user {username}", _hubContext);
                 return BadRequest();
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error processing follow/unfollow request for user {Username}", username);
+                _logger.RLogError(ex, $"Error processing follow/unfollow request for user {username}", _hubContext);
                 return StatusCode(500, "An error occurred while processing follow request");
             }
         }
@@ -397,14 +404,14 @@ namespace MiniTwitAPI.Controllers
                 var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == username);
                 if (user == null)
                 {
-                    _logger.LogWarning("User not found in follows request: {Username}", username);
+                    _logger.RLogWarning($"User not found in follows request: {username}", _hubContext);
                     return NotFound("Couldn't find user");
                 }
 
                 var userToFollow = await _context.Users.FirstOrDefaultAsync(u => u.Username == followUser);
                 if (userToFollow == null)
                 {
-                    _logger.LogWarning("User not found in follows request: {Username}", username);
+                    _logger.RLogWarning($"User not found in follows request: {username}", _hubContext);
                     return NotFound("Couldn't find user");
                 }
 
@@ -415,7 +422,7 @@ namespace MiniTwitAPI.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error retrieving followers for user {Username}", username);
+                _logger.RLogError(ex, $"Error retrieving followers for user {username}", _hubContext);
                 return StatusCode(500, "An error occurred while retrieving followers");
             }
         }
@@ -429,7 +436,7 @@ namespace MiniTwitAPI.Controllers
             {
                 return NotFound("Invalid username");
             }
-            else if (user.PasswordHash != request.Password)
+            else if (user.PasswordHash != HashPassword(request.Password))
             {
                 return BadRequest("Invalid password");
             }
@@ -446,6 +453,68 @@ namespace MiniTwitAPI.Controllers
             else
             {
                 return BadRequest("You are not logged in");
+            }
+        }
+
+        [HttpGet("/logs")]
+        public IActionResult GetLogs(string date, int page = 1, int pageSize = 100)
+        {
+            try
+            {
+                var logs = GetLogsFromFile(date, page, pageSize);
+                return Ok(logs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error reading log file", details = ex.Message });
+            }
+        }
+
+        private List<string> GetLogsFromFile(string date, int page, int pageSize)
+        {
+            var lines = new List<string>();
+            try
+            {
+                // Open the file with exclusive read access, using a FileStream to handle concurrency
+                using (var fileStream = new FileStream(logFilePath + date + ".log", FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (var streamReader = new StreamReader(fileStream))
+                {
+                    var totalLines = new List<string>();
+                    string line;
+                    while ((line = streamReader.ReadLine()) != null)
+                    {
+                        totalLines.Add(line);
+                    }
+
+                    // Reverse to get the most recent log entries first
+                    totalLines.Reverse();
+
+                    // Paginate the results
+                    var paginatedLines = totalLines.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+                    return paginatedLines;
+                }
+            }
+            catch (IOException ex)
+            {
+                throw new Exception("Error reading the log file. It might be locked by another process.");
+            }
+        }
+
+
+        // Helper method to fetch the next set of logs when the user scrolls up
+        [HttpGet("/more-logs")]
+        public IActionResult FetchMoreLogs(string date, int currentPage, int pageSize = 100)
+        {
+            try
+            {
+                var nextPage = currentPage + 1;
+                var moreLogs = GetLogsFromFile(date, nextPage, pageSize);
+                return Ok(moreLogs);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error fetching more logs", details = ex.Message });
             }
         }
     }

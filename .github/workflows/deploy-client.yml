@@ -1,0 +1,15 @@
+name: Deploy Client
+
+on:
+  repository_dispatch:
+    types: [deploy-client]
+      
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy frontend to DigitalOcean
+        uses: digitalocean/app_action@v1.1.5
+        with:
+          app_name: minitwit-app
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}

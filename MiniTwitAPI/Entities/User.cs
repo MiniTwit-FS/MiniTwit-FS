@@ -16,5 +16,7 @@ namespace MiniTwitAPI.Entities
 
         [Required]
         public string PasswordHash { get; set; }
+
+        public bool IsPasswordHashed { get; set; } = true;
     }
 }

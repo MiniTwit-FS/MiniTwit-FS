@@ -1,0 +1,37 @@
+name: Deploy API
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'MiniTwitAPI/**'
+      - '.github/workflows/deploy-api.yml'
+
+jobs:
+  deploy:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 2  # Required to compare current commit with previous one
+
+      - name: Check if MiniTwitClient folder was changed
+        id: check_client_changes
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep '^MiniTwitClient/'; then
+            echo "Client changed, skipping API deployment"
+            echo "skip=true" >> $GITHUB_OUTPUT
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Deploy API to DigitalOcean
+        if: steps.check_client_changes.outputs.skip != 'true'
+        uses: digitalocean/app_action@v1.1.5
+        with:
+          app_name: minitwit-app
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
