@@ -2,31 +2,47 @@
 @using MiniTwitClient.Shared
 <AppPageTitle Text="Logs" />
 
-@if (UserState.IsAdmin)
+@if (true)
 {
-    <h1 class="text-2xl font-bold mb-4">Live Logs</h1>
+	<h1 class="mt-4 text-2xl font-bold mb-4 text-center">
+		Live Logs<br />
+		@($"{DateTime.Now:dd-MM-yyyy}")
+	</h1>
 
-    <div class="mt-4 flex justify-between items-center">
-        <span>Page @currentPage</span>
-        <button class="px-4 py-2 bg-gray-800 text-white rounded" @onclick="LoadNextPage">Next</button>
-    </div>
+	<div class="fixed               /* take it out of flow */
+         inset-4             /* 1rem (4) from all sides */
+         bg-black
+         mt-40
+         mb-32
+         mr-64
+         ml-64
+         text-green-400
+         font-mono
+         p-8
+         rounded
+         shadow
+         overflow-y-auto    /* scroll when too tall */
+         whitespace-pre-wrap">
+		@if (_logMessages.Count == 0)
+		{
+			<div>Loading logs...</div>
+			for (int i = 0; i < 100; i++)
+			{
+				<div>Loading logs...</div>
+			}
+		}
+		else
+		{
+			@foreach (var log in _logMessages)
+			{
+				<div>@log</div>
+			}
+		}
+	</div>
 
-    <div class="bg-black text-green-400 font-mono p-4 rounded shadow max-h-[500px] overflow-y-auto whitespace-pre-wrap">
-        @if (_logMessages.Count == 0)
-        {
-            <div>Loading logs...</div>
-        }
-        else
-        {
-            @foreach (var log in _logMessages)
-            {
-                <div>@log</div>
-            }
-        }
-    </div>
 }
 else
 {
-    <h1 class="mt-8 text-2xl font-bold mb-4">Not Authorized</h1>
+	<h1 class="mt-8 text-2xl font-bold mb-4">Not Authorized</h1>
 }
 
