@@ -1,24 +1,32 @@
 ﻿@page "/logs"
+@using MiniTwitClient.Shared
+<AppPageTitle Text="Logs" />
 
-<PageTitle>Logs</PageTitle>
+@if (UserState.IsAdmin)
+{
+    <h1 class="text-2xl font-bold mb-4">Live Logs</h1>
 
-<h1 class="text-2xl font-bold mb-4">Live Logs</h1>
+    <div class="mt-4 flex justify-between items-center">
+        <span>Page @currentPage</span>
+        <button class="px-4 py-2 bg-gray-800 text-white rounded" @onclick="LoadNextPage">Next</button>
+    </div>
 
-<div class="mt-4 flex justify-between items-center">
-    <span>Page @currentPage</span>
-    <button class="px-4 py-2 bg-gray-800 text-white rounded" @onclick="LoadNextPage">Next</button>
-</div>
-
-<div class="bg-black text-green-400 font-mono p-4 rounded shadow max-h-[500px] overflow-y-auto whitespace-pre-wrap">
-    @if (_logMessages.Count == 0)
-    {
-        <div>Loading logs...</div>
-    }
-    else
-    {
-        @foreach (var log in _logMessages)
+    <div class="bg-black text-green-400 font-mono p-4 rounded shadow max-h-[500px] overflow-y-auto whitespace-pre-wrap">
+        @if (_logMessages.Count == 0)
         {
-            <div>@log</div>
+            <div>Loading logs...</div>
         }
-    }
-</div>
+        else
+        {
+            @foreach (var log in _logMessages)
+            {
+                <div>@log</div>
+            }
+        }
+    </div>
+}
+else
+{
+    <h1 class="mt-8 text-2xl font-bold mb-4">Not Authorized</h1>
+}
+

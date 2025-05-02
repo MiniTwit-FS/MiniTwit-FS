@@ -14,6 +14,7 @@ namespace MiniTwitClient.Pages
 		[Inject] public MinitwitController Controller { get; set; }
 		[Inject] public NavigationManager Navigation { get; set; }
         [Inject] public IJSRuntime JSRuntime { get; set; }
+        [Inject] public UserState UserState { get; set; }
 
         private HubConnection? _hubConnection;
         private List<string> _logMessages = new List<string>();
