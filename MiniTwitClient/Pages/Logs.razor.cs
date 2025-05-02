@@ -29,6 +29,7 @@ namespace MiniTwitClient.Pages
         {
             _hubConnection = new HubConnectionBuilder()
             .WithUrl(Controller.address + "logHub")
+            .WithAutomaticReconnect()
             .Build();
 
             _hubConnection.On<string>("ReceiveLogUpdate", async message =>
