@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MiniTwitAPI.Entities
+namespace MiniTwitAPI.Models
 {
     public class User
     {

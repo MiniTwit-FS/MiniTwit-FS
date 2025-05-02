@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MiniTwitAPI.Entities
+namespace MiniTwitAPI.Models
 {
     public class Follower
     {
