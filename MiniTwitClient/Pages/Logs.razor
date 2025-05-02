@@ -2,7 +2,7 @@
 @using MiniTwitClient.Shared
 <AppPageTitle Text="Logs" />
 
-@if (true)
+@if (UserState.IsAdmin)
 {
     <h1 class="mt-4 text-2xl font-bold mb-4 text-center">
         Live Logs<br />
@@ -16,10 +16,6 @@
         @if (_logMessages.Count == 0)
         {
             <div>Loading logs...</div>
-            for (int i = 0; i < 100; i++)
-            {
-                <div>Loading logs...</div>
-            }
         }
         else
         {

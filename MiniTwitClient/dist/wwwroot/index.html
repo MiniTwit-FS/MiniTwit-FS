@@ -49,6 +49,9 @@
         };
     };
 
+    window.isScrolledToBottom = (el) =>
+        (el.scrollHeight - el.clientHeight - el.scrollTop) < 5;
+
     window.scrollToBottom = (el) => {
         el.scrollTop = el.scrollHeight;
     };
