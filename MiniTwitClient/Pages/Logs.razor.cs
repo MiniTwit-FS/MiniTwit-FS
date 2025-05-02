@@ -25,6 +25,13 @@ namespace MiniTwitClient.Pages
         private ElementReference logContainer;
         private bool _shouldAutoScroll;
 
+        [JSInvokable]
+        public async Task OnReachedTop()
+        {
+            await LoadNextPage();
+            await InvokeAsync(StateHasChanged);
+        }
+
         protected override async Task OnInitializedAsync()
         {
             _hubConnection = new HubConnectionBuilder()
@@ -132,8 +139,7 @@ namespace MiniTwitClient.Pages
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("initializeScrollListener",
-                    DotNetObjectReference.Create(this));
+                await JSRuntime.InvokeVoidAsync("initializeScrollTopListener", DotNetObjectReference.Create(this), logContainer);
                 await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
             }
             else if (_shouldAutoScroll)
