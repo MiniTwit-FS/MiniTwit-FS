@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiniTwitAPI.Models;
+using MiniTwitAPI.Entities;
 
 namespace MiniTwitAPI
 {

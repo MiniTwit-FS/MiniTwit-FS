@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MiniTwitAPI.DTOs;
+using MiniTwitAPI.Entities;
 using MiniTwitAPI.Extentions;
 using MiniTwitAPI.Models;
 using System.Linq;
@@ -293,7 +294,7 @@ namespace MiniTwitAPI.Controllers
 
                 await _context.SaveChangesAsync();
                 _logger.RLogInformation($"Message posted successfully for user: {username}", _hubContext);
-                return Ok(msg);
+                return Ok("Your message was recorded");
             }
             catch (Exception ex)
             {
@@ -355,7 +356,7 @@ namespace MiniTwitAPI.Controllers
                         });
                         await _context.SaveChangesAsync();
                         _logger.RLogInformation($"User {username} now follows {request.Follow}", _hubContext);
-                        return NoContent();
+                        return Ok($"You are now following {request.Follow}");
                     }
                     else
                     {
@@ -377,7 +378,7 @@ namespace MiniTwitAPI.Controllers
                         _context.Followers.Remove(followData);
                         await _context.SaveChangesAsync();
                         _logger.RLogInformation($"User {username} unfollowed {request.Unfollow}", _hubContext);
-                        return NoContent();
+                        return Ok($"You are no longer following {request.Unfollow}");
                     }
                     else
                     {
