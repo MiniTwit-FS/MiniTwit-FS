@@ -6,6 +6,7 @@ using MiniTwitClient.Models;
 using Microsoft.AspNetCore.SignalR.Client;
 using static System.Net.WebRequestMethods;
 using System.Text.Json;
+using System.Globalization;
 
 namespace MiniTwitClient.Pages
 {
@@ -29,7 +30,8 @@ namespace MiniTwitClient.Pages
 
             _hubConnection.On<string>("ReceiveLogUpdate", (message) =>
             {
-                _logMessages.Insert(_logMessages.Count(), message);
+                var converted = FormatTimestampToLocal(message);
+                _logMessages.Insert(_logMessages.Count(), converted);
                 StateHasChanged();
             });
 
@@ -42,7 +44,8 @@ namespace MiniTwitClient.Pages
             // Call your API to load logs
             var time = DateTime.UtcNow;
             var logs = await Controller.GetLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            if (logs != null) _logMessages.InsertRange(0, logs);
+            var converted = logs.Select(FormatTimestampToLocal);
+            if (logs != null) _logMessages.InsertRange(0, converted);
         }
 
         private async Task ScrollLogs()
@@ -50,7 +53,8 @@ namespace MiniTwitClient.Pages
             // Call your API to load logs
             var time = DateTime.UtcNow;
             var logs = await Controller.GetMoreLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            if (logs != null) _logMessages.InsertRange(0, logs);
+            var converted = logs.Select(FormatTimestampToLocal);
+            if (logs != null) _logMessages.InsertRange(0, converted);
         }
 
         private async Task NewLogs()
@@ -58,7 +62,8 @@ namespace MiniTwitClient.Pages
             // Call your API to load logs
             var time = DateTime.UtcNow;
             var logs = await Controller.GetMoreLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            if (logs != null) _logMessages.InsertRange(_logMessages.Count(), logs);
+            var converted = logs.Select(FormatTimestampToLocal);
+            if (logs != null) _logMessages.InsertRange(_logMessages.Count(), converted);
         }
 
         private async Task LoadNextPage()
@@ -116,6 +121,32 @@ namespace MiniTwitClient.Pages
                 await JSRuntime.InvokeVoidAsync("initializeScrollListener",
                     DotNetObjectReference.Create(this));
             }
+        }
+
+        private string FormatTimestampToLocal(string logLine)
+        {
+            // Split into [date] [time] [offset] [the rest…]
+            var parts = logLine.Split(' ', 4);
+            if (parts.Length < 4)
+                return logLine;    // something unexpected—just return as-is
+
+            // e.g. "2025-04-25 09:44:44.756 +02:00"
+            var tsRaw = $"{parts[0]} {parts[1]} {parts[2]}";
+
+            if (!DateTimeOffset.TryParseExact(
+                    tsRaw,
+                    "yyyy-MM-dd HH:mm:ss.fff zzz",
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.None,
+                    out var dto))
+            {
+                return logLine;    // parse failed → leave original
+            }
+
+            // Convert to local time and reformat
+            var local = dto.ToLocalTime();
+            var rest = parts[3];  // "[INF] Application starting..."
+            return $"{local:yyyy-MM-dd HH:mm:ss.fff zzz} {rest}";
         }
     }
 }
