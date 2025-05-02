@@ -25,13 +25,6 @@ namespace MiniTwitClient.Pages
         private ElementReference logContainer;
         private bool _shouldAutoScroll;
 
-        [JSInvokable]
-        public async Task OnReachedTop()
-        {
-            await LoadNextPage();
-            await InvokeAsync(StateHasChanged);
-        }
-
         protected override async Task OnInitializedAsync()
         {
             _hubConnection = new HubConnectionBuilder()
@@ -110,29 +103,12 @@ namespace MiniTwitClient.Pages
             }
         }
 
+
         [JSInvokable]
-        public async Task OnReachedBottom()
+        public async Task OnReachedTop()
         {
-            //// if we’re already loading, bail out
-            //if (_isLoading)
-            //    return;
-
-            //_isLoading = true;
-            //try
-            //{
-            //    Console.WriteLine("Reached bottom!");
-
-            //    messageIndex++;
-            //    Messages = await Controller.GetUserTimeline(username, new MessagesRequest
-            //    {
-            //        NumberOfMessages = messagesCount * messageIndex
-            //    });
-            //    StateHasChanged();
-            //}
-            //finally
-            //{
-            //    _isLoading = false;
-            //}
+            await LoadNextPage();
+            await InvokeAsync(StateHasChanged);
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
