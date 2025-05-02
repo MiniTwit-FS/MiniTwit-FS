@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.DependencyInjection;
 using MiniTwitAPI;
 using MiniTwitAPI.Entities;
@@ -16,12 +17,18 @@ namespace MiniTwitClient.Tests.ClientTest
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            Environment.SetEnvironmentVariable("ASPNETCORE_ENVIRONMENT", "Test");
+
             builder.ConfigureServices(async services =>
             {
                 // Remove the real DB context
                 var descriptor = services.SingleOrDefault(
                     d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
                 if (descriptor != null) services.Remove(descriptor);
+
+                var factoryDescriptor = services.SingleOrDefault(
+                    d => d.ServiceType == typeof(IDbContextFactory<AppDbContext>));
+                if (factoryDescriptor != null) services.Remove(factoryDescriptor);
 
                 // Add a fake/in-memory DB context
                 services.AddDbContext<AppDbContext>(options =>
@@ -35,6 +42,8 @@ namespace MiniTwitClient.Tests.ClientTest
                 {
                     var scopedServices = scope.ServiceProvider;
                     var db = scopedServices.GetRequiredService<AppDbContext>();
+                    /*var dbFactory = scopedServices.GetRequiredService<AppDbContextFactory>();
+                    var db = dbFactory.CreateDbContext([]);*/
 
                     // Ensure database is created
                     db.Database.EnsureCreated();

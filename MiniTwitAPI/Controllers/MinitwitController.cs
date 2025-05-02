@@ -288,7 +288,7 @@ namespace MiniTwitAPI.Controllers
 
                 await _context.SaveChangesAsync();
                 _logger.LogInformation("Message posted successfully for user: {Username}", username);
-                return Ok(msg);
+                return Ok("Your message was recorded");
             }
             catch (Exception ex)
             {
@@ -349,7 +349,7 @@ namespace MiniTwitAPI.Controllers
                         });
                         await _context.SaveChangesAsync();
                         _logger.LogInformation("User {Username} now follows {TargetUsername}", username, request.Follow);
-                        return NoContent();
+                        return Ok($"You are now following {request.Follow}");
                     }
                     else
                     {
@@ -371,7 +371,7 @@ namespace MiniTwitAPI.Controllers
                         _context.Followers.Remove(followData);
                         await _context.SaveChangesAsync();
                         _logger.LogInformation("User {Username} unfollowed {TargetUsername}", username, request.Unfollow);
-                        return NoContent();
+                        return Ok($"You are no longer following {request.Unfollow}");
                     }
                     else
                     {

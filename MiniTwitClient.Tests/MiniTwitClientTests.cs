@@ -1,27 +1,58 @@
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MiniTwitClient.Controllers;
 using MiniTwitClient.Models;
 using MiniTwitClient.Tests.ClientTest;
+using MiniTwitAPI;
 using System.Net;
+using Microsoft.Extensions.DependencyInjection;
 using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
-using Xunit;
 
-public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>
+public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>, IDisposable, IAsyncLifetime
 {
     private readonly MinitwitController _controller;
+    private readonly HttpClient _httpClient;
+    private readonly IServiceScope _scope;
+    private readonly AppDbContext _dbContext;
 
     public MiniTwitClientTests(MinitwitTestFactory<Program> factory)
     {
-        var _client = factory.CreateClient();
+        _httpClient = factory.CreateClient();
+        _controller = new MinitwitController(_httpClient);
 
-        _controller = new MinitwitController(_client);
+        _scope = factory.Services.CreateScope();
+        _dbContext = _scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    }
+
+    public Task InitializeAsync() => Task.CompletedTask;
+
+    public async Task DisposeAsync()
+    {
+        _dbContext.Users.RemoveRange(_dbContext.Users);
+        _dbContext.Messages.RemoveRange(_dbContext.Messages);
+        _dbContext.Followers.RemoveRange(_dbContext.Followers);
+        await _dbContext.SaveChangesAsync();
+    }
+
+    public void Dispose()
+    {
+        _scope.Dispose();
+    }
+
+    private void SetHeader(string name, string value)
+    {
+        if (_httpClient.DefaultRequestHeaders.Contains(name))
+        {
+            _httpClient.DefaultRequestHeaders.Remove(name);
+        }
+        _httpClient.DefaultRequestHeaders.Add(name, value);
     }
 
     private async Task<HttpResponseMessage> Register(string username, string password, string? password2 = null, string? email = null)
     {
         if (password2 == null) password2 = password;
+        if (password != password2) return new HttpResponseMessage(HttpStatusCode.BadRequest)
+        {
+            Content = new StringContent("The two passwords do not match")
+        };
         if (email == null) email = $"{username}@example.com";
 
         return await _controller.Register(new RegisterRequest()
@@ -127,6 +158,7 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>
         var rv = await RegisterAndLogin("user1", "default");
         Assert.Contains("You were logged in", await rv.Content.ReadAsStringAsync());
 
+        SetHeader("username", "user1");
         rv = await Logout();
         Assert.Contains("You were logged out", await rv.Content.ReadAsStringAsync());
 
@@ -141,20 +173,23 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>
     public async Task TestMessageRecording()
     {
         await RegisterAndLogin("foo", "default");
+        SetHeader("username", "foo");
         await AddMessage("test message 1");
         await AddMessage("<test message 2>"); 
         var messages = (await GetTimeline("foo")).Select(m => m.Text);
         Assert.Contains("test message 1", messages);
-        Assert.Contains("&lt;test message 2&gt;", messages);
+        Assert.Contains("<test message 2>", messages);
     }
 
     [Fact]
     public async Task TestTimelines()
     {
         await RegisterAndLogin("foo", "default");
+        SetHeader("username", "foo");
         await AddMessage("the message by foo");
         await Logout();
         await RegisterAndLogin("bar", "default");
+        SetHeader("username", "bar");
         await AddMessage("the message by bar");
 
         var messages = (await GetPublic()).Select(m => m.Text);
@@ -169,7 +204,7 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>
         // now let's follow foo
         var rv = await Follow("foo");
         var content = await rv.Content.ReadAsStringAsync();
-        Assert.Contains("You are now following &#34;foo&#34;", content);
+        Assert.Contains("You are now following foo", content);
 
         // we should now see foo's message
         messages = (await GetTimeline("bar")).Select(m => m.Text);
@@ -188,7 +223,7 @@ public class MiniTwitClientTests : IClassFixture<MinitwitTestFactory<Program>>
         // now unfollow and check if that worked
         rv = await Unfollow("foo");
         content = await rv.Content.ReadAsStringAsync();
-        Assert.Contains("You are no longer following &#34;foo&#34;", content);
+        Assert.Contains("You are no longer following foo", content);
 
         messages = (await GetTimeline("bar")).Select(m => m.Text);
         Assert.DoesNotContain("the message by foo", messages);
