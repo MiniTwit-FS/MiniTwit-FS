@@ -39,6 +39,17 @@ jobs:
           dotnet publish ./MiniTwitClient -c Release -r win-x64 -o ./MiniTwitClient/dist
         shell: pwsh
 
+      - name: Check if main branch has changed
+        run: |
+          git fetch origin main
+          $localHash = git rev-parse HEAD
+          $remoteHash = git rev-parse origin/main
+          if ($localHash -ne $remoteHash) {
+            Write-Output "Remote main has new commits. Aborting to avoid conflicts."
+            exit 1
+          }
+        shell: pwsh
+
       - name: Commit and push dist folder
         run: |
           git config user.name "github-actions[bot]"
@@ -46,7 +57,8 @@ jobs:
           git add MiniTwitClient/dist
           git commit -m "Auto-build client and update dist folder"
           git push origin main
-        
+        shell: pwsh
+
       - name: Trigger deploy-client workflow
         if: success()
         uses: peter-evans/repository-dispatch@v2
