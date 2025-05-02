@@ -9,6 +9,12 @@ using System.Text.RegularExpressions;
 using System.IO;
 using Microsoft.AspNetCore.SignalR;
 using MiniTwitAPI.Hubs;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace MiniTwitAPI.Controllers
 {
@@ -18,15 +24,17 @@ namespace MiniTwitAPI.Controllers
         private readonly ILogger<MinitwitController> _logger;
         private readonly AppDbContext _context;
         private readonly IHubContext<LogHub> _hubContext;
+        private readonly IConfiguration _config;
 
         private readonly string filePath = "./latest_processed_sim_action_id.txt";
         private readonly string logFilePath = "./logs/minitwit-api-log";
 
-        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger, IHubContext<LogHub> hubContext)
+        public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger, IHubContext<LogHub> hubContext, IConfiguration config)
         {
             _logger = logger;
             _context = context;
             _hubContext = hubContext;
+            _config = config;
         }
 
         private IActionResult UpdateLatest(int latest)
@@ -52,15 +60,37 @@ namespace MiniTwitAPI.Controllers
 
         private IActionResult NotFromSimulator(string authorization)
         {
-            if (authorization != "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh")
-            {
-                _logger.RLogWarning("Unauthorized access attempt with invalid authorization header", _hubContext);
-                return Forbid("You are not authorized to use this resource!");
-            }
+            //var allowedAuthorization = _config["SpecialApp:AuthorizationHeader"];
+            //if (authorization != "Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh")
+            //{
+            //    _logger.RLogWarning("Unauthorized access attempt with invalid authorization header", _hubContext);
+            //    return Forbid("You are not authorized to use this resource!");
+            //}
 
             return Ok();
         }
 
+        private string GenerateJwtToken(string username)
+        {
+            var claims = new[]
+            {
+            new Claim(ClaimTypes.Name, username),
+            // Add any other claims as necessary (e.g., roles, permissions, etc.)
+        };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.Now.AddHours(1),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        [AllowAnonymous]
         [HttpGet("/latest")]
         public IActionResult GetLatest()
         {
@@ -83,6 +113,7 @@ namespace MiniTwitAPI.Controllers
             return Ok(new { latest = -1 });
         }
 
+        [AllowAnonymous]
         [HttpPost("/register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterRequest data, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
@@ -140,6 +171,7 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("/msgs")]
         public async Task<IActionResult> Messages([FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
@@ -217,7 +249,7 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpGet("/msgs/{username}")]
+        [HttpGet("/msgs/{username}"), AllowAnonymous]
         public async Task<IActionResult> UserMessages(string username,
             [FromHeader] string authorization, [FromQuery] int latest = -1, [FromQuery] int no = 100)
         {
@@ -395,6 +427,7 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpGet("/fllws/{followUser}")]
         public async Task<IActionResult> Follows([FromHeader] string username, string followUser)
         {
@@ -426,7 +459,7 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/login")]
+        [HttpPost("/login"), AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
@@ -439,7 +472,15 @@ namespace MiniTwitAPI.Controllers
             {
                 return BadRequest("Invalid password");
             }
-            else return Ok("You were logged in");
+            else
+            {
+                var token = GenerateJwtToken(request.Username);
+                return Ok(new 
+                {
+                    Message = "You were logged in.",
+                    Token = token
+                });
+            }
         }
 
         [HttpGet("/logout")]

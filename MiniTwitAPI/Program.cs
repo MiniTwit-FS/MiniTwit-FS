@@ -7,6 +7,8 @@ using MiniTwitAPI.Extentions;
 using Serilog;
 using Serilog.Extensions.Logging;
 using MiniTwitAPI.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,8 +44,6 @@ var logger = new SerilogLoggerFactory(Log.Logger).CreateLogger("Program");
 logger.LogInformation("Application starting. Environment: {Environment}", environment);
 
 
-// Add services to the container.
-builder.Services.AddControllers();
 
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")?.Replace("{DB_PASSWORD}", dbPassword);
@@ -91,40 +91,115 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSignalR();
 
-logger.LogInformation("Configuring CORS policies");
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("DevCorsPolicy", policy =>
     {
-        policy.SetIsOriginAllowed(origin => true) // This effectively allows any origin.
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
-
-        logger.LogDebug("CORS policy 'AllowAll' configured");
-    });
-
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.WithOrigins("https://localhost:7192") // Replace with client port
-              .AllowAnyHeader()
+        policy.WithOrigins("https://localhost:7192")
               .AllowAnyMethod()
+              .AllowAnyHeader()
               .AllowCredentials();
     });
 });
 
+// Add services to the container.
+builder.Services.AddControllers();
+
+var jwtKey = builder.Configuration["Jwt:Key"]; // store securely
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+            ValidateIssuer = false,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                context.NoResult();
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                context.Response.ContentType = "application/json";
+                return context.Response.WriteAsync("Unauthorized - Invalid token.");
+            },
+            OnForbidden = context =>
+            {
+                context.NoResult();
+                context.Response.StatusCode = StatusCodes.Status403Forbidden;
+                context.Response.ContentType = "application/json";
+                return context.Response.WriteAsync("Forbidden - You don't have access.");
+            }
+        };
+    });
+
+builder.Services.AddAuthorization();
+
 logger.LogInformation("Building application");
 var app = builder.Build();
+app.UseCors("DevCorsPolicy"); // Apply the CORS policy
+
 
 // Create an application lifetime logger
 var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
 var appLogger = app.Services.GetRequiredService<ILogger<Program>>();
 
 // Middleware for handling HTTP requests
-app.UseCors("AllowAll"); // Apply the CORS policy
-app.UseSession();
 app.UseHttpsRedirection();
-app.MapHub<LogHub>("/logHub"); // Map the hub to a URL
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+var allowedBasicAuthValue = builder.Configuration["SpecialApp:AuthorizationHeader"];
+app.Use(async (context, next) =>
+{
+    var authorizationHeader = context.Request.Headers["Authorization"].ToString();
+    var allowedBasicAuthValue = builder.Configuration["SpecialApp:AuthorizationHeader"];
+
+    if (string.IsNullOrWhiteSpace(authorizationHeader))
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("Unauthorized - Authorization required.");
+        return;
+    }
+
+    // If Basic Auth is present, handle it separately
+    if (authorizationHeader.StartsWith("Basic ", StringComparison.OrdinalIgnoreCase))
+    {
+        if (authorizationHeader == allowedBasicAuthValue)
+        {
+            await next(); // valid Basic — continue pipeline
+            return;
+        }
+
+        // Invalid Basic Auth — stop here
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("Unauthorized - Invalid Basic credentials.");
+        return;
+    }
+
+    // Let the JWT middleware handle the rest
+    await next();
+});
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == HttpMethods.Options)
+    {
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+
+    await next();
+});
 
 // Add a basic request logger middleware
 app.Use(async (context, next) =>
@@ -160,6 +235,9 @@ app.Use(async (context, next) =>
 });
 
 app.MapControllers(); // Map controllers to handle requests
+
+app.MapHub<LogHub>("/logHub"); // Map the hub to a URL
+app.UseSession();
 
 // Register application lifecycle logging
 lifetime.ApplicationStarted.Register(() =>

@@ -11,14 +11,22 @@ namespace MiniTwitClient.Layout
         [Inject] public NavigationManager Navigation { get; set; }
         [Inject] public HttpClient _client { get; set; }
 
+        protected override void OnInitialized()
+        {
+            UserState.OnChange += StateHasChanged;
+        }
+
+        public void Dispose()
+        {
+            UserState.OnChange -= StateHasChanged;
+        }
+
         public async Task Logout()
         {
             var logout = await Controller.Logout();
 
             if (logout.IsSuccessStatusCode)
             {
-                _client.DefaultRequestHeaders.Remove("Username");
-
                 UserState.LogOut();
                 Navigation.NavigateTo("/login");
             }
