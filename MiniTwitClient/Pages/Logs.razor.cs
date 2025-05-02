@@ -115,7 +115,8 @@ namespace MiniTwitClient.Pages
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("initializeScrollTopListener", DotNetObjectReference.Create(this));
+                await JSRuntime.InvokeVoidAsync("initializeTopSentinel", DotNetObjectReference.Create(this));
+
                 await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
             }
             else if (_shouldAutoScroll)

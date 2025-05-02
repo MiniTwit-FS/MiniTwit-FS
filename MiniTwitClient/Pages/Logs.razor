@@ -4,22 +4,21 @@
 
 @if (UserState.IsAdmin)
 {
-    <h1 class="mt-4 text-2xl font-bold mb-4 text-center">
-        Live Logs<br />
-        @($"{DateTime.Now:dd-MM-yyyy}")
-    </h1>
-
-    <div id ="logContainer" @ref ="logContainer"
-    class="fixed inset-4 bg-black mt-40 mb-32 mr-64 ml-64
+    <div @ref="logContainer"
+         id="logContainer"
+         class="fixed inset-4 bg-black mt-40 mb-32 mr-64 ml-64
          text-green-400 font-mono p-8 rounded shadow
          overflow-y-auto whitespace-pre-wrap">
+
+        <!-- ← Top sentinel: when *this* enters view, we load older logs -->
+        <div id="topSentinel"></div>
+
         @if (_logMessages.Count == 0)
         {
             <div>Loading logs...</div>
         }
         else
         {
-            _logMessages.Reverse();
             @foreach (var log in _logMessages)
             {
                 <div>@log</div>

@@ -27,43 +27,48 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    <script>
+        window.appConfig = { apiEndpoint: "https://localhost:7297" };
+
+
+        window.initializeScrollListener = (dotNetHelper) => {
+            window.onscroll = () => {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight >= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync('OnReachedBottom');
+                }
+            };
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) => {
+            const container = document.getElementById('logContainer');
+            const sentinel = document.getElementById('topSentinel');
+            if (!container || !sentinel) {
+                console.error('❌ Missing logContainer or topSentinel');
+                return;
+            }
+
+            const observer = new IntersectionObserver(entries => {
+                // entries[0] is our sentinel
+                if (entries[0].isIntersecting) {
+                    dotNetHelper.invokeMethodAsync('OnReachedTop');
+                }
+            }, {
+                root: container,      // observe topSentinel *within* our scroll pane
+                threshold: 0.1        // fire as soon as 10% of sentinel is visible
+            });
+
+            observer.observe(sentinel);
+        };
+
+        window.scrollToBottom = (el) => {
+            el.scrollTop = el.scrollHeight;
+        };
+    </script>
     <script src="_framework/blazor.webassembly.js"></script>
 </body>
-
 </html>
-
-<script>
-    window.appConfig = { apiEndpoint: "https://localhost:7297" };
-
-
-    window.initializeScrollListener = (dotNetHelper) => {
-        window.onscroll = () => {
-            const scrollTop = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
-
-            if (scrollTop + windowHeight >= documentHeight - 10) {
-                // Call the .NET method if near the bottom
-                dotNetHelper.invokeMethodAsync('OnReachedBottom');
-            }
-        };
-    };
-
-    window.initializeScrollTopListener = (dotNetHelper) => {
-        const el = document.getElementById('logContainer');
-        if (!el) {
-            console.error('❌ #logContainer not found');
-            return;
-        }
-        el.addEventListener('scroll', () => {
-            if (el.scrollTop <= 5) {
-                dotNetHelper.invokeMethodAsync('OnReachedTop');
-            }
-        });
-    };
-
-    window.scrollToBottom = (el) => {
-        el.scrollTop = el.scrollHeight;
-    };
-</script>
-
