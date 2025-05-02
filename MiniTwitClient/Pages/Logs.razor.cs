@@ -52,19 +52,32 @@ namespace MiniTwitClient.Pages
 
         private async Task LoadInitialLogs()
         {
-            currentPage = 1;
-            var date = DateTime.UtcNow.ToString("yyyyMMdd");
+            if (_isLoading) return;
 
-            // more: false is default, so you can omit it if you like
-            var logs = await Controller.GetLogs(date, currentPage, pageSize, more: false);
-
-            if (logs != null)
+            _isLoading = true;
+            StateHasChanged();
+            try
             {
-                _logMessages = logs
-                    .Select(FormatTimestampToLocal)
-                    .Reverse()    // oldest at top, newest at bottom
-                    .ToList();
+                currentPage = 1;
+                var date = DateTime.UtcNow.ToString("yyyyMMdd");
+
+                // more: false is default, so you can omit it if you like
+                var logs = await Controller.GetLogs(date, currentPage, pageSize, more: false);
+
+                if (logs != null)
+                {
+                    _logMessages = logs
+                        .Select(FormatTimestampToLocal)
+                        .Reverse()    // oldest at top, newest at bottom
+                        .ToList();
+                }
+                _isLoading = false;
             }
+            finally
+            {
+                _isLoading = false;
+            }
+            
         }
         public async ValueTask DisposeAsync()
         {
