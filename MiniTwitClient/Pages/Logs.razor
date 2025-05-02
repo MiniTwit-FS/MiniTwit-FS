@@ -2,11 +2,11 @@
 @using MiniTwitClient.Shared
 <AppPageTitle Text="Logs" />
 
-@if (UserState.IsAdmin)
+@if (true)
 {
-    <div @ref="logContainer"
-         id="logContainer"
-         class="fixed inset-4 bg-black mt-40 mb-32 mr-64 ml-64
+    <div @ref="_logContainer"
+    id="logContainer"
+    class="fixed inset-4 bg-black mt-40 mb-32 mr-64 ml-64
          text-green-400 font-mono p-8 rounded shadow
          overflow-y-auto whitespace-pre-wrap">
 
@@ -16,6 +16,10 @@
         @if (_logMessages.Count == 0)
         {
             <div>Loading logs...</div>
+            for(int i = 0; i < 100; i++)
+            {
+                <div>Loading logs...</div>
+            }
         }
         else
         {

@@ -27,6 +27,7 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+    <script src="_framework/blazor.webassembly.js"></script>
     <script>
         window.appConfig = { apiEndpoint: "https://minitwit-api-5ezat.ondigitalocean.app/api" };
 
@@ -44,32 +45,47 @@
             };
         };
 
+        window.isScrolledToBottom = (container) => {
+            return container.scrollTop + container.clientHeight >= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) => {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) => {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) => {
+            container.scrollTop = top;
+        };
+
         window.initializeTopSentinel = (dotNetHelper) => {
             const container = document.getElementById('logContainer');
-            const sentinel = document.getElementById('topSentinel');
-            if (!container || !sentinel) {
-                console.error('❌ Missing logContainer or topSentinel');
-                return;
-            }
+            // create a sentinel at the very top
+            let sentinel = document.createElement('div');
+            sentinel.id = 'top-sentinel';
+            sentinel.style.position = 'absolute';
+            sentinel.style.top = '0';
+            sentinel.style.width = '100%';
+            sentinel.style.height = '1px';
+            container.prepend(sentinel);
 
             const observer = new IntersectionObserver(entries => {
-                // entries[0] is our sentinel
-                if (entries[0].isIntersecting) {
-                    dotNetHelper.invokeMethodAsync('OnReachedTop');
-                }
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync('OnReachedTop');
+                    }
+                });
             }, {
-                root: container,      // observe topSentinel *within* our scroll pane
-                threshold: 0.1        // fire as soon as 10% of sentinel is visible
+                root: container,
+                threshold: 0.1
             });
 
             observer.observe(sentinel);
         };
-
-        window.scrollToBottom = (el) => {
-            el.scrollTop = el.scrollHeight;
-        };
     </script>
-    <script src="_framework/blazor.webassembly.js"></script>
 </body>
 
 </html>
