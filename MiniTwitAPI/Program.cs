@@ -113,8 +113,6 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddSingleton<LogHub>();
-
 logger.LogInformation("Building application");
 var app = builder.Build();
 

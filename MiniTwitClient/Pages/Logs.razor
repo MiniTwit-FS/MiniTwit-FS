@@ -4,20 +4,22 @@
 
 @if (UserState.IsAdmin)
 {
-    <h1 class="text-2xl font-bold mb-4">Live Logs</h1>
+    <h1 class="mt-4 text-2xl font-bold mb-4 text-center">
+        Live Logs<br />
+        @($"{DateTime.Now:dd-MM-yyyy}")
+    </h1>
 
-    <div class="mt-4 flex justify-between items-center">
-        <span>Page @currentPage</span>
-        <button class="px-4 py-2 bg-gray-800 text-white rounded" @onclick="LoadNextPage">Next</button>
-    </div>
-
-    <div class="bg-black text-green-400 font-mono p-4 rounded shadow max-h-[500px] overflow-y-auto whitespace-pre-wrap">
+    <div @ref="logContainer"
+    class="fixed inset-4 bg-black mt-40 mb-32 mr-64 ml-64
+         text-green-400 font-mono p-8 rounded shadow
+         overflow-y-auto whitespace-pre-wrap">
         @if (_logMessages.Count == 0)
         {
             <div>Loading logs...</div>
         }
         else
         {
+            _logMessages.Reverse();
             @foreach (var log in _logMessages)
             {
                 <div>@log</div>
@@ -27,6 +29,6 @@
 }
 else
 {
-    <h1 class="mt-8 text-2xl font-bold mb-4">Not Authorized</h1>
+	<h1 class="mt-8 text-2xl font-bold mb-4">Not Authorized</h1>
 }
 

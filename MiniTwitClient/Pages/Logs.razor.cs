@@ -22,22 +22,43 @@ namespace MiniTwitClient.Pages
         private int currentPage = 1;
         private int pageSize = 100;
 
+        private ElementReference logContainer;
+        private bool _shouldAutoScroll;
+
+        [JSInvokable]
+        public async Task OnReachedTop()
+        {
+            await LoadNextPage();
+            await InvokeAsync(StateHasChanged);
+        }
+
         protected override async Task OnInitializedAsync()
         {
             _hubConnection = new HubConnectionBuilder()
             .WithUrl(Controller.address + "logHub")
+            .WithAutomaticReconnect()
             .Build();
 
-            _hubConnection.On<string>("ReceiveLogUpdate", (message) =>
+            _hubConnection.On<string>("ReceiveLogUpdate", async message =>
             {
+                // 1) check if we’re at bottom _before_ inserting
+                var atBottom = await JSRuntime.InvokeAsync<bool>("isScrolledToBottom", logContainer);
+
+                // 2) insert new log and re-render
                 var converted = FormatTimestampToLocal(message);
-                _logMessages.Insert(_logMessages.Count(), converted);
-                StateHasChanged();
+                _logMessages.Add(converted);
+
+                if (atBottom)
+                    _shouldAutoScroll = true;
+
+                await InvokeAsync(StateHasChanged);
             });
 
             await _hubConnection.StartAsync();
             await InitialLogs();
         }
+
+        public void Dispose() => _hubConnection?.DisposeAsync();
 
         private async Task InitialLogs()
         {
@@ -118,8 +139,14 @@ namespace MiniTwitClient.Pages
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("initializeScrollListener",
-                    DotNetObjectReference.Create(this));
+                await JSRuntime.InvokeVoidAsync("initializeScrollTopListener", DotNetObjectReference.Create(this), logContainer);
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
+            }
+            else if (_shouldAutoScroll)
+            {
+                // only scroll if the hub told us we were already at bottom
+                _shouldAutoScroll = false;
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
             }
         }
 

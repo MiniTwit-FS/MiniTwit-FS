@@ -48,5 +48,23 @@
             }
         };
     };
+
+    window.initializeScrollTopListener = (dotNetHelper, element) => {
+        // Listen for scroll events on the container
+        element.addEventListener('scroll', () => {
+            // If we're at (or within 5px of) the top...
+            if (element.scrollTop <= 5) {
+                // Invoke the .NET method
+                dotNetHelper.invokeMethodAsync('OnReachedTop');
+            }
+        });
+    };
+
+    window.isScrolledToBottom = (el) =>
+        (el.scrollHeight - el.clientHeight - el.scrollTop) < 5;
+
+    window.scrollToBottom = (el) => {
+        el.scrollTop = el.scrollHeight;
+    };
 </script>
 
