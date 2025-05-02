@@ -262,8 +262,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/msgs")]
-        public async Task<IActionResult> PostMessage([FromHeader] string username,
+        [HttpPost("/msgs/{username}")]
+        public async Task<IActionResult> PostMessage(string username,
             [FromBody] AddMessageRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("PostMessage endpoint called for user: {Username}", username);
@@ -303,8 +303,8 @@ namespace MiniTwitAPI.Controllers
             }
         }
 
-        [HttpPost("/fllws")]
-        public async Task<IActionResult> Follow([FromHeader] string username,
+        [HttpPost("/fllws/{username}")]
+        public async Task<IActionResult> Follow(string username,
             [FromBody] FollowRequest request, [FromHeader] string authorization, [FromQuery] int latest = -1)
         {
             _logger.LogInformation("Follow endpoint called for user: {Username}", username);

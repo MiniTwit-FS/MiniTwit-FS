@@ -48,7 +48,7 @@ namespace MiniTwitClient.Pages
             await Controller.FollowChange(new FollowRequest()
             {
                 Follow = username
-            });
+            }, UserState.Username!);
 
             Follows = await Controller.Follows(username);
 
@@ -60,7 +60,7 @@ namespace MiniTwitClient.Pages
             await Controller.FollowChange(new FollowRequest()
             {
                 Unfollow = username
-            });
+            }, UserState.Username!);
 
             Follows = await Controller.Follows(username);
 

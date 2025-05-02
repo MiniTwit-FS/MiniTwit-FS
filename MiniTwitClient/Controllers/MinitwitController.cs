@@ -99,20 +99,21 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.GetAsync($"{_httpClient.BaseAddress}logout");
         }
 
-		public async Task<HttpResponseMessage> PostMessage(AddMessageRequest request)
+		public async Task<HttpResponseMessage> PostMessage(AddMessageRequest request, string username)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}msgs", content);
+            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}msgs/{username}", content);
         }
 
-		public async Task<HttpResponseMessage> FollowChange(FollowRequest request)
+
+        public async Task<HttpResponseMessage> FollowChange(FollowRequest request, string username)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}fllws", content);
+            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}fllws/{username}", content);
         }
 
         public async Task<bool> Follows(string toFollow)

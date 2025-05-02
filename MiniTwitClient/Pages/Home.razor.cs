@@ -9,7 +9,7 @@ namespace MiniTwitClient.Pages
     public partial class Home : ComponentBase
     {
 		[Inject] public MinitwitController Controller { get; set; }
-        [Inject] public UserState userState { get; set; }
+        [Inject] public UserState UserState { get; set; }
         [Inject] public IJSRuntime JSRuntime { get; set; }
 
         private AddMessageRequest AddMessageRequest { get; set; } = new AddMessageRequest();
@@ -27,7 +27,7 @@ namespace MiniTwitClient.Pages
 
 		private async Task PostMessage()
         {
-            await Controller.PostMessage(AddMessageRequest);
+            await Controller.PostMessage(AddMessageRequest, UserState.Username!);
 
             // Refresh the messages after posting
             Messages = await Controller.GetPublicTimeline(new MessagesRequest());
