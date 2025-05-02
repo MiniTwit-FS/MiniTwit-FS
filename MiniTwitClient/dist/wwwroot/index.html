@@ -49,12 +49,14 @@
         };
     };
 
-    window.initializeScrollTopListener = (dotNetHelper, element) => {
-        // Listen for scroll events on the container
-        element.addEventListener('scroll', () => {
-            // If we're at (or within 5px of) the top...
-            if (element.scrollTop <= 5) {
-                // Invoke the .NET method
+    window.initializeScrollTopListener = (dotNetHelper) => {
+        const el = document.getElementById('logContainer');
+        if (!el) {
+            console.error('❌ #logContainer not found');
+            return;
+        }
+        el.addEventListener('scroll', () => {
+            if (el.scrollTop <= 5) {
                 dotNetHelper.invokeMethodAsync('OnReachedTop');
             }
         });
