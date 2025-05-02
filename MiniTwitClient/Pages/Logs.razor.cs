@@ -22,6 +22,8 @@ namespace MiniTwitClient.Pages
         private int currentPage = 1;
         private int pageSize = 100;
 
+        private ElementReference logContainer;
+
         protected override async Task OnInitializedAsync()
         {
             _hubConnection = new HubConnectionBuilder()
@@ -121,6 +123,7 @@ namespace MiniTwitClient.Pages
             {
                 await JSRuntime.InvokeVoidAsync("initializeScrollListener",
                     DotNetObjectReference.Create(this));
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
             }
         }
 
