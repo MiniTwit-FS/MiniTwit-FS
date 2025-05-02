@@ -72,6 +72,7 @@ namespace MiniTwitClient.Pages
                 await _hubConnection.DisposeAsync();
         }
 
+        private bool _isLoading = false;
 
         /// <summary>
         /// When the user scrolls up to the top sentinel—
@@ -80,21 +81,35 @@ namespace MiniTwitClient.Pages
         [JSInvokable]
         public async Task OnReachedTop()
         {
-            // 1) remember how tall we were
-            _previousScrollHeight = await JSRuntime.InvokeAsync<double>("getScrollHeight", _logContainer);
+            // if we’re already loading, bail out
+            if (_isLoading)
+                return;
 
-            // 2) bump page, fetch older logs
-            currentPage++;
-            var date = DateTime.UtcNow.ToString("yyyyMMdd");
-            var older = await Controller.GetLogs(date, currentPage, pageSize, more: true);
+            _isLoading = true;
+            StateHasChanged();
 
-            if (older != null && older.Any())
+            try
             {
-                var converted = older.Select(FormatTimestampToLocal).ToList();
-                _logMessages.InsertRange(0, converted);
-            }
+                // 1) remember how tall we were
+                _previousScrollHeight = await JSRuntime.InvokeAsync<double>("getScrollHeight", _logContainer);
 
-            await InvokeAsync(StateHasChanged);
+                // 2) bump page, fetch older logs
+                currentPage++;
+                var date = DateTime.UtcNow.ToString("yyyyMMdd");
+                var older = await Controller.GetLogs(date, currentPage, pageSize, more: true);
+
+                if (older != null && older.Any())
+                {
+                    var converted = older.Select(FormatTimestampToLocal).ToList();
+                    _logMessages.InsertRange(0, converted);
+                }
+
+                await InvokeAsync(StateHasChanged);
+            }
+            finally
+            {
+                _isLoading = false;
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
