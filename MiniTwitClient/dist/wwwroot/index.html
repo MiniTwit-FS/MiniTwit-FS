@@ -28,43 +28,63 @@
         <a class="dismiss">🗙</a>
     </div>
     <script src="_framework/blazor.webassembly.js"></script>
-</body>
-
-</html>
-
-<script>
-    window.appConfig = { apiEndpoint: "https://minitwit-api-5ezat.ondigitalocean.app/api" };
+    <script>
+        window.appConfig = { apiEndpoint: "https://minitwit-api-5ezat.ondigitalocean.app/api" };
 
 
-    window.initializeScrollListener = (dotNetHelper) => {
-        window.onscroll = () => {
-            const scrollTop = window.scrollY;
-            const windowHeight = window.innerHeight;
-            const documentHeight = document.documentElement.scrollHeight;
+        window.initializeScrollListener = (dotNetHelper) => {
+            window.onscroll = () => {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
 
-            if (scrollTop + windowHeight >= documentHeight - 10) {
-                // Call the .NET method if near the bottom
-                dotNetHelper.invokeMethodAsync('OnReachedBottom');
-            }
+                if (scrollTop + windowHeight >= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync('OnReachedBottom');
+                }
+            };
         };
-    };
 
-    window.initializeScrollTopListener = (dotNetHelper, element) => {
-        // Listen for scroll events on the container
-        element.addEventListener('scroll', () => {
-            // If we're at (or within 5px of) the top...
-            if (element.scrollTop <= 5) {
-                // Invoke the .NET method
-                dotNetHelper.invokeMethodAsync('OnReachedTop');
-            }
-        });
-    };
+        window.isScrolledToBottom = (container) => {
+            return container.scrollTop + container.clientHeight >= container.scrollHeight - 1;
+        };
 
-    window.isScrolledToBottom = (el) =>
-        (el.scrollHeight - el.clientHeight - el.scrollTop) < 5;
+        window.scrollToBottom = (container) => {
+            container.scrollTop = container.scrollHeight;
+        };
 
-    window.scrollToBottom = (el) => {
-        el.scrollTop = el.scrollHeight;
-    };
-</script>
+        window.getScrollHeight = (container) => {
+            return container.scrollHeight;
+        };
 
+        window.setScrollTop = (container, top) => {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) => {
+            const container = document.getElementById('logContainer');
+            // create a sentinel at the very top
+            let sentinel = document.createElement('div');
+            sentinel.id = 'top-sentinel';
+            sentinel.style.position = 'absolute';
+            sentinel.style.top = '0';
+            sentinel.style.width = '100%';
+            sentinel.style.height = '1px';
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync('OnReachedTop');
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    </script>
+</body>
+</html>

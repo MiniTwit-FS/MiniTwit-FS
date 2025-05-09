@@ -2,6 +2,7 @@
 using MiniTwitClient.Authentication;
 using MiniTwitClient.Controllers;
 using MiniTwitClient.Models;
+using System.Text.Json;
 
 namespace MiniTwitClient.Pages
 {
@@ -16,19 +17,18 @@ namespace MiniTwitClient.Pages
 
         private async Task LoginCall()
         {
-            var login = await Controller.Login(LoginRequest);
+            var loginResponse = await Controller.Login(LoginRequest);
 
-            if (login.IsSuccessStatusCode)
-            {
-                _client.DefaultRequestHeaders.Add("Username", LoginRequest.Username);
+            var token = loginResponse?.Token;
 
-                UserState.LogIn(LoginRequest.Username);
-                Navigation.NavigateTo($"/public");
-            }
-            else
+            if (string.IsNullOrEmpty(token))
             {
-                // Show error to user if failed login.
+                // Do an error...
+                return;
             }
+
+            UserState.LogIn(LoginRequest.Username, token);
+            Navigation.NavigateTo($"/public");
         }
     }
 }

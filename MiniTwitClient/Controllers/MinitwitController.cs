@@ -1,26 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.JSInterop;
 using MiniTwitClient.Models;
-using MiniTwitClient.Pages;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MiniTwitClient.Controllers
 {
     public class MinitwitController
     {
         private readonly HttpClient _httpClient;
-        private static string _auth = "c2ltdWxhdG9yOnN1cGVyX3NhZmUh";
 
         public Uri address;
 
         public MinitwitController(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", _auth);
+
             address = httpClient.BaseAddress;
             Console.WriteLine("Controller endpoint: " + httpClient.BaseAddress);
+            Console.WriteLine("Auth: " + httpClient.DefaultRequestHeaders.Authorization);
         }
 
         public async Task<List<Message>> GetPublicTimeline(MessagesRequest request)
@@ -86,12 +87,13 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.PostAsync($"{_httpClient.BaseAddress}register", content);
         }
 
-        public async Task<HttpResponseMessage> Login(LoginRequest request)
-		{
-            var jsonContent = JsonSerializer.Serialize(new LoginRequest { Username = request.Username, Password = request.Password});
+        public async Task<LoginResponse> Login(LoginRequest request)
+        {
+            var jsonContent = JsonSerializer.Serialize(new LoginRequest { Username = request.Username, Password = request.Password });
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            return await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);
+            var response = await _httpClient.PostAsync($"{_httpClient.BaseAddress}login", content);
+            return await response.Content.ReadFromJsonAsync<LoginResponse>();
         }
 
         public async Task<HttpResponseMessage> Logout()
@@ -99,6 +101,7 @@ namespace MiniTwitClient.Controllers
             return await _httpClient.GetAsync($"{_httpClient.BaseAddress}logout");
         }
 
+        [Authorize]
 		public async Task<HttpResponseMessage> PostMessage(AddMessageRequest request, string username)
 		{
             var jsonContent = JsonSerializer.Serialize(request);
@@ -126,28 +129,17 @@ namespace MiniTwitClient.Controllers
             else return false;
         }
 
-        public async Task<List<string>> GetLogs(string date, int currentPage, int pageSize)
+        public async Task<List<string>?> GetLogs(string date, int page, int pageSize = 100, bool more = false)
         {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}logs?date={date}&page={currentPage}&pageSize={pageSize}");
+            var path = more ? "more-logs" : "logs";
+            var queryKey = more ? "currentPage" : "page";
+            var url = $"{_httpClient.BaseAddress}{path}?date={date}"
+                    + $"&{queryKey}={page}"
+                    + $"&pageSize={pageSize}";
 
-            if (response.IsSuccessStatusCode)
-            {
-                var logs = await response.Content.ReadFromJsonAsync<List<string>>();
-                return logs;
-            }
-            else return null;
-        }
-
-        public async Task<List<string>> GetMoreLogs(string date, int currentPage, int pageSize)
-        {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}more-logs?date={date}&page={currentPage}&pageSize={pageSize}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var logs = await response.Content.ReadFromJsonAsync<List<string>>();
-                return logs;
-            }
-            else return null;
+            var resp = await _httpClient.GetAsync(url);
+            if (!resp.IsSuccessStatusCode) return null;
+            return await resp.Content.ReadFromJsonAsync<List<string>>();
         }
 
         /// <summary>
