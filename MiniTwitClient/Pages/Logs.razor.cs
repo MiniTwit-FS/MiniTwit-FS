@@ -19,6 +19,8 @@ namespace MiniTwitClient.Pages
 
         private HubConnection? _hubConnection;
         private List<string> _logMessages = new List<string>();
+        private List<string> _logFilesList = new List<string>();
+        private string? _selectedLogFile;
         private int currentPage = 1;
         private int pageSize = 100;
 
@@ -32,12 +34,37 @@ namespace MiniTwitClient.Pages
             await InvokeAsync(StateHasChanged);
         }
 
+        public string? SelectedLogFile
+        {
+            get => _selectedLogFile;
+            set
+            {
+                if (_selectedLogFile != value)
+                {
+                    _selectedLogFile = value;
+                    // fire-and-forget is okay here; exceptions will surface in the console
+                    _ = LoadInitialLogs();
+                }
+            }
+        }
+
         protected override async Task OnInitializedAsync()
         {
+            // 1) Load list of log files
+            await LoadLogFiles();
+
+            // 2) If there's at least one, pick the first by default
+            if (_logFilesList.Any())
+            {
+                SelectedLogFile = _logFilesList.First();
+            }
+
+            // 3) Start your SignalR hub and then load logs for selected file
             _hubConnection = new HubConnectionBuilder()
-            .WithUrl(Controller.address + "logHub")
-            .WithAutomaticReconnect()
-            .Build();
+                .WithUrl(Controller.address + "logHub", options =>
+                    options.AccessTokenProvider = async () => UserState.Token)
+                .WithAutomaticReconnect()
+                .Build();
 
             _hubConnection.On<string>("ReceiveLogUpdate", async message =>
             {
@@ -58,15 +85,53 @@ namespace MiniTwitClient.Pages
             await InitialLogs();
         }
 
-        public void Dispose() => _hubConnection?.DisposeAsync();
-
-        private async Task InitialLogs()
+        private async Task LoadLogFiles()
         {
-            // Call your API to load logs
-            var time = DateTime.UtcNow;
-            var logs = await Controller.GetLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            var converted = logs.Select(FormatTimestampToLocal);
-            if (logs != null) _logMessages.InsertRange(0, converted);
+            var files = await Controller.GetLogFiles();
+            if (files != null)
+            {
+                _logFilesList = files;
+            }
+        }
+
+        private void DownloadSelectedLogFile()
+        {
+            if (string.IsNullOrEmpty(SelectedLogFile)) return;
+
+            var url = $"log-files/download/{Uri.EscapeDataString(SelectedLogFile)}";
+            Navigation.NavigateTo(url, forceLoad: true);
+        }
+
+        private async Task LoadInitialLogs()
+        {
+            if (_isLoading || string.IsNullOrEmpty(SelectedLogFile))
+                return;
+
+            _isLoading = true;
+            StateHasChanged();
+
+            try
+            {
+                currentPage = 1;
+                var date = Path.GetFileNameWithoutExtension(SelectedLogFile);
+                date = date.Remove(0, 16);
+
+
+                var logs = await Controller.GetLogs(date, currentPage, pageSize, more: false);
+
+                if (logs != null)
+                {
+                    _logMessages = logs
+                        .Select(FormatTimestampToLocal)
+                        .Reverse()    // oldest first
+                        .ToList();
+                }
+            }
+            finally
+            {
+                _isLoading = false;
+                StateHasChanged();
+            }
         }
 
         private async Task ScrollLogs()
@@ -113,40 +178,61 @@ namespace MiniTwitClient.Pages
         [JSInvokable]
         public async Task OnReachedBottom()
         {
-            //// if we’re already loading, bail out
-            //if (_isLoading)
-            //    return;
+            if (_isLoading || string.IsNullOrEmpty(SelectedLogFile))
+                return;
 
             //_isLoading = true;
             //try
             //{
             //    Console.WriteLine("Reached bottom!");
 
-            //    messageIndex++;
-            //    Messages = await Controller.GetUserTimeline(username, new MessagesRequest
-            //    {
-            //        NumberOfMessages = messagesCount * messageIndex
-            //    });
-            //    StateHasChanged();
-            //}
-            //finally
-            //{
-            //    _isLoading = false;
-            //}
+            try
+            {
+                _previousScrollHeight = await JSRuntime.InvokeAsync<double>("getScrollHeight", _logContainer);
+
+                currentPage++;
+                var date = Path.GetFileNameWithoutExtension(SelectedLogFile!);
+                var older = await Controller.GetLogs(date, currentPage, pageSize, more: true);
+
+                if (older?.Any() == true)
+                {
+                    var converted = older.Select(FormatTimestampToLocal);
+                    _logMessages.InsertRange(0, converted);
+                }
+
+                await InvokeAsync(StateHasChanged);
+            }
+            finally
+            {
+                _isLoading = false;
+                StateHasChanged();
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("initializeScrollTopListener", DotNetObjectReference.Create(this), logContainer);
-                await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", _logContainer);
+                await JSRuntime.InvokeVoidAsync(
+                    "initializeTopSentinel",
+                    DotNetObjectReference.Create(this)
+                );
             }
             else if (_shouldAutoScroll)
             {
-                // only scroll if the hub told us we were already at bottom
-                _shouldAutoScroll = false;
-                await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
+                if (_shouldAutoScroll)
+                {
+                    _shouldAutoScroll = false;
+                    await JSRuntime.InvokeVoidAsync("scrollToBottom", _logContainer);
+                }
+                else if (_previousScrollHeight > 0)
+                {
+                    var newHeight = await JSRuntime.InvokeAsync<double>("getScrollHeight", _logContainer);
+                    var delta = newHeight - _previousScrollHeight;
+                    await JSRuntime.InvokeVoidAsync("setScrollTop", _logContainer, delta);
+                    _previousScrollHeight = 0;
+                }
             }
         }
 

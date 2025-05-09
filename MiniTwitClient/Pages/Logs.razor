@@ -4,6 +4,26 @@
 
 @if (UserState.IsAdmin)
 {
+    <!-- ▼ Dropdown for selecting which .log file to view ▼ -->
+    <div class="mb-4 flex items-center">
+        <label for="logFiles" class="mr-2 font-semibold">Choose log file:</label>
+        <select id="logFiles"
+                @bind="SelectedLogFile"
+                class="px-2 py-1 border rounded">
+            <option value="">-- Select a file --</option>
+            @foreach (var file in _logFilesList)
+            {
+                <option value="@file">@file</option>
+            }
+        </select>
+        <!-- Download button -->
+        <button class="ml-4 px-3 py-1 bg-blue-600 text-white rounded disabled:opacity-50"
+                @onclick="DownloadSelectedLogFile"
+                disabled="@string.IsNullOrEmpty(SelectedLogFile)">
+            Download
+        </button>
+    </div>
+
     <h1 class="mt-4 text-2xl font-bold mb-4 text-center">
         Live Logs<br />
         @($"{DateTime.Now:dd-MM-yyyy}")

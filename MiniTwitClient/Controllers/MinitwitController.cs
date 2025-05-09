@@ -149,5 +149,23 @@ namespace MiniTwitClient.Controllers
             }
             else return null;
         }
+
+        /// <summary>
+        /// Fetches the list of all .log file names from the server.
+        /// </summary>
+        public async Task<List<string>?> GetLogFiles()
+        {
+            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}log-files-names");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadFromJsonAsync<List<string>>();
+            }
+            else
+            {
+                Console.WriteLine($"Error fetching log file list: {response.StatusCode}");
+                return null;
+            }
+        }
     }
 }

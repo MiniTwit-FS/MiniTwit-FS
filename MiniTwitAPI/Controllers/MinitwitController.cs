@@ -21,6 +21,7 @@ namespace MiniTwitAPI.Controllers
 
         private readonly string filePath = "./latest_processed_sim_action_id.txt";
         private readonly string logFilePath = "./logs/minitwit-api-log";
+        private readonly string logFilePathReal = "./logs";
 
         public MinitwitController(AppDbContext context, ILogger<MinitwitController> logger, IHubContext<LogHub> hubContext)
         {
@@ -514,6 +515,36 @@ namespace MiniTwitAPI.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = "Error fetching more logs", details = ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Returns all .log file names in the logFilePath directory.
+        /// </summary>
+        [HttpGet("/log-files-names")]
+        public IActionResult GetLogFiles()
+        {
+            try
+            {
+                // Grab all files ending in .log, only the file name (no path)
+                var fileNames = Directory
+                    .EnumerateFiles(logFilePathReal, "*.log", SearchOption.TopDirectoryOnly)
+                    .Select(Path.GetFileName)
+                    .ToList();
+
+                return Ok(fileNames);
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return NotFound(new { message = $"Log directory not found: {logFilePath}" });
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return StatusCode(403, new { message = "Access denied to log directory", details = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Error retrieving log files", details = ex.Message });
             }
         }
     }

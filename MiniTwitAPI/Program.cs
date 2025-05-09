@@ -96,17 +96,8 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
     {
-        policy.SetIsOriginAllowed(origin => true) // This effectively allows any origin.
-               .AllowAnyMethod()
-               .AllowAnyHeader()
-               .AllowCredentials();
-
-        logger.LogDebug("CORS policy 'AllowAll' configured");
-    });
-
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.WithOrigins("https://localhost:7192") // Replace with client port
+        policy.WithOrigins("https://localhost:7192", "https://localhost:7192/log-files")
+              .AllowAnyMethod()
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -115,6 +106,9 @@ builder.Services.AddCors(options =>
 
 logger.LogInformation("Building application");
 var app = builder.Build();
+app.UseRouting();
+app.UseCors("DevCorsPolicy"); // Apply the CORS policy
+
 
 // Create an application lifetime logger
 var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
@@ -124,7 +118,54 @@ var appLogger = app.Services.GetRequiredService<ILogger<Program>>();
 app.UseCors("AllowAll"); // Apply the CORS policy
 app.UseSession();
 app.UseHttpsRedirection();
-app.MapHub<LogHub>("/logHub"); // Map the hub to a URL
+
+app.Use(async (context, next) =>
+{
+    if (context.Request.Method == HttpMethods.Options)
+    {
+        context.Response.StatusCode = StatusCodes.Status204NoContent;
+        return;
+    }
+
+    await next();
+});
+
+var allowedBasicAuthValue = builder.Configuration["SpecialApp:AuthorizationHeader"];
+app.Use(async (context, next) =>
+{
+    var authorizationHeader = context.Request.Headers["Authorization"].ToString();
+    var allowedBasicAuthValue = builder.Configuration["SpecialApp:AuthorizationHeader"];
+
+    if (string.IsNullOrWhiteSpace(authorizationHeader))
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("Unauthorized - Authorization required.");
+        return;
+    }
+
+    // If Basic Auth is present, handle it separately
+    if (authorizationHeader.StartsWith("Basic ", StringComparison.OrdinalIgnoreCase))
+    {
+        if (authorizationHeader == allowedBasicAuthValue)
+        {
+            await next(); // valid Basic — continue pipeline
+            return;
+        }
+
+        // Invalid Basic Auth — stop here
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("Unauthorized - Invalid Basic credentials.");
+        return;
+    }
+
+    // Let the JWT middleware handle the rest
+    await next();
+});
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Add a basic request logger middleware
 app.Use(async (context, next) =>
@@ -199,7 +240,7 @@ using (var scope = app.Services.CreateScope())
     {
         foreach (var user in unhashedUsers)
         {
-            user.PasswordHash = user.PasswordHash.Sha256Hash(); // ← Your hashing method
+            user.PasswordHash = user.PasswordHash.Sha256Hash();
             user.IsPasswordHashed = true;
         }
 
