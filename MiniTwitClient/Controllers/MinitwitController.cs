@@ -129,28 +129,17 @@ namespace MiniTwitClient.Controllers
             else return false;
         }
 
-        public async Task<List<string>> GetLogs(string date, int currentPage, int pageSize)
+        public async Task<List<string>?> GetLogs(string date, int page, int pageSize = 100, bool more = false)
         {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}logs?date={date}&page={currentPage}&pageSize={pageSize}");
+            var path = more ? "more-logs" : "logs";
+            var queryKey = more ? "currentPage" : "page";
+            var url = $"{_httpClient.BaseAddress}{path}?date={date}"
+                    + $"&{queryKey}={page}"
+                    + $"&pageSize={pageSize}";
 
-            if (response.IsSuccessStatusCode)
-            {
-                var logs = await response.Content.ReadFromJsonAsync<List<string>>();
-                return logs;
-            }
-            else return null;
-        }
-
-        public async Task<List<string>> GetMoreLogs(string date, int currentPage, int pageSize)
-        {
-            var response = await _httpClient.GetAsync($"{_httpClient.BaseAddress}more-logs?date={date}&page={currentPage}&pageSize={pageSize}");
-
-            if (response.IsSuccessStatusCode)
-            {
-                var logs = await response.Content.ReadFromJsonAsync<List<string>>();
-                return logs;
-            }
-            else return null;
+            var resp = await _httpClient.GetAsync(url);
+            if (!resp.IsSuccessStatusCode) return null;
+            return await resp.Content.ReadFromJsonAsync<List<string>>();
         }
     }
 }

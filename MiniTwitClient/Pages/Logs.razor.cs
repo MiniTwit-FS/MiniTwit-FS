@@ -20,9 +20,12 @@ namespace MiniTwitClient.Pages
         private HubConnection? _hubConnection;
         private List<string> _logMessages = new List<string>();
         private int currentPage = 1;
-        private int pageSize = 100;
+        private const int pageSize = 100;
 
-        private ElementReference logContainer;
+        private ElementReference _logContainer;
+        private bool _shouldAutoScroll = false;
+
+        private double _previousScrollHeight = 0;
 
         protected override async Task OnInitializedAsync()
         {
@@ -37,99 +40,123 @@ namespace MiniTwitClient.Pages
             .WithAutomaticReconnect()
             .Build();
 
-            _hubConnection.On<string>("ReceiveLogUpdate", (message) =>
+            _hubConnection.On<string>("ReceiveLogUpdate", async message =>
             {
+                var atBottom = await JSRuntime.InvokeAsync<bool>("isScrolledToBottom", _logContainer);
                 var converted = FormatTimestampToLocal(message);
-                _logMessages.Insert(_logMessages.Count(), converted);
-                StateHasChanged();
+                _logMessages.Add(converted);
+
+                if (atBottom)
+                    _shouldAutoScroll = true;
+
+                await InvokeAsync(StateHasChanged);
             });
 
             await _hubConnection.StartAsync();
-            await InitialLogs();
+            await LoadInitialLogs();
         }
 
-        private async Task InitialLogs()
+        private async Task LoadInitialLogs()
         {
-            // Call your API to load logs
-            var time = DateTime.UtcNow;
-            var logs = await Controller.GetLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            var converted = logs.Select(FormatTimestampToLocal);
-            if (logs != null) _logMessages.InsertRange(0, converted);
-        }
+            if (_isLoading) return;
 
-        private async Task ScrollLogs()
-        {
-            // Call your API to load logs
-            var time = DateTime.UtcNow;
-            var logs = await Controller.GetMoreLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            var converted = logs.Select(FormatTimestampToLocal);
-            if (logs != null) _logMessages.InsertRange(0, converted);
-        }
-
-        private async Task NewLogs()
-        {
-            // Call your API to load logs
-            var time = DateTime.UtcNow;
-            var logs = await Controller.GetMoreLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
-            var converted = logs.Select(FormatTimestampToLocal);
-            if (logs != null) _logMessages.InsertRange(_logMessages.Count(), converted);
-        }
-
-        private async Task LoadNextPage()
-        {
-            currentPage++;
-            await ScrollLogs();
-        }
-
-        private async Task LoadPreviousPage()
-        {
-            if (currentPage > 1)
+            _isLoading = true;
+            StateHasChanged();
+            try
             {
-                currentPage--;
-                await InitialLogs();
-            }
-        }
+                currentPage = 1;
+                var date = DateTime.UtcNow.ToString("yyyyMMdd");
 
+                // more: false is default, so you can omit it if you like
+                var logs = await Controller.GetLogs(date, currentPage, pageSize, more: false);
+
+                if (logs != null)
+                {
+                    _logMessages = logs
+                        .Select(FormatTimestampToLocal)
+                        .Reverse()    // oldest at top, newest at bottom
+                        .ToList();
+                }
+                _isLoading = false;
+            }
+            finally
+            {
+                _isLoading = false;
+            }
+            
+        }
         public async ValueTask DisposeAsync()
         {
             if (_hubConnection is not null)
-            {
                 await _hubConnection.DisposeAsync();
-            }
         }
 
+        private bool _isLoading = false;
+
+        /// <summary>
+        /// When the user scrolls up to the top sentinel—
+        /// load the next (older) page and prepend.
+        /// </summary>
         [JSInvokable]
-        public async Task OnReachedBottom()
+        public async Task OnReachedTop()
         {
-            //// if we’re already loading, bail out
-            //if (_isLoading)
-            //    return;
+            // if we’re already loading, bail out
+            if (_isLoading)
+                return;
 
-            //_isLoading = true;
-            //try
-            //{
-            //    Console.WriteLine("Reached bottom!");
+            _isLoading = true;
+            StateHasChanged();
 
-            //    messageIndex++;
-            //    Messages = await Controller.GetUserTimeline(username, new MessagesRequest
-            //    {
-            //        NumberOfMessages = messagesCount * messageIndex
-            //    });
-            //    StateHasChanged();
-            //}
-            //finally
-            //{
-            //    _isLoading = false;
-            //}
+            try
+            {
+                // 1) remember how tall we were
+                _previousScrollHeight = await JSRuntime.InvokeAsync<double>("getScrollHeight", _logContainer);
+
+                // 2) bump page, fetch older logs
+                currentPage++;
+                var date = DateTime.UtcNow.ToString("yyyyMMdd");
+                var older = await Controller.GetLogs(date, currentPage, pageSize, more: true);
+
+                if (older != null && older.Any())
+                {
+                    var converted = older.Select(FormatTimestampToLocal).ToList();
+                    _logMessages.InsertRange(0, converted);
+                }
+
+                await InvokeAsync(StateHasChanged);
+            }
+            finally
+            {
+                _isLoading = false;
+            }
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)
             {
-                await JSRuntime.InvokeVoidAsync("initializeScrollListener",
-                    DotNetObjectReference.Create(this));
-                await JSRuntime.InvokeVoidAsync("scrollToBottom", logContainer);
+                // First time: scroll to bottom & start watching top
+                await JSRuntime.InvokeVoidAsync("scrollToBottom", _logContainer);
+                await JSRuntime.InvokeVoidAsync(
+                    "initializeTopSentinel",
+                    DotNetObjectReference.Create(this)
+                );
+            }
+            else
+            {
+                if (_shouldAutoScroll)
+                {
+                    _shouldAutoScroll = false;
+                    await JSRuntime.InvokeVoidAsync("scrollToBottom", _logContainer);
+                }
+                else if (_previousScrollHeight > 0)
+                {
+                    // we prepended older logs → restore scroll offset
+                    var newHeight = await JSRuntime.InvokeAsync<double>("getScrollHeight", _logContainer);
+                    var delta = newHeight - _previousScrollHeight;
+                    await JSRuntime.InvokeVoidAsync("setScrollTop", _logContainer, delta);
+                    _previousScrollHeight = 0;
+                }
             }
         }
 
