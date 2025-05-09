@@ -27,7 +27,13 @@ namespace MiniTwitClient.Pages
         protected override async Task OnInitializedAsync()
         {
             _hubConnection = new HubConnectionBuilder()
-            .WithUrl(Controller.address + "logHub")
+            .WithUrl(Controller.address + "logHub", options =>
+            {
+                options.AccessTokenProvider = async () =>
+                {
+                    return UserState.Token;
+                };
+            })
             .WithAutomaticReconnect()
             .Build();
 
