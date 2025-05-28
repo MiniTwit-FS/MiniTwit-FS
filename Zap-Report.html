@@ -1,0 +1,3608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAP by Checkmarx Scanning Report</title>
+<link
+	href="2025-05-09-ZAP-Report-/normalize/normalize.css" rel="stylesheet">
+<link
+	href="2025-05-09-ZAP-Report-/themes/original/main.css" rel="stylesheet">
+<link
+	href="2025-05-09-ZAP-Report-/themes/original/colors.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>ZAP by Checkmarx Scanning Report</h1>
+		<p>
+			<span>Generated with</span> <a href="https://zaproxy.org"><img
+				src="2025-05-09-ZAP-Report-/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
+			<span>on Fri 9 May 2025, at 11:07:20</span>
+		</p>
+		<p>ZAP Version: 2.16.1</p>
+	</header>
+
+	<main>
+
+		<section id="contents" class="contents">
+			<h2>Contents</h2>
+			<nav>
+				<ol>
+					<li><a
+						href="#about-this-report">About this report</a>
+						<ol>
+							
+							<li><a
+								href="#report-parameters">Report parameters</a></li>
+						</ol></li>
+					<data-th-block>
+					<li><a
+						href="#summaries">Summaries</a>
+						<ol>
+							<li><a
+								href="#risk-confidence-counts">Alert counts by risk and confidence</a></li>
+							<li><a
+								href="#site-risk-counts">Alert counts by site and risk</a></li>
+							<li><a
+								href="#alert-type-counts">Alert counts by alert type</a></li>
+						</ol></li>
+					<li><a
+						href="#alerts">Alerts</a>
+						<ol>
+							
+							 
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-2-confidence-3"><span>Risk</span>=<span
+									class="risk-level">Medium</span>, <span>Confidence</span>=<span
+									class="confidence-level">High</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-2-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Medium</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-2-confidence-1"><span>Risk</span>=<span
+									class="risk-level">Medium</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(1)</span></a></li>
+							  
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-1-confidence-3"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">High</span> <span>(1)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-1-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(2)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-1-confidence-1"><span>Risk</span>=<span
+									class="risk-level">Low</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(1)</span></a></li>
+							  
+							
+							
+							
+							
+							
+							
+							<li><a
+								href="#alerts--risk-0-confidence-2"><span>Risk</span>=<span
+									class="risk-level">Informational</span>, <span>Confidence</span>=<span
+									class="confidence-level">Medium</span> <span>(3)</span></a></li>
+							
+							<li><a
+								href="#alerts--risk-0-confidence-1"><span>Risk</span>=<span
+									class="risk-level">Informational</span>, <span>Confidence</span>=<span
+									class="confidence-level">Low</span> <span>(3)</span></a></li>
+							  
+						</ol></li>
+					<li><a
+						href="#appendix">Appendix</a>
+						<ol>
+							<li><a
+								href="#alert-types">Alert types</a></li>
+						</ol></li>
+					</data-th-block>
+				</ol>
+			</nav>
+		</section>
+
+		<section
+			id="about-this-report" class="about-this-report">
+			<h2>About this report</h2>
+
+			
+
+			<section
+				id="report-parameters">
+				<h3>Report parameters</h3>
+				<div class="report-parameters--container">
+					<h4>Contexts</h4>
+					
+					
+					<p>No contexts were selected, so all contexts were included by default.</p>
+					  
+
+					<h4>Sites</h4>
+					
+					<p>The following sites were included:</p>
+					<ul class="sites-list">
+						<li><span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span></li>
+					</ul>
+					
+					<p>(If no sites were selected, all sites were included by default.)</p>
+					<p>An included site must also be within one of the included contexts for its data to be included in the report.</p>
+
+					<h4>Risk levels</h4>
+					<p>
+						<span>Included</span>:
+						 
+						<span class="included-risk-codes"><span class="risk-level">High</span>, <span class="risk-level">Medium</span>, <span class="risk-level">Low</span>, <span class="risk-level">Informational</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						 <span>None</span>
+						
+					</p>
+
+					<h4>Confidence levels</h4>
+					<p>
+						<span>Included</span>:
+						
+						
+						<span class="included-confidence-codes"><span class="confidence-level">User Confirmed</span>, <span class="confidence-level">High</span>, <span class="confidence-level">Medium</span>, <span class="confidence-level">Low</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						
+						
+						<span class="included-confidence-codes"> <span class="confidence-level">User Confirmed</span>, <span class="confidence-level">High</span>, <span class="confidence-level">Medium</span>, <span class="confidence-level">Low</span>, <span class="confidence-level">False Positive</span></span>
+					</p>
+				</div>
+			</section>
+		</section>
+
+		
+		<section>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section
+				id="risk-confidence-counts">
+				<h3>Alert counts by risk and confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%"><col
+							style="width: 14.0%">
+						<col style="width: 14.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup"
+								colspan="5">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">User Confirmed</th>
+							<th scope="col">High</th>
+							<th scope="col">Medium</th>
+							<th scope="col">Low</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="5">Risk</th>
+							<th scope="row">High</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0.0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Medium</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(7.7%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(7.7%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(7.7%)</span></td>
+							<td><span>3</span><br> <span class="additional-info-percentages">(23.1%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Low</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(7.7%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(15.4%)</span></td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(7.7%)</span></td>
+							<td><span>4</span><br> <span class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Informational</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(23.1%)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(23.1%)</span></td>
+							<td><span>6</span><br> <span class="additional-info-percentages">(46.2%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0.0%)</span></td>
+							<td><span>2</span><br> <span
+								class="additional-info-percentages">(15.4%)</span></td>
+							<td><span>6</span><br> <span
+								class="additional-info-percentages">(46.2%)</span></td>
+							<td><span>5</span><br> <span
+								class="additional-info-percentages">(38.5%)</span></td>
+							<td><span>13</span><br> <span
+								class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="site-risk-counts">
+				<h3>Alert counts by site and risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of &quot;False Positive&quot; have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%"><col
+							style="width: 16.25%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="4">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>High</span><br>  <span
+									class="additional-info-percentages">(= High)</span>  
+							</th>
+							<th scope="col">
+								<span>Medium</span><br>   <span
+									class="additional-info-percentages">(&gt;= Medium)</span> 
+							</th>
+							<th scope="col">
+								<span>Low</span><br>   <span
+									class="additional-info-percentages">(&gt;= Low)</span> 
+							</th>
+							<th scope="col">
+								<span>Informational</span><br>   <span
+									class="additional-info-percentages">(&gt;= Informational)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup"
+								rowspan="1">Site</th>
+							<th scope="row">https://minitwit-api-5ezat.ondigitalocean.app</th>
+							
+							<td><span>0</span><br> <span
+								class="additional-info-percentages">(0)</span></td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(3)</span></td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(7)</span></td>
+							<td><span>6</span><br> <span
+								class="additional-info-percentages">(13)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section
+				id="alert-type-counts">
+				<h3>Alert counts by alert type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type&#39;s risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-0">Content Security Policy (CSP) Header Not Set</a></th>
+							<td class="risk-level">Medium</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-1">Hidden File Found</a></th>
+							<td class="risk-level">Medium</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-2">Missing Anti-clickjacking Header</a></th>
+							<td class="risk-level">Medium</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-3">Cookie with SameSite Attribute None</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>3</span><br> <span
+								class="additional-info-percentages">(23.1%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-4">Strict-Transport-Security Header Not Set</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>10</span><br> <span
+								class="additional-info-percentages">(76.9%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-5">Timestamp Disclosure - Unix</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-6">X-Content-Type-Options Header Missing</a></th>
+							<td class="risk-level">Low</td>
+							<td><span>10</span><br> <span
+								class="additional-info-percentages">(76.9%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-7">Information Disclosure - Suspicious Comments</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>1</span><br> <span
+								class="additional-info-percentages">(7.7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-8">Loosely Scoped Cookie</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-9">Modern Web Application</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-10">Re-examine Cache-control Directives</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>4</span><br> <span
+								class="additional-info-percentages">(30.8%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-11">Retrieved from Cache</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>9</span><br> <span
+								class="additional-info-percentages">(69.2%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a
+								href="#alert-type-12">Session Management Response Identified</a></th>
+							<td class="risk-level">Informational</td>
+							<td><span>7</span><br> <span
+								class="additional-info-percentages">(53.8%)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>13</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				 
+				
+				
+				<li id="alerts--risk-2-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Medium</span>, <span>Confidence</span>=<span
+							class="confidence-level">High</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-0">Content Security Policy (CSP) Header Not Set</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Content Security Policy (CSP) is an added layer of security that helps to detect and mitigate certain types of attacks, including Cross Site Scripting (XSS) and data injection attacks. These attacks are used for everything from data theft to site defacement or distribution of malware. CSP provides a set of standard HTTP headers that allow website owners to declare approved sources of content that browsers should be allowed to load on that page — covered types are JavaScript, CSS, HTML frames, fonts, images and embeddable objects such as Java applets, ActiveX, audio and video files.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (275 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (886 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ebbee0ea5248c73c-00681dc036-82560268-ams3c
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk; path=/; expires=Fri, 09-May-25 09:30:04 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011d699e2875-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that your web server, application server, load balancer, etc. is configured to set the Content-Security-Policy header.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-2-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Medium</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-2">Missing Anti-clickjacking Header</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/11-Client-side_Testing/09-Testing_for_Clickjacking">WSTG-v42-CLNT-09</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/1021.html">CWE-1021</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The response does not protect against &#39;ClickJacking&#39; attacks. It should include either Content-Security-Policy with &#39;frame-ancestors&#39; directive or X-Frame-Options.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (275 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (886 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:03 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ebbee0ea5248c73c-00681dc036-82560268-ams3c
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 989
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=nuEjHvT7cxTVBn5OdglrJth1iAnfD4iVuGcoSxXBz48-1746781203-1.0.1.1-LYFXXHiSDa8sH_I02wcIpZwbjrCiBPjyeB9t4HSfCnaIJ0kIR9fDnm1IqCo_zUDQDYJpqH2BooMZ.OW7jdytEZYjyuMQskL1mywmVMziZlA; path=/; expires=Fri, 09-May-25 09:30:03 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011c9f68ebc5-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-frame-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Modern Web browsers support the Content-Security-Policy and X-Frame-Options HTTP headers. Ensure one of them is set on all web pages returned by your site/app.</p>
+
+<p>If you expect the page to be framed only by pages on your server (e.g. it&#39;s part of a FRAMESET) then you&#39;ll want to use SAMEORIGIN, otherwise if you never expect the page to be framed, you should use DENY. Alternatively consider implementing Content Security Policy&#39;s &quot;frame-ancestors&quot; directive.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-2-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Medium</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-1">Hidden File Found</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/.hg</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_FULL = </span>
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/538.html">CWE-538</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/02-Configuration_and_Deployment_Management_Testing/05-Enumerate_Infrastructure_and_Application_Admin_Interfaces">WSTG-v42-CONF-05</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A sensitive file was identified as accessible or available. This may leak administrative, configuration, or credential information which can be leveraged by a malicious individual to further attack the system or conduct social engineering efforts.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (279 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/.hg HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (911 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:29 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ffd39a023afda4c5-00681dc42d-82560268-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-orig-status: 404
+CF-Cache-Status: MISS
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=NHNcn85ftVk7eF_GZwbpej2Ya2Aq7oxb0AbDGtt2434-1746781229-1.0.1.1-fZiW67a5LsrjzNHglNq.4QzOn84VC0CNeEen7ip7sDmTAWGSeriR5EygRMVPmgR65U1pVs8z.ZI6Fskl6wg_ZkqjtU4tHPaojr42.J7KMFM; path=/; expires=Fri, 09-May-25 09:30:29 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d001bbe83d92f8-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>HTTP/1.1 200 OK</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Consider whether or not the component is actually required in production, if it isn&#39;t then disable it. If it is then ensure access to it requires appropriate authentication and authorization, or limit exposure to internal systems or specific source IPs, etc.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+				 
+				
+				
+				<li id="alerts--risk-1-confidence-3">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">High</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-4">Strict-Transport-Security Header Not Set</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/css/app.css</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/319.html">CWE-319</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>HTTP Strict Transport Security (HSTS) is a web security policy mechanism whereby a web server declares that complying user agents (such as a web browser) are to interact with it using only secure HTTPS connections (i.e. HTTP layered over TLS/SSL). HSTS is an IETF standards track protocol and is specified in RFC 6797.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (531 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/css/app.css HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+referer: https://minitwit-api-5ezat.ondigitalocean.app
+Cookie: __cf_bm=2ZdJH.KH0ipGAOdiMix4Ni4E7m6VB6p9.gRYZ0_FXIE-1746781204-1.0.1.1-RWkVgB_v.WN7i9ErscWeK8swZRS_CKmayRWvoEvDzWpB6sVUoBLOpqdkSn8fo63yzTpFzZumgCP0fyx7ung.Or3ewrUT5cKsyCvzzt8Kic8
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (706 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/css; charset=utf-8
+Content-Length: 3679
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+etag: &quot;deead3211ef1d423e0079a2aeeda8dc7&quot;
+x-amz-request-id: tx00000edecbe6e6be55da0-00681dc036-82560268-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Server: cloudflare
+CF-RAY: 93d0011dfbe09305-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3679 bytes)</summary>
+				
+				<pre><code>html, body {
+    font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif;
+}
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    color: #0071c1;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: &quot;An error has occurred.&quot;
+    }
+
+.loading-progress {
+    position: relative;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    margin: 20vh auto 1rem auto;
+}
+
+    .loading-progress circle {
+        fill: none;
+        stroke: #e0e0e0;
+        stroke-width: 0.6rem;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg);
+    }
+
+        .loading-progress circle:last-child {
+            stroke: #1b6ec2;
+            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            transition: stroke-dasharray 0.05s ease-in-out;
+        }
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+    .loading-progress-text:after {
+        content: var(--blazor-load-percentage-text, &quot;Loading&quot;);
+    }
+
+code {
+    color: #c02d76;
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that your web server, application server, load balancer, etc. is configured to enforce Strict-Transport-Security.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-1-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(2)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(2)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-3">Cookie with SameSite Attribute None</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control.html">OWASP_2017_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes">WSTG-v42-SESS-02</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/1275.html">CWE-1275</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A cookie has been set with its SameSite attribute set to &quot;none&quot;, which means that the cookie can be sent as a result of a &#39;cross-site&#39; request. The SameSite attribute is an effective counter measure to cross-site request forgery, cross-site script inclusion, and timing attacks.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (275 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (886 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ebbee0ea5248c73c-00681dc036-82560268-ams3c
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk; path=/; expires=Fri, 09-May-25 09:30:04 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011d699e2875-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>__cf_bm</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>Set-Cookie: __cf_bm</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that the SameSite attribute is set to either &#39;lax&#39; or ideally &#39;strict&#39; for all cookies.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-6">X-Content-Type-Options Header Missing</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/css/app.css</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/693.html">CWE-693</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The Anti-MIME-Sniffing header X-Content-Type-Options was not set to &#39;nosniff&#39;. This allows older versions of Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response body to be interpreted and displayed as a content type other than the declared content type. Current (early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing MIME-sniffing.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>This issue still applies to error type pages (401, 403, 500, etc.) as those pages are often still affected by injection issues, in which case there is still concern for browsers sniffing pages away from their actual content type.</p>
+
+<p>At &quot;High&quot; threshold this scan rule will not alert on client or server error responses.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (531 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/css/app.css HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+referer: https://minitwit-api-5ezat.ondigitalocean.app
+Cookie: __cf_bm=2ZdJH.KH0ipGAOdiMix4Ni4E7m6VB6p9.gRYZ0_FXIE-1746781204-1.0.1.1-RWkVgB_v.WN7i9ErscWeK8swZRS_CKmayRWvoEvDzWpB6sVUoBLOpqdkSn8fo63yzTpFzZumgCP0fyx7ung.Or3ewrUT5cKsyCvzzt8Kic8
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (706 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/css; charset=utf-8
+Content-Length: 3679
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+etag: &quot;deead3211ef1d423e0079a2aeeda8dc7&quot;
+x-amz-request-id: tx00000edecbe6e6be55da0-00681dc036-82560268-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Server: cloudflare
+CF-RAY: 93d0011dfbe09305-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3679 bytes)</summary>
+				
+				<pre><code>html, body {
+    font-family: &#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif;
+}
+
+h1:focus {
+    outline: none;
+}
+
+a, .btn-link {
+    color: #0071c1;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: &quot;An error has occurred.&quot;
+    }
+
+.loading-progress {
+    position: relative;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    margin: 20vh auto 1rem auto;
+}
+
+    .loading-progress circle {
+        fill: none;
+        stroke: #e0e0e0;
+        stroke-width: 0.6rem;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg);
+    }
+
+        .loading-progress circle:last-child {
+            stroke: #1b6ec2;
+            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            transition: stroke-dasharray 0.05s ease-in-out;
+        }
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+    .loading-progress-text:after {
+        content: var(--blazor-load-percentage-text, &quot;Loading&quot;);
+    }
+
+code {
+    color: #c02d76;
+}
+</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>x-content-type-options</code></pre></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to &#39;nosniff&#39; for all web pages.</p>
+
+<p>If possible, ensure that the end user uses a standards-compliant and modern web browser that does not perform MIME-sniffing at all, or that can be directed by the web application/web server to not perform MIME-sniffing.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-1-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Low</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-5">Timestamp Disclosure - Unix</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/sitemap.xml</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html">OWASP_2017_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/497.html">CWE-497</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>A timestamp was disclosed by the application/web server. - Unix</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>1746781204, which evaluates to: 2025-05-09 11:00:04.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (287 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/sitemap.xml HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (911 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx000005ea85ffd05cbdf78-00681dc414-82557b56-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-orig-status: 404
+CF-Cache-Status: MISS
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=2ZdJH.KH0ipGAOdiMix4Ni4E7m6VB6p9.gRYZ0_FXIE-1746781204-1.0.1.1-RWkVgB_v.WN7i9ErscWeK8swZRS_CKmayRWvoEvDzWpB6sVUoBLOpqdkSn8fo63yzTpFzZumgCP0fyx7ung.Or3ewrUT5cKsyCvzzt8Kic8; path=/; expires=Fri, 09-May-25 09:30:04 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011d6a6792c2-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>Set-Cookie</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>1746781204</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Manually confirm that the timestamp data is not sensitive, and that the data cannot be aggregated to disclose exploitable patterns.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-0-confidence-2">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Informational</span>, <span>Confidence</span>=<span
+							class="confidence-level">Medium</span> <span>(3)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(3)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-9">Modern Web Application</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The application appears to be a modern web application. If you need to explore it automatically then the Ajax Spider may well be more effective than the standard one.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>Links have been found that do not have traditional href attributes, which is an indication that this is a modern web application.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (520 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/ HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+referer: https://minitwit-api-5ezat.ondigitalocean.app
+Cookie: __cf_bm=rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (588 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ebbee0ea5248c73c-00681dc036-82560268-ams3c
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Server: cloudflare
+CF-RAY: 93d0011deb2c6ded-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>This is an informational alert and so no changes are required.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-11">Retrieved from Cache</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/favicon.png</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses">WSTG-v42-ATHN-06</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The content was retrieved from a shared cache. If the response data is sensitive, personal or user-specific, this may result in sensitive information being leaked. In some cases, this may even result in a user gaining complete control of the session of another user, depending on the configuration of the caching components in use in their environment. This is primarily an issue where caching servers such as &quot;proxy&quot; caches are configured on the local network. This configuration is typically found in corporate or educational environments, for instance.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The presence of the &#39;Age&#39; header indicates that a HTTP/1.1 compliant caching server is in use.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (531 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/favicon.png HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+referer: https://minitwit-api-5ezat.ondigitalocean.app
+Cookie: __cf_bm=2uuT3cbQpbWiji6Alwu2guNGpOXSUowDH0lbJy5l9HA-1746781204-1.0.1.1-mkdDGkS.WtvlZy.kiS5dm.5gmdlpvKPPSV2jEJKCJJ1EKG2iClOq2QdcRfm3_OneDOoKvbLQ1Yg0PlhYpUIkeMaMV8mTRfGKR5EsEblRABs
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (692 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: image/png
+Content-Length: 2396
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+etag: &quot;c629a1e1c57a3e6295e082464d48a703&quot;
+x-amz-request-id: tx00000797d7658d1d58596-00681dc037-82557b56-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 989
+Accept-Ranges: bytes
+Server: cloudflare
+CF-RAY: 93d0011df922be56-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (2396 bytes)</summary>
+				
+				<pre><code>PNG
+
+   IHDR           szzô  	#IDATXG­yTT×Çï½ofcXEºÄåTYUÅ¨1Gcl+ÕJL­§F«FL¥öÄHlui\[µÁc!×
+3,Â8â¨ *lÃ0ÌÌ{÷ö&gt;Dê¾Üùç½w·Ïï{ËÑNgWôbì­O-Ö¸×éN6çÞê[]WT(Jßó·ªQª[7úgïx6·%ï^4ÄòM¢(¬kt4|ç-w÷%@y9hÇjÖUZ8×ïBÞÎ7Ñ@Zü©uÁÜo!À¤èËÛ¬êÞi¸¬Î¦ø³ÆÜ7	Ñ àTU&lt;¾ þÈ a¨úÓU\~[Ý½ÏâáÁgMwa4YÁ !yÐn éééL/Ï±G!ÇÑM	f&lt;% ©B@ÏL ÍØfrï§ìô®vâÄJ5ã=Bg=ÝGð«N^yÄcGpúdù0y%BE@?¯A!÷¥t!ûSýÅ¼]æ)ÔÜP@P@meRm[~Å÷BÞ8Ó8@Ù· ÐSx¸t °.è½eh«)M¸÷ù÷gÁ&quot;ö]aP±¨\N&quot;Ôº_@`1ÖÃD¾ æXtÉú®£ ýà¿ñµ×Wíú&gt;0Qâô,³ÐïËèì,ÊÒ]1O~% s^Õ@âÒîÕ1	Ârùô(Ç%Ô5×çö3o­&gt; 5 &gt;?&quot;òs¨]Îïªµ,ÏM`ù@ñÜ»ÁXTüî8nÝ1b,@æá&lt;/Ð¸=fºH¯ïÙÚVW±+òÀ¦vlßÛ&#39;ïä­çY/õ?@?¯ø0ë L5Ö,YÿÈ*9«µX.;ÿë3büýÀÌZ&quot;ÇLÐøZ ÒäS§ê|âS¢À­t{;Æ|¤Çð Q
+¡¬-·ÍL«¼\Zx©+6ç{úKNázÄSø)Ä5þÔyN3cv9!ßM_íZ	þõíÀq&lt;P«ÜÁg«¾Y:gÁÄu¯U¥)uiM¬&quot;&quot;À÷( `°hi$%®âbÇÆ{MõèG³¢ð,ç*Ð5ÙtìfÂ#~.Á Ö+nßÔíÿBÎUW $¸@sH¿	íÕ5J¢=4jd)SFYß@qîÝ·\ÛB P®¼Ë/Fyï^7³Z¤*H1J·C#¿¼:é¾§-Ñ£ÇE%$Q2ôµáèt9Ï¬©?gþòûoh¾+üýÿñ¼Æ@½È°µ4\ÝKW¤M­uqï¨ôº´·ßîë8ôþûþÓöí«y/ÐµÀÆ&gt;d¯sHï5i½ö|9°AÅ¢¾çÙÒ¾ÈÆ£^¶Hý
+ÖÇ§hfæÅ&#39;Hñèí&gt;Ö§®k@YÁ=µÝÕÆ8fl¸Áã]¸|©©Fv\øÀTÔãFÉ6P}õ\CÂ¯µ	LùM2ã}×öK¥±[3îÝt3krþn7wä¨ìMÈÁ@uÂ´w:Q~~uê²&quot;â4Q?^NËf°E²¯m¤Ùß`èÙð(ýÚµéZÃÈIÍw)?Ó¼ð fâz)1jøCÅn¨):Á15¨àØN±µ²³8&quot;zÐ§£þôwy7:Eat¼·Éx¤²BáSAE@aÙÿ«§Ip¹Ø¶ÿÿÎ,MñN
+Äð8aÔóhÁòæX×EpÑÈhýÑÂôKo±æ£ê ¼£+n%-ýÖ³Xg·;¯q¬j$ì Áißy»JqÎ*¼î dGÆiÇ³×ÈýZ7@qUáÅ|+©­³ªî]ÿe WHQx¬:Ðc[í EzC)U§X¶ãèêß=«5k2&quot;BM 8vcæ#Èz@¸&quot;&quot;×N Ò3Wb·/r7uïlÄpß	k+dàïWEÄ©Gt:UvÛ^§ÓzX!×|fPK `YIÔØu&#39;ù×`A,±3õJ¨¯ÃÈ1aþï*kv[B8&gt;&amp;ljñ#  ¼gÎµð[	À[ BJQ.&amp;âfÝÉ¢ Ç«^ M(Ê¶ýÕfoº¥Q{,v±äX©8@^ymØo@-Î#0Þ45`_bFXr¨ÅÔnTi³[Z! èpjI7v¨®ÖËXhþcõÔ¿6 â/bfÜ¨x--ÍTj±ÃÞRíæ¦]Aè]H
+0f6©(ÛºBnöéðcé%Ñ¤õI¨Aó73à9Çì; nzA3· +ëN¯Î5¨îCpóSÛzÈiAëq.ÀÓvz­àrYoÊYuJX2¤ðu5&quot;òÑ¤fkDl¯¦÷N¯º_åèíKïrÜïPk6R Þ1ÛÖÔÚ*Sy`HZ$®©©©(Á0&#39;$&lt;:àZW¨çÝôxµMhïðVëm,«Æ$uÆmöB?¡þ®K9xnÔÞWó3ËÃú­¤²¶%[ònH¼Ñ	k¼Ý?ÒÐ³LzÎ¥²²©DKzÊ´NGÇÇ2aaD¬?D#`éúÿ;ALÈò(TßtWMÌÈè¼nÝ½Ý­Ã1¯]ÎìÞtñô1Ó¦ðml*@EozQUCZ½XÙXpþ&#39;5Lm]ÆJ ðÐâÅ×¯÷UØ~ªV!,¯ Ò`:Ü-=¤çA1ª F¨è±ÛõgM¦XpRcbØ©¬2Pe&#39;!gÝ¦z­¢¢ÄÇ§ôjÁCx#&quot;:U!r=-§Nü?Ü¾¿2À¡¹sý{ÕÕ58|¸ýE7{Ò¸ÿã°w    IEND®B`</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>Age: 989</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Validate that the response does not contain sensitive, personal or user-specific information. If it does, consider the use of the following HTTP response headers, to limit, or prevent the content being stored and retrieved from the cache by another user:</p>
+
+<p>Cache-Control: no-cache, no-store, must-revalidate, private</p>
+
+<p>Pragma: no-cache</p>
+
+<p>Expires: 0</p>
+
+<p>This configuration directs both HTTP 1.0 and HTTP 1.1 compliant caching servers to not store the response, and to not retrieve the response (without validation) from the cache, in response to a similar request.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-12">Session Management Response Identified</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The given response has been identified as containing a session management token. The &#39;Other Info&#39; field contains a set of header tokens that can be used in the Header Based Session Management Method. If the request is in a context which has a Session Management Method set to &quot;Auto-Detect&quot; then this rule will change the session management to use the tokens identified.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>cookie:__cf_bm</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (275 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (886 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ebbee0ea5248c73c-00681dc036-82560268-ams3c
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk; path=/; expires=Fri, 09-May-25 09:30:04 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011d699e2875-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>__cf_bm</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>This is an informational alert rather than a vulnerability and so there is nothing to fix.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				<li id="alerts--risk-0-confidence-1">
+					<h3>
+						<span>Risk</span>=<span
+							class="risk-level">Informational</span>, <span>Confidence</span>=<span
+							class="confidence-level">Low</span> <span>(3)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">https://minitwit-api-5ezat.ondigitalocean.app</span> <span>(3)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-7">Information Disclosure - Suspicious Comments</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/_framework/blazor.webassembly.js</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A01_2021-Broken_Access_Control/">OWASP_2021_A01</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/01-Information_Gathering/05-Review_Webpage_Content_for_Information_Leakage">WSTG-v42-INFO-05</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure.html">OWASP_2017_A03</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/615.html">CWE-615</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The response appears to contain suspicious comments which may help an attacker.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The following pattern was used: \bSELECT\b and was detected in likely comment: &quot;//www.w3.org/2000/svg&quot;===t.namespaceURI&amp;&amp;&quot;foreignObject&quot;!==t.tagName}function U(e){return e[L]}function K(e){const t=U($(e));ret&quot;, see evidence field for the suspicious comment/snippet.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (552 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/_framework/blazor.webassembly.js HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+referer: https://minitwit-api-5ezat.ondigitalocean.app
+Cookie: __cf_bm=2uuT3cbQpbWiji6Alwu2guNGpOXSUowDH0lbJy5l9HA-1746781204-1.0.1.1-mkdDGkS.WtvlZy.kiS5dm.5gmdlpvKPPSV2jEJKCJJ1EKG2iClOq2QdcRfm3_OneDOoKvbLQ1Yg0PlhYpUIkeMaMV8mTRfGKR5EsEblRABs
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (714 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/javascript; charset=utf-8
+Content-Length: 60300
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+etag: &quot;847ec09a5d77dc3ead9216be1a80fb98&quot;
+x-amz-request-id: tx000004e6cfbd2f05f1b08-00681dc036-82557b56-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Server: cloudflare
+CF-RAY: 93d0011e0f19ebcd-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (60300 bytes)</summary>
+				
+				<pre><code>(()=&gt;{&quot;use strict&quot;;var e,t,n;!function(e){const t=[],n=&quot;__jsObjectId&quot;,r=&quot;__dotNetObject&quot;,o=&quot;__byte[]&quot;,i=&quot;__dotNetStream&quot;,s=&quot;__jsStreamReferenceLength&quot;;let a,c;class l{constructor(e){this._jsObject=e,this._cachedFunctions=new Map}findFunction(e){const t=this._cachedFunctions.get(e);if(t)return t;let n,r=this._jsObject;if(e.split(&quot;.&quot;).forEach((t=&gt;{if(!(t in r))throw new Error(`Could not find &#39;${e}&#39; (&#39;${t}&#39; was undefined).`);n=r,r=r[t]})),r instanceof Function)return r=r.bind(n),this._cachedFunctions.set(e,r),r;throw new Error(`The value &#39;${e}&#39; is not a function.`)}getWrappedObject(){return this._jsObject}}const u={0:new l(window)};u[0]._cachedFunctions.set(&quot;import&quot;,(e=&gt;(&quot;string&quot;==typeof e&amp;&amp;e.startsWith(&quot;./&quot;)&amp;&amp;(e=new URL(e.substr(2),document.baseURI).toString()),import(e))));let d,f=1;function m(e){t.push(e)}function h(e){if(e&amp;&amp;&quot;object&quot;==typeof e){u[f]=new l(e);const t={[n]:f};return f++,t}throw new Error(`Cannot create a JSObjectReference from the value &#39;${e}&#39;.`)}function p(e){let t=-1;if(e instanceof ArrayBuffer&amp;&amp;(e=new Uint8Array(e)),e instanceof Blob)t=e.size;else{if(!(e.buffer instanceof ArrayBuffer))throw new Error(&quot;Supplied value is not a typed array or blob.&quot;);if(void 0===e.byteLength)throw new Error(`Cannot create a JSStreamReference from the value &#39;${e}&#39; as it doesn&#39;t have a byteLength.`);t=e.byteLength}const r={[s]:t};try{const t=h(e);r[n]=t[n]}catch(t){throw new Error(`Cannot create a JSStreamReference from the value &#39;${e}&#39;.`)}return r}function v(e,n){c=e;const r=n?JSON.parse(n,((e,n)=&gt;t.reduce(((t,n)=&gt;n(e,t)),n))):null;return c=void 0,r}function g(){if(void 0===a)throw new Error(&quot;No call dispatcher has been set.&quot;);if(null===a)throw new Error(&quot;There are multiple .NET runtimes present, so a default dispatcher could not be resolved. Use DotNetObject to invoke .NET instance methods.&quot;);return a}e.attachDispatcher=function(e){const t=new b(e);return void 0===a?a=t:a&amp;&amp;(a=null),t},e.attachReviver=m,e.invokeMethod=function(e,t,...n){return g().invokeDotNetStaticMethod(e,t,...n)},e.invokeMethodAsync=function(e,t,...n){return g().invokeDotNetStaticMethodAsync(e,t,...n)},e.createJSObjectReference=h,e.createJSStreamReference=p,e.disposeJSObjectReference=function(e){const t=e&amp;&amp;e[n];&quot;number&quot;==typeof t&amp;&amp;E(t)},function(e){e[e.Default=0]=&quot;Default&quot;,e[e.JSObjectReference=1]=&quot;JSObjectReference&quot;,e[e.JSStreamReference=2]=&quot;JSStreamReference&quot;,e[e.JSVoidResult=3]=&quot;JSVoidResult&quot;}(d=e.JSCallResultType||(e.JSCallResultType={}));class b{constructor(e){this._dotNetCallDispatcher=e,this._byteArraysToBeRevived=new Map,this._pendingDotNetToJSStreams=new Map,this._pendingAsyncCalls={},this._nextAsyncCallId=1}getDotNetCallDispatcher(){return this._dotNetCallDispatcher}invokeJSFromDotNet(e,t,n,r){const o=v(this,t),i=I(w(e,r)(...o||[]),n);return null==i?null:_(this,i)}beginInvokeJSFromDotNet(e,t,n,r,o){const i=new Promise((e=&gt;{const r=v(this,n);e(w(t,o)(...r||[]))}));e&amp;&amp;i.then((t=&gt;_(this,[e,!0,I(t,r)]))).then((t=&gt;this._dotNetCallDispatcher.endInvokeJSFromDotNet(e,!0,t)),(t=&gt;this._dotNetCallDispatcher.endInvokeJSFromDotNet(e,!1,JSON.stringify([e,!1,y(t)]))))}endInvokeDotNetFromJS(e,t,n){const r=t?v(this,n):new Error(n);this.completePendingCall(parseInt(e,10),t,r)}invokeDotNetStaticMethod(e,t,...n){return this.invokeDotNetMethod(e,t,null,n)}invokeDotNetStaticMethodAsync(e,t,...n){return this.invokeDotNetMethodAsync(e,t,null,n)}invokeDotNetMethod(e,t,n,r){if(this._dotNetCallDispatcher.invokeDotNetFromJS){const o=_(this,r),i=this._dotNetCallDispatcher.invokeDotNetFromJS(e,t,n,o);return i?v(this,i):null}throw new Error(&quot;The current dispatcher does not support synchronous calls from JS to .NET. Use invokeDotNetMethodAsync instead.&quot;)}invokeDotNetMethodAsync(e,t,n,r){if(e&amp;&amp;n)throw new Error(`For instance method calls, assemblyName should be null. Received &#39;${e}&#39;.`);const o=this._nextAsyncCallId++,i=new Promise(((e,t)=&gt;{this._pendingAsyncCalls[o]={resolve:e,reject:t}}));try{const i=_(this,r);this._dotNetCallDispatcher.beginInvokeDotNetFromJS(o,e,t,n,i)}catch(e){this.completePendingCall(o,!1,e)}return i}receiveByteArray(e,t){this._byteArraysToBeRevived.set(e,t)}processByteArray(e){const t=this._byteArraysToBeRevived.get(e);return t?(this._byteArraysToBeRevived.delete(e),t):null}supplyDotNetStream(e,t){if(this._pendingDotNetToJSStreams.has(e)){const n=this._pendingDotNetToJSStreams.get(e);this._pendingDotNetToJSStreams.delete(e),n.resolve(t)}else{const n=new C;n.resolve(t),this._pendingDotNetToJSStreams.set(e,n)}}getDotNetStreamPromise(e){let t;if(this._pendingDotNetToJSStreams.has(e))t=this._pendingDotNetToJSStreams.get(e).streamPromise,this._pendingDotNetToJSStreams.delete(e);else{const n=new C;this._pendingDotNetToJSStreams.set(e,n),t=n.streamPromise}return t}completePendingCall(e,t,n){if(!this._pendingAsyncCalls.hasOwnProperty(e))throw new Error(`There is no pending async call with ID ${e}.`);const r=this._pendingAsyncCalls[e];delete this._pendingAsyncCalls[e],t?r.resolve(n):r.reject(n)}}function y(e){return e instanceof Error?`${e.message}\n${e.stack}`:e?e.toString():&quot;null&quot;}function w(e,t){const n=u[t];if(n)return n.findFunction(e);throw new Error(`JS object instance with ID ${t} does not exist (has it been disposed?).`)}function E(e){delete u[e]}e.findJSFunction=w,e.disposeJSObjectReferenceById=E;class S{constructor(e,t){this._id=e,this._callDispatcher=t}invokeMethod(e,...t){return this._callDispatcher.invokeDotNetMethod(null,e,this._id,t)}invokeMethodAsync(e,...t){return this._callDispatcher.invokeDotNetMethodAsync(null,e,this._id,t)}dispose(){this._callDispatcher.invokeDotNetMethodAsync(null,&quot;__Dispose&quot;,this._id,null).catch((e=&gt;console.error(e)))}serializeAsArg(){return{[r]:this._id}}}e.DotNetObject=S,m((function(e,t){if(t&amp;&amp;&quot;object&quot;==typeof t){if(t.hasOwnProperty(r))return new S(t[r],c);if(t.hasOwnProperty(n)){const e=t[n],r=u[e];if(r)return r.getWrappedObject();throw new Error(`JS object instance with Id &#39;${e}&#39; does not exist. It may have been disposed.`)}if(t.hasOwnProperty(o)){const e=t[o],n=c.processByteArray(e);if(void 0===n)throw new Error(`Byte array index &#39;${e}&#39; does not exist.`);return n}if(t.hasOwnProperty(i)){const e=t[i],n=c.getDotNetStreamPromise(e);return new A(n)}}return t}));class A{constructor(e){this._streamPromise=e}stream(){return this._streamPromise}async arrayBuffer(){return new Response(await this.stream()).arrayBuffer()}}class C{constructor(){this.streamPromise=new Promise(((e,t)=&gt;{this.resolve=e,this.reject=t}))}}function I(e,t){switch(t){case d.Default:return e;case d.JSObjectReference:return h(e);case d.JSStreamReference:return p(e);case d.JSVoidResult:return null;default:throw new Error(`Invalid JS call result type &#39;${t}&#39;.`)}}let N=0;function _(e,t){N=0,c=e;const n=JSON.stringify(t,R);return c=void 0,n}function R(e,t){if(t instanceof S)return t.serializeAsArg();if(t instanceof Uint8Array){c.getDotNetCallDispatcher().sendByteArray(N,t);const e={[o]:N};return N++,e}return t}}(e||(e={})),function(e){e[e.prependFrame=1]=&quot;prependFrame&quot;,e[e.removeFrame=2]=&quot;removeFrame&quot;,e[e.setAttribute=3]=&quot;setAttribute&quot;,e[e.removeAttribute=4]=&quot;removeAttribute&quot;,e[e.updateText=5]=&quot;updateText&quot;,e[e.stepIn=6]=&quot;stepIn&quot;,e[e.stepOut=7]=&quot;stepOut&quot;,e[e.updateMarkup=8]=&quot;updateMarkup&quot;,e[e.permutationListEntry=9]=&quot;permutationListEntry&quot;,e[e.permutationListEnd=10]=&quot;permutationListEnd&quot;}(t||(t={})),function(e){e[e.element=1]=&quot;element&quot;,e[e.text=2]=&quot;text&quot;,e[e.attribute=3]=&quot;attribute&quot;,e[e.component=4]=&quot;component&quot;,e[e.region=5]=&quot;region&quot;,e[e.elementReferenceCapture=6]=&quot;elementReferenceCapture&quot;,e[e.markup=8]=&quot;markup&quot;,e[e.namedEvent=10]=&quot;namedEvent&quot;}(n||(n={}));class r{constructor(e,t){this.componentId=e,this.fieldValue=t}static fromEvent(e,t){const n=t.target;if(n instanceof Element){const t=function(e){return e instanceof HTMLInputElement?e.type&amp;&amp;&quot;checkbox&quot;===e.type.toLowerCase()?{value:e.checked}:{value:e.value}:e instanceof HTMLSelectElement||e instanceof HTMLTextAreaElement?{value:e.value}:null}(n);if(t)return new r(e,t.value)}return null}}const o=new Map,i=new Map,s=[];function a(e){return o.get(e)}function c(e){const t=o.get(e);return(null==t?void 0:t.browserEventName)||e}function l(e,t){e.forEach((e=&gt;o.set(e,t)))}function u(e){const t=[];for(let n=0;n&lt;e.length;n++){const r=e[n];t.push({identifier:r.identifier,clientX:r.clientX,clientY:r.clientY,screenX:r.screenX,screenY:r.screenY,pageX:r.pageX,pageY:r.pageY})}return t}function d(e){return{detail:e.detail,screenX:e.screenX,screenY:e.screenY,clientX:e.clientX,clientY:e.clientY,offsetX:e.offsetX,offsetY:e.offsetY,pageX:e.pageX,pageY:e.pageY,movementX:e.movementX,movementY:e.movementY,button:e.button,buttons:e.buttons,ctrlKey:e.ctrlKey,shiftKey:e.shiftKey,altKey:e.altKey,metaKey:e.metaKey,type:e.type}}l([&quot;input&quot;,&quot;change&quot;],{createEventArgs:function(e){const t=e.target;if(function(e){return-1!==f.indexOf(e.getAttribute(&quot;type&quot;))}(t)){const e=function(e){const t=e.value,n=e.type;switch(n){case&quot;date&quot;:case&quot;month&quot;:case&quot;week&quot;:return t;case&quot;datetime-local&quot;:return 16===t.length?t+&quot;:00&quot;:t;case&quot;time&quot;:return 5===t.length?t+&quot;:00&quot;:t}throw new Error(`Invalid element type &#39;${n}&#39;.`)}(t);return{value:e}}if(function(e){return e instanceof HTMLSelectElement&amp;&amp;&quot;select-multiple&quot;===e.type}(t)){const e=t;return{value:Array.from(e.options).filter((e=&gt;e.selected)).map((e=&gt;e.value))}}{const e=function(e){return!!e&amp;&amp;&quot;INPUT&quot;===e.tagName&amp;&amp;&quot;checkbox&quot;===e.getAttribute(&quot;type&quot;)}(t);return{value:e?!!t.checked:t.value}}}}),l([&quot;copy&quot;,&quot;cut&quot;,&quot;paste&quot;],{createEventArgs:e=&gt;({type:e.type})}),l([&quot;drag&quot;,&quot;dragend&quot;,&quot;dragenter&quot;,&quot;dragleave&quot;,&quot;dragover&quot;,&quot;dragstart&quot;,&quot;drop&quot;],{createEventArgs:e=&gt;{return{...d(t=e),dataTransfer:t.dataTransfer?{dropEffect:t.dataTransfer.dropEffect,effectAllowed:t.dataTransfer.effectAllowed,files:Array.from(t.dataTransfer.files).map((e=&gt;e.name)),items:Array.from(t.dataTransfer.items).map((e=&gt;({kind:e.kind,type:e.type}))),types:t.dataTransfer.types}:null};var t}}),l([&quot;focus&quot;,&quot;blur&quot;,&quot;focusin&quot;,&quot;focusout&quot;],{createEventArgs:e=&gt;({type:e.type})}),l([&quot;keydown&quot;,&quot;keyup&quot;,&quot;keypress&quot;],{createEventArgs:e=&gt;{return{key:(t=e).key,code:t.code,location:t.location,repeat:t.repeat,ctrlKey:t.ctrlKey,shiftKey:t.shiftKey,altKey:t.altKey,metaKey:t.metaKey,type:t.type};var t}}),l([&quot;contextmenu&quot;,&quot;click&quot;,&quot;mouseover&quot;,&quot;mouseout&quot;,&quot;mousemove&quot;,&quot;mousedown&quot;,&quot;mouseup&quot;,&quot;mouseleave&quot;,&quot;mouseenter&quot;,&quot;dblclick&quot;],{createEventArgs:e=&gt;d(e)}),l([&quot;error&quot;],{createEventArgs:e=&gt;{return{message:(t=e).message,filename:t.filename,lineno:t.lineno,colno:t.colno,type:t.type};var t}}),l([&quot;loadstart&quot;,&quot;timeout&quot;,&quot;abort&quot;,&quot;load&quot;,&quot;loadend&quot;,&quot;progress&quot;],{createEventArgs:e=&gt;{return{lengthComputable:(t=e).lengthComputable,loaded:t.loaded,total:t.total,type:t.type};var t}}),l([&quot;touchcancel&quot;,&quot;touchend&quot;,&quot;touchmove&quot;,&quot;touchenter&quot;,&quot;touchleave&quot;,&quot;touchstart&quot;],{createEventArgs:e=&gt;{return{detail:(t=e).detail,touches:u(t.touches),targetTouches:u(t.targetTouches),changedTouches:u(t.changedTouches),ctrlKey:t.ctrlKey,shiftKey:t.shiftKey,altKey:t.altKey,metaKey:t.metaKey,type:t.type};var t}}),l([&quot;gotpointercapture&quot;,&quot;lostpointercapture&quot;,&quot;pointercancel&quot;,&quot;pointerdown&quot;,&quot;pointerenter&quot;,&quot;pointerleave&quot;,&quot;pointermove&quot;,&quot;pointerout&quot;,&quot;pointerover&quot;,&quot;pointerup&quot;],{createEventArgs:e=&gt;{return{...d(t=e),pointerId:t.pointerId,width:t.width,height:t.height,pressure:t.pressure,tiltX:t.tiltX,tiltY:t.tiltY,pointerType:t.pointerType,isPrimary:t.isPrimary};var t}}),l([&quot;wheel&quot;,&quot;mousewheel&quot;],{createEventArgs:e=&gt;{return{...d(t=e),deltaX:t.deltaX,deltaY:t.deltaY,deltaZ:t.deltaZ,deltaMode:t.deltaMode};var t}}),l([&quot;cancel&quot;,&quot;close&quot;,&quot;toggle&quot;],{createEventArgs:()=&gt;({})});const f=[&quot;date&quot;,&quot;datetime-local&quot;,&quot;month&quot;,&quot;time&quot;,&quot;week&quot;],m=new Map;let h,p,v=0;const g={async add(e,t,n){if(!n)throw new Error(&quot;initialParameters must be an object, even if empty.&quot;);const r=&quot;__bl-dynamic-root:&quot;+(++v).toString();m.set(r,e);const o=await w().invokeMethodAsync(&quot;AddRootComponent&quot;,t,r),i=new y(o,p[t]);return await i.setParameters(n),i}};class b{invoke(e){return this._callback(e)}setCallback(t){this._selfJSObjectReference||(this._selfJSObjectReference=e.createJSObjectReference(this)),this._callback=t}getJSObjectReference(){return this._selfJSObjectReference}dispose(){this._selfJSObjectReference&amp;&amp;e.disposeJSObjectReference(this._selfJSObjectReference)}}class y{constructor(e,t){this._jsEventCallbackWrappers=new Map,this._componentId=e;for(const e of t)&quot;eventcallback&quot;===e.type&amp;&amp;this._jsEventCallbackWrappers.set(e.name.toLowerCase(),new b)}setParameters(e){const t={},n=Object.entries(e||{}),r=n.length;for(const[e,r]of n){const n=this._jsEventCallbackWrappers.get(e.toLowerCase());n&amp;&amp;r?(n.setCallback(r),t[e]=n.getJSObjectReference()):t[e]=r}return w().invokeMethodAsync(&quot;SetRootComponentParameters&quot;,this._componentId,r,t)}async dispose(){if(null!==this._componentId){await w().invokeMethodAsync(&quot;RemoveRootComponent&quot;,this._componentId),this._componentId=null;for(const e of this._jsEventCallbackWrappers.values())e.dispose()}}}function w(){if(!h)throw new Error(&quot;Dynamic root components have not been enabled in this application.&quot;);return h}const E=new Map,S=[],A=new Map;function C(e,t,n){return N(e,t.eventHandlerId,(()=&gt;I(e).invokeMethodAsync(&quot;DispatchEventAsync&quot;,t,n)))}function I(e){const t=E.get(e);if(!t)throw new Error(`No interop methods are registered for renderer ${e}`);return t}let N=(e,t,n)=&gt;n();const _=O([&quot;abort&quot;,&quot;blur&quot;,&quot;cancel&quot;,&quot;canplay&quot;,&quot;canplaythrough&quot;,&quot;change&quot;,&quot;close&quot;,&quot;cuechange&quot;,&quot;durationchange&quot;,&quot;emptied&quot;,&quot;ended&quot;,&quot;error&quot;,&quot;focus&quot;,&quot;load&quot;,&quot;loadeddata&quot;,&quot;loadedmetadata&quot;,&quot;loadend&quot;,&quot;loadstart&quot;,&quot;mouseenter&quot;,&quot;mouseleave&quot;,&quot;pointerenter&quot;,&quot;pointerleave&quot;,&quot;pause&quot;,&quot;play&quot;,&quot;playing&quot;,&quot;progress&quot;,&quot;ratechange&quot;,&quot;reset&quot;,&quot;scroll&quot;,&quot;seeked&quot;,&quot;seeking&quot;,&quot;stalled&quot;,&quot;submit&quot;,&quot;suspend&quot;,&quot;timeupdate&quot;,&quot;toggle&quot;,&quot;unload&quot;,&quot;volumechange&quot;,&quot;waiting&quot;,&quot;DOMNodeInsertedIntoDocument&quot;,&quot;DOMNodeRemovedFromDocument&quot;]),R={submit:!0},k=O([&quot;click&quot;,&quot;dblclick&quot;,&quot;mousedown&quot;,&quot;mousemove&quot;,&quot;mouseup&quot;]);class D{constructor(e){this.browserRendererId=e,this.afterClickCallbacks=[];const t=++D.nextEventDelegatorId;this.eventsCollectionKey=`_blazorEvents_${t}`,this.eventInfoStore=new F(this.onGlobalEvent.bind(this))}setListener(e,t,n,r){const o=this.getEventHandlerInfosForElement(e,!0),i=o.getHandler(t);if(i)this.eventInfoStore.update(i.eventHandlerId,n);else{const i={element:e,eventName:t,eventHandlerId:n,renderingComponentId:r};this.eventInfoStore.add(i),o.setHandler(t,i)}}getHandler(e){return this.eventInfoStore.get(e)}removeListener(e){const t=this.eventInfoStore.remove(e);if(t){const e=t.element,n=this.getEventHandlerInfosForElement(e,!1);n&amp;&amp;n.removeHandler(t.eventName)}}notifyAfterClick(e){this.afterClickCallbacks.push(e),this.eventInfoStore.addGlobalListener(&quot;click&quot;)}setStopPropagation(e,t,n){this.getEventHandlerInfosForElement(e,!0).stopPropagation(t,n)}setPreventDefault(e,t,n){this.getEventHandlerInfosForElement(e,!0).preventDefault(t,n)}onGlobalEvent(e){if(!(e.target instanceof Element))return;this.dispatchGlobalEventToAllElements(e.type,e);const t=(n=e.type,i.get(n));var n;t&amp;&amp;t.forEach((t=&gt;this.dispatchGlobalEventToAllElements(t,e))),&quot;click&quot;===e.type&amp;&amp;this.afterClickCallbacks.forEach((t=&gt;t(e)))}dispatchGlobalEventToAllElements(e,t){const n=t.composedPath();let o=n.shift(),i=null,s=!1;const c=Object.prototype.hasOwnProperty.call(_,e);let l=!1;for(;o;){const f=o,m=this.getEventHandlerInfosForElement(f,!1);if(m){const n=m.getHandler(e);if(n&amp;&amp;(u=f,d=t.type,!((u instanceof HTMLButtonElement||u instanceof HTMLInputElement||u instanceof HTMLTextAreaElement||u instanceof HTMLSelectElement)&amp;&amp;Object.prototype.hasOwnProperty.call(k,d)&amp;&amp;u.disabled))){if(!s){const n=a(e);i=(null==n?void 0:n.createEventArgs)?n.createEventArgs(t):{},s=!0}Object.prototype.hasOwnProperty.call(R,t.type)&amp;&amp;t.preventDefault(),C(this.browserRendererId,{eventHandlerId:n.eventHandlerId,eventName:e,eventFieldInfo:r.fromEvent(n.renderingComponentId,t)},i)}m.stopPropagation(e)&amp;&amp;(l=!0),m.preventDefault(e)&amp;&amp;t.preventDefault()}o=c||l?void 0:n.shift()}var u,d}getEventHandlerInfosForElement(e,t){return Object.prototype.hasOwnProperty.call(e,this.eventsCollectionKey)?e[this.eventsCollectionKey]:t?e[this.eventsCollectionKey]=new T:null}}D.nextEventDelegatorId=0;class F{constructor(e){this.globalListener=e,this.infosByEventHandlerId={},this.countByEventName={},s.push(this.handleEventNameAliasAdded.bind(this))}add(e){if(this.infosByEventHandlerId[e.eventHandlerId])throw new Error(`Event ${e.eventHandlerId} is already tracked`);this.infosByEventHandlerId[e.eventHandlerId]=e,this.addGlobalListener(e.eventName)}get(e){return this.infosByEventHandlerId[e]}addGlobalListener(e){if(e=c(e),Object.prototype.hasOwnProperty.call(this.countByEventName,e))this.countByEventName[e]++;else{this.countByEventName[e]=1;const t=Object.prototype.hasOwnProperty.call(_,e);document.addEventListener(e,this.globalListener,t)}}update(e,t){if(Object.prototype.hasOwnProperty.call(this.infosByEventHandlerId,t))throw new Error(`Event ${t} is already tracked`);const n=this.infosByEventHandlerId[e];delete this.infosByEventHandlerId[e],n.eventHandlerId=t,this.infosByEventHandlerId[t]=n}remove(e){const t=this.infosByEventHandlerId[e];if(t){delete this.infosByEventHandlerId[e];const n=c(t.eventName);0==--this.countByEventName[n]&amp;&amp;(delete this.countByEventName[n],document.removeEventListener(n,this.globalListener))}return t}handleEventNameAliasAdded(e,t){if(Object.prototype.hasOwnProperty.call(this.countByEventName,e)){const n=this.countByEventName[e];delete this.countByEventName[e],document.removeEventListener(e,this.globalListener),this.addGlobalListener(t),this.countByEventName[t]+=n-1}}}class T{constructor(){this.handlers={},this.preventDefaultFlags=null,this.stopPropagationFlags=null}getHandler(e){return Object.prototype.hasOwnProperty.call(this.handlers,e)?this.handlers[e]:null}setHandler(e,t){this.handlers[e]=t}removeHandler(e){delete this.handlers[e]}preventDefault(e,t){return void 0!==t&amp;&amp;(this.preventDefaultFlags=this.preventDefaultFlags||{},this.preventDefaultFlags[e]=t),!!this.preventDefaultFlags&amp;&amp;this.preventDefaultFlags[e]}stopPropagation(e,t){return void 0!==t&amp;&amp;(this.stopPropagationFlags=this.stopPropagationFlags||{},this.stopPropagationFlags[e]=t),!!this.stopPropagationFlags&amp;&amp;this.stopPropagationFlags[e]}}function O(e){const t={};return e.forEach((e=&gt;{t[e]=!0})),t}const L=Symbol(),M=Symbol(),x=Symbol();function P(e,t){if(L in e)return e;const n=[];if(e.childNodes.length&gt;0){if(!t)throw new Error(&quot;New logical elements must start empty, or allowExistingContents must be true&quot;);e.childNodes.forEach((t=&gt;{const r=P(t,!0);r[M]=e,n.push(r)}))}return e[L]=n,e}function B(e){const t=U(e);for(;t.length;)H(e,0)}function J(e,t){const n=document.createComment(&quot;!&quot;);return j(n,e,t),n}function j(e,t,n){const r=e;let o=e;if(e instanceof Comment){const t=U(r);if((null==t?void 0:t.length)&gt;0){const t=G(r),n=new Range;n.setStartBefore(e),n.setEndAfter(t),o=n.extractContents()}}const i=$(r);if(i){const e=U(i),t=Array.prototype.indexOf.call(e,r);e.splice(t,1),delete r[M]}const s=U(t);if(n&lt;s.length){const e=s[n];e.parentNode.insertBefore(o,e),s.splice(n,0,r)}else Y(o,t),s.push(r);r[M]=t,L in r||(r[L]=[])}function H(e,t){const n=U(e).splice(t,1)[0];if(n instanceof Comment){const e=U(n);if(e)for(;e.length&gt;0;)H(n,0)}const r=n;r.parentNode.removeChild(r)}function $(e){return e[M]||null}function z(e,t){return U(e)[t]}function W(e){const t=X(e);return&quot;http://www.w3.org/2000/svg&quot;===t.namespaceURI&amp;&amp;&quot;foreignObject&quot;!==t.tagName}function U(e){return e[L]}function K(e){const t=U($(e));return t[Array.prototype.indexOf.call(t,e)+1]||null}function V(e,t){const n=U(e);t.forEach((e=&gt;{e.moveRangeStart=n[e.fromSiblingIndex],e.moveRangeEnd=G(e.moveRangeStart)})),t.forEach((t=&gt;{const r=document.createComment(&quot;marker&quot;);t.moveToBeforeMarker=r;const o=n[t.toSiblingIndex+1];o?o.parentNode.insertBefore(r,o):Y(r,e)})),t.forEach((e=&gt;{const t=e.moveToBeforeMarker,n=t.parentNode,r=e.moveRangeStart,o=e.moveRangeEnd;let i=r;for(;i;){const e=i.nextSibling;if(n.insertBefore(i,t),i===o)break;i=e}n.removeChild(t)})),t.forEach((e=&gt;{n[e.toSiblingIndex]=e.moveRangeStart}))}function X(e){if(e instanceof Element||e instanceof DocumentFragment)return e;if(e instanceof Comment)return e.parentNode;throw new Error(&quot;Not a valid logical element&quot;)}function Y(e,t){if(t instanceof Element||t instanceof DocumentFragment)t.appendChild(e);else{if(!(t instanceof Comment))throw new Error(`Cannot append node because the parent is not a valid logical element. Parent: ${t}`);{const n=K(t);n?n.parentNode.insertBefore(e,n):Y(e,$(t))}}}function G(e){if(e instanceof Element||e instanceof DocumentFragment)return e;const t=K(e);if(t)return t.previousSibling;{const t=$(e);return t instanceof Element||t instanceof DocumentFragment?t.lastChild:G(t)}}function q(e){return`_bl_${e}`}const Z=&quot;__internalId&quot;;e.attachReviver(((e,t)=&gt;t&amp;&amp;&quot;object&quot;==typeof t&amp;&amp;Object.prototype.hasOwnProperty.call(t,Z)&amp;&amp;&quot;string&quot;==typeof t[Z]?function(e){const t=`[${q(e)}]`;return document.querySelector(t)}(t[Z]):t));const Q=&quot;_blazorDeferredValue&quot;;function ee(e){return&quot;select-multiple&quot;===e.type}function te(e,t){e.value=t||&quot;&quot;}function ne(e,t){e instanceof HTMLSelectElement?ee(e)?function(e,t){t||(t=[]);for(let n=0;n&lt;e.options.length;n++)e.options[n].selected=-1!==t.indexOf(e.options[n].value)}(e,t):te(e,t):e.value=t}function re(e){const t=function(e){for(;e;){if(e instanceof HTMLSelectElement)return e;e=e.parentElement}return null}(e);if(!function(e){return!!e&amp;&amp;Q in e}(t))return!1;if(ee(t))e.selected=-1!==t._blazorDeferredValue.indexOf(e.value);else{if(t._blazorDeferredValue!==e.value)return!1;te(t,e.value),delete t._blazorDeferredValue}return!0}const oe=document.createElement(&quot;template&quot;),ie=document.createElementNS(&quot;http://www.w3.org/2000/svg&quot;,&quot;g&quot;),se=new Set,ae=Symbol(),ce=Symbol();class le{constructor(e){this.rootComponentIds=new Set,this.childComponentLocations={},this.eventDelegator=new D(e),this.eventDelegator.notifyAfterClick((e=&gt;{Ie()&amp;&amp;function(e,t){if(0!==e.button||function(e){return e.ctrlKey||e.shiftKey||e.altKey||e.metaKey}(e))return;if(e.defaultPrevented)return;const n=function(e){const t=e.composedPath&amp;&amp;e.composedPath();if(t)for(let e=0;e&lt;t.length;e++){const n=t[e];if(n instanceof HTMLAnchorElement||n instanceof SVGAElement)return n}return null}(e);if(n&amp;&amp;function(e){const t=e.getAttribute(&quot;target&quot;);return(!t||&quot;_self&quot;===t)&amp;&amp;e.hasAttribute(&quot;href&quot;)&amp;&amp;!e.hasAttribute(&quot;download&quot;)}(n)){const t=Ce(n.getAttribute(&quot;href&quot;));we(t)&amp;&amp;(e.preventDefault(),Me(t,!0,!1))}}(e)}))}getRootComponentCount(){return this.rootComponentIds.size}attachRootComponentToLogicalElement(e,t,n){if(function(e){return e[ae]}(t))throw new Error(`Root component &#39;${e}&#39; could not be attached because its target element is already associated with a root component`);n&amp;&amp;(t=J(t,U(t).length)),ue(t,!0),this.attachComponentToElement(e,t),this.rootComponentIds.add(e),se.add(t)}updateComponent(e,t,n,r){var o;const i=this.childComponentLocations[t];if(!i)throw new Error(`No element is currently associated with component ${t}`);se.delete(i)&amp;&amp;(B(i),i instanceof Comment&amp;&amp;(i.textContent=&quot;!&quot;));const s=null===(o=X(i))||void 0===o?void 0:o.getRootNode(),a=s&amp;&amp;s.activeElement;this.applyEdits(e,t,i,0,n,r),a instanceof HTMLElement&amp;&amp;s&amp;&amp;s.activeElement!==a&amp;&amp;a.focus()}disposeComponent(e){if(this.rootComponentIds.delete(e)){const t=this.childComponentLocations[e];ue(t,!1),!0===t[ce]?se.add(t):B(t)}delete this.childComponentLocations[e]}disposeEventHandler(e){this.eventDelegator.removeListener(e)}attachComponentToElement(e,t){this.childComponentLocations[e]=t}applyEdits(e,n,r,o,i,s){let a,c=0,l=o;const u=e.arrayBuilderSegmentReader,d=e.editReader,f=e.frameReader,m=u.values(i),h=u.offset(i),p=h+u.count(i);for(let i=h;i&lt;p;i++){const u=e.diffReader.editsEntry(m,i),h=d.editType(u);switch(h){case t.prependFrame:{const t=d.newTreeIndex(u),o=e.referenceFramesEntry(s,t),i=d.siblingIndex(u);this.insertFrame(e,n,r,l+i,s,o,t);break}case t.removeFrame:H(r,l+d.siblingIndex(u));break;case t.setAttribute:{const t=d.newTreeIndex(u),o=e.referenceFramesEntry(s,t),i=z(r,l+d.siblingIndex(u));if(!(i instanceof Element))throw new Error(&quot;Cannot set attribute on non-element child&quot;);this.applyAttribute(e,n,i,o);break}case t.removeAttribute:{const e=z(r,l+d.siblingIndex(u));if(!(e instanceof Element))throw new Error(&quot;Cannot remove attribute from non-element child&quot;);{const t=d.removedAttributeName(u);this.setOrRemoveAttributeOrProperty(e,t,null)}break}case t.updateText:{const t=d.newTreeIndex(u),n=e.referenceFramesEntry(s,t),o=z(r,l+d.siblingIndex(u));if(!(o instanceof Text))throw new Error(&quot;Cannot set text content on non-text child&quot;);o.textContent=f.textContent(n);break}case t.updateMarkup:{const t=d.newTreeIndex(u),n=e.referenceFramesEntry(s,t),o=d.siblingIndex(u);H(r,l+o),this.insertMarkup(e,r,l+o,n);break}case t.stepIn:r=z(r,l+d.siblingIndex(u)),c++,l=0;break;case t.stepOut:r=$(r),c--,l=0===c?o:0;break;case t.permutationListEntry:a=a||[],a.push({fromSiblingIndex:l+d.siblingIndex(u),toSiblingIndex:l+d.moveToSiblingIndex(u)});break;case t.permutationListEnd:V(r,a),a=void 0;break;default:throw new Error(`Unknown edit type: ${h}`)}}}insertFrame(e,t,r,o,i,s,a){const c=e.frameReader,l=c.frameType(s);switch(l){case n.element:return this.insertElement(e,t,r,o,i,s,a),1;case n.text:return this.insertText(e,r,o,s),1;case n.attribute:throw new Error(&quot;Attribute frames should only be present as leading children of element frames.&quot;);case n.component:return this.insertComponent(e,r,o,s),1;case n.region:return this.insertFrameRange(e,t,r,o,i,a+1,a+c.subtreeLength(s));case n.elementReferenceCapture:if(r instanceof Element)return u=r,d=c.elementReferenceCaptureId(s),u.setAttribute(q(d),&quot;&quot;),0;throw new Error(&quot;Reference capture frames can only be children of element frames.&quot;);case n.markup:return this.insertMarkup(e,r,o,s),1;case n.namedEvent:return 0;default:throw new Error(`Unknown frame type: ${l}`)}var u,d}insertElement(e,t,r,o,i,s,a){const c=e.frameReader,l=c.elementName(s),u=&quot;svg&quot;===l||W(r)?document.createElementNS(&quot;http://www.w3.org/2000/svg&quot;,l):document.createElement(l),d=P(u);let f=!1;const m=a+c.subtreeLength(s);for(let s=a+1;s&lt;m;s++){const a=e.referenceFramesEntry(i,s);if(c.frameType(a)!==n.attribute){j(u,r,o),f=!0,this.insertFrameRange(e,t,d,0,i,s,m);break}this.applyAttribute(e,t,u,a)}var h;f||j(u,r,o),(h=u)instanceof HTMLOptionElement?re(h):Q in h&amp;&amp;ne(h,h[Q])}insertComponent(e,t,n,r){const o=J(t,n),i=e.frameReader.componentId(r);this.attachComponentToElement(i,o)}insertText(e,t,n,r){const o=e.frameReader.textContent(r);j(document.createTextNode(o),t,n)}insertMarkup(e,t,n,r){const o=J(t,n),i=(s=e.frameReader.markupContent(r),W(t)?(ie.innerHTML=s||&quot; &quot;,ie):(oe.innerHTML=s||&quot; &quot;,oe.content.querySelectorAll(&quot;script&quot;).forEach((e=&gt;{const t=document.createElement(&quot;script&quot;);t.textContent=e.textContent,e.getAttributeNames().forEach((n=&gt;{t.setAttribute(n,e.getAttribute(n))})),e.parentNode.replaceChild(t,e)})),oe.content));var s;let a=0;for(;i.firstChild;)j(i.firstChild,o,a++)}applyAttribute(e,t,n,r){const o=e.frameReader,i=o.attributeName(r),s=o.attributeEventHandlerId(r);if(s){const e=fe(i);return void this.eventDelegator.setListener(n,e,s,t)}const a=o.attributeValue(r);this.setOrRemoveAttributeOrProperty(n,i,a)}insertFrameRange(e,t,n,r,o,i,s){const a=r;for(let a=i;a&lt;s;a++){const i=e.referenceFramesEntry(o,a);r+=this.insertFrame(e,t,n,r,o,i,a),a+=de(e,i)}return r-a}setOrRemoveAttributeOrProperty(e,t,n){(function(e,t,n){switch(t){case&quot;value&quot;:return function(e,t){switch(t&amp;&amp;&quot;INPUT&quot;===e.tagName&amp;&amp;(t=function(e,t){switch(t.getAttribute(&quot;type&quot;)){case&quot;time&quot;:return 8!==e.length||!e.endsWith(&quot;00&quot;)&amp;&amp;t.hasAttribute(&quot;step&quot;)?e:e.substring(0,5);case&quot;datetime-local&quot;:return 19!==e.length||!e.endsWith(&quot;00&quot;)&amp;&amp;t.hasAttribute(&quot;step&quot;)?e:e.substring(0,16);default:return e}}(t,e)),e.tagName){case&quot;INPUT&quot;:case&quot;SELECT&quot;:case&quot;TEXTAREA&quot;:return t&amp;&amp;e instanceof HTMLSelectElement&amp;&amp;ee(e)&amp;&amp;(t=JSON.parse(t)),ne(e,t),e[Q]=t,!0;case&quot;OPTION&quot;:return t||&quot;&quot;===t?e.setAttribute(&quot;value&quot;,t):e.removeAttribute(&quot;value&quot;),re(e),!0;default:return!1}}(e,n);case&quot;checked&quot;:return function(e,t){return&quot;INPUT&quot;===e.tagName&amp;&amp;(e.checked=null!==t,!0)}(e,n);default:return!1}})(e,t,n)||(t.startsWith(&quot;__internal_&quot;)?this.applyInternalAttribute(e,t.substring(11),n):null!==n?e.setAttribute(t,n):e.removeAttribute(t))}applyInternalAttribute(e,t,n){if(t.startsWith(&quot;stopPropagation_&quot;)){const r=fe(t.substring(16));this.eventDelegator.setStopPropagation(e,r,null!==n)}else{if(!t.startsWith(&quot;preventDefault_&quot;))throw new Error(`Unsupported internal attribute &#39;${t}&#39;`);{const r=fe(t.substring(15));this.eventDelegator.setPreventDefault(e,r,null!==n)}}}}function ue(e,t){e[ae]=t}function de(e,t){const r=e.frameReader;switch(r.frameType(t)){case n.component:case n.element:case n.region:return r.subtreeLength(t)-1;default:return 0}}function fe(e){if(e.startsWith(&quot;on&quot;))return e.substring(2);throw new Error(`Attribute should be an event name, but doesn&#39;t start with &#39;on&#39;. Value: &#39;${e}&#39;`)}const me={};let he,pe,ve,ge,be=!1;function ye(e,t,n,r){let o=me[e];o||(o=new le(e),me[e]=o),o.attachRootComponentToLogicalElement(n,t,r)}function we(e){const t=(n=document.baseURI).substring(0,n.lastIndexOf(&quot;/&quot;));var n;const r=e.charAt(t.length);return e.startsWith(t)&amp;&amp;(&quot;&quot;===r||&quot;/&quot;===r||&quot;?&quot;===r||&quot;#&quot;===r)}function Ee(e){var t;null===(t=document.getElementById(e))||void 0===t||t.scrollIntoView()}function Se(){return void 0!==pe}function Ae(e,t){if(!pe)throw new Error(&quot;No enhanced programmatic navigation handler has been attached&quot;);pe(e,t)}function Ce(e){return ge=ge||document.createElement(&quot;a&quot;),ge.href=e,ge.href}function Ie(){return void 0!==he}function Ne(){return he}let _e=!1,Re=0,ke=0;const De=new Map;let Fe=async function(e){var t,n,r;Be();const o=$e();if(null==o?void 0:o.hasLocationChangingEventListeners){const i=null!==(n=null===(t=e.state)||void 0===t?void 0:t._index)&amp;&amp;void 0!==n?n:0,s=null===(r=e.state)||void 0===r?void 0:r.userState,a=i-Re,c=location.href;if(await Pe(-a),!await Je(c,s,!1,o))return;await Pe(a)}await je(!1)},Te=null;const Oe={listenForNavigationEvents:function(e,t,n){var r,o;De.set(e,{rendererId:e,hasLocationChangingEventListeners:!1,locationChanged:t,locationChanging:n}),_e||(_e=!0,window.addEventListener(&quot;popstate&quot;,He),Re=null!==(o=null===(r=history.state)||void 0===r?void 0:r._index)&amp;&amp;void 0!==o?o:0,ve=(e,t)=&gt;{je(t,e)})},enableNavigationInterception:function(e){if(void 0!==he&amp;&amp;he!==e)throw new Error(&quot;Only one interactive runtime may enable navigation interception at a time.&quot;);he=e},setHasLocationChangingListeners:function(e,t){const n=De.get(e);if(!n)throw new Error(`Renderer with ID &#39;${e}&#39; is not listening for navigation events`);n.hasLocationChangingEventListeners=t},endLocationChanging:function(e,t){Te&amp;&amp;e===ke&amp;&amp;(Te(t),Te=null)},navigateTo:function(e,t){Le(e,t,!0)},refresh:function(e){!e&amp;&amp;Se()?Ae(location.href,!0):location.reload()},getBaseURI:()=&gt;document.baseURI,getLocationHref:()=&gt;location.href,scrollToElement:Ee};function Le(e,t,n=!1){const r=Ce(e),o=ze();if(t.forceLoad||!we(r)||&quot;serverside-fullpageload&quot;===o)!function(e,t){if(location.href===e){const t=e+&quot;?&quot;;history.replaceState(null,&quot;&quot;,t),location.replace(e)}else t?location.replace(e):location.href=e}(e,t.replaceHistoryEntry);else if(&quot;clientside-router&quot;===o)Me(r,!1,t.replaceHistoryEntry,t.historyEntryState,n);else{if(&quot;serverside-enhanced&quot;!==o)throw new Error(`Unsupported page load mechanism: ${o}`);Ae(r,t.replaceHistoryEntry)}}async function Me(e,t,n,r=void 0,o=!1){if(Be(),function(e){const t=new URL(e);return&quot;&quot;!==t.hash&amp;&amp;location.origin===t.origin&amp;&amp;location.pathname===t.pathname&amp;&amp;location.search===t.search}(e))return xe(e,n,r),void function(e){const t=e.indexOf(&quot;#&quot;);t!==e.length-1&amp;&amp;Ee(e.substring(t+1))}(e);const i=$e();(o||!(null==i?void 0:i.hasLocationChangingEventListeners)||await Je(e,r,t,i))&amp;&amp;(be=!0,xe(e,n,r),await je(t))}function xe(e,t,n=void 0){t?history.replaceState({userState:n,_index:Re},&quot;&quot;,e):(Re++,history.pushState({userState:n,_index:Re},&quot;&quot;,e))}function Pe(e){return new Promise((t=&gt;{const n=Fe;Fe=()=&gt;{Fe=n,t()},history.go(e)}))}function Be(){Te&amp;&amp;(Te(!1),Te=null)}function Je(e,t,n,r){return new Promise((o=&gt;{Be(),ke++,Te=o,r.locationChanging(ke,e,t,n)}))}async function je(e,t){const n=null!=t?t:location.href;await Promise.all(Array.from(De,(async([t,r])=&gt;{var o,i;i=t,E.has(i)&amp;&amp;await r.locationChanged(n,null===(o=history.state)||void 0===o?void 0:o.userState,e)})))}async function He(e){var t,n;Fe&amp;&amp;&quot;serverside-enhanced&quot;!==ze()&amp;&amp;await Fe(e),Re=null!==(n=null===(t=history.state)||void 0===t?void 0:t._index)&amp;&amp;void 0!==n?n:0}function $e(){const e=Ne();if(void 0!==e)return De.get(e)}function ze(){return Ie()?&quot;clientside-router&quot;:Se()?&quot;serverside-enhanced&quot;:window.Blazor._internal.isBlazorWeb?&quot;serverside-fullpageload&quot;:&quot;clientside-router&quot;}const We={focus:function(e,t){if(e instanceof HTMLElement)e.focus({preventScroll:t});else{if(!(e instanceof SVGElement))throw new Error(&quot;Unable to focus an invalid element.&quot;);if(!e.hasAttribute(&quot;tabindex&quot;))throw new Error(&quot;Unable to focus an SVG element that does not have a tabindex.&quot;);e.focus({preventScroll:t})}},focusBySelector:function(e,t){const n=document.querySelector(e);n&amp;&amp;(n.hasAttribute(&quot;tabindex&quot;)||(n.tabIndex=-1),n.focus({preventScroll:!0}))}},Ue={init:function(e,t,n,r=50){const o=Ve(t);(o||document.documentElement).style.overflowAnchor=&quot;none&quot;;const i=document.createRange();f(n.parentElement)&amp;&amp;(t.style.display=&quot;table-row&quot;,n.style.display=&quot;table-row&quot;);const s=new IntersectionObserver((function(r){r.forEach((r=&gt;{var o;if(!r.isIntersecting)return;i.setStartAfter(t),i.setEndBefore(n);const s=i.getBoundingClientRect().height,a=null===(o=r.rootBounds)||void 0===o?void 0:o.height;r.target===t?e.invokeMethodAsync(&quot;OnSpacerBeforeVisible&quot;,r.intersectionRect.top-r.boundingClientRect.top,s,a):r.target===n&amp;&amp;n.offsetHeight&gt;0&amp;&amp;e.invokeMethodAsync(&quot;OnSpacerAfterVisible&quot;,r.boundingClientRect.bottom-r.intersectionRect.bottom,s,a)}))}),{root:o,rootMargin:`${r}px`});s.observe(t),s.observe(n);const a=d(t),c=d(n),{observersByDotNetObjectId:l,id:u}=Xe(e);function d(e){const t={attributes:!0},n=new MutationObserver(((n,r)=&gt;{f(e.parentElement)&amp;&amp;(r.disconnect(),e.style.display=&quot;table-row&quot;,r.observe(e,t)),s.unobserve(e),s.observe(e)}));return n.observe(e,t),n}function f(e){return null!==e&amp;&amp;(e instanceof HTMLTableElement&amp;&amp;&quot;&quot;===e.style.display||&quot;table&quot;===e.style.display||e instanceof HTMLTableSectionElement&amp;&amp;&quot;&quot;===e.style.display||&quot;table-row-group&quot;===e.style.display)}l[u]={intersectionObserver:s,mutationObserverBefore:a,mutationObserverAfter:c}},dispose:function(e){const{observersByDotNetObjectId:t,id:n}=Xe(e),r=t[n];r&amp;&amp;(r.intersectionObserver.disconnect(),r.mutationObserverBefore.disconnect(),r.mutationObserverAfter.disconnect(),e.dispose(),delete t[n])}},Ke=Symbol();function Ve(e){return e&amp;&amp;e!==document.body&amp;&amp;e!==document.documentElement?&quot;visible&quot;!==getComputedStyle(e).overflowY?e:Ve(e.parentElement):null}function Xe(e){var t;const n=e._callDispatcher,r=e._id;return null!==(t=n[Ke])&amp;&amp;void 0!==t||(n[Ke]={}),{observersByDotNetObjectId:n[Ke],id:r}}const Ye={getAndRemoveExistingTitle:function(){var e;const t=document.head?document.head.getElementsByTagName(&quot;title&quot;):[];if(0===t.length)return null;let n=null;for(let r=t.length-1;r&gt;=0;r--){const o=t[r],i=o.previousSibling;i instanceof Comment&amp;&amp;null!==$(i)||(null===n&amp;&amp;(n=o.textContent),null===(e=o.parentNode)||void 0===e||e.removeChild(o))}return n}},Ge={init:function(e,t){t._blazorInputFileNextFileId=0,t.addEventListener(&quot;click&quot;,(function(){t.value=&quot;&quot;})),t.addEventListener(&quot;change&quot;,(function(){t._blazorFilesById={};const n=Array.prototype.map.call(t.files,(function(e){const n={id:++t._blazorInputFileNextFileId,lastModified:new Date(e.lastModified).toISOString(),name:e.name,size:e.size,contentType:e.type,readPromise:void 0,arrayBuffer:void 0,blob:e};return t._blazorFilesById[n.id]=n,n}));e.invokeMethodAsync(&quot;NotifyChange&quot;,n)}))},toImageFile:async function(e,t,n,r,o){const i=qe(e,t),s=await new Promise((function(e){const t=new Image;t.onload=function(){URL.revokeObjectURL(t.src),e(t)},t.onerror=function(){t.onerror=null,URL.revokeObjectURL(t.src)},t.src=URL.createObjectURL(i.blob)})),a=await new Promise((function(e){var t;const i=Math.min(1,r/s.width),a=Math.min(1,o/s.height),c=Math.min(i,a),l=document.createElement(&quot;canvas&quot;);l.width=Math.round(s.width*c),l.height=Math.round(s.height*c),null===(t=l.getContext(&quot;2d&quot;))||void 0===t||t.drawImage(s,0,0,l.width,l.height),l.toBlob(e,n)})),c={id:++e._blazorInputFileNextFileId,lastModified:i.lastModified,name:i.name,size:(null==a?void 0:a.size)||0,contentType:n,blob:a||i.blob};return e._blazorFilesById[c.id]=c,c},readFileData:async function(e,t){return qe(e,t).blob}};function qe(e,t){const n=e._blazorFilesById[t];if(!n)throw new Error(`There is no file with ID ${t}. The file list may have changed. See https://aka.ms/aspnet/blazor-input-file-multiple-selections.`);return n}const Ze=new Set,Qe={enableNavigationPrompt:function(e){0===Ze.size&amp;&amp;window.addEventListener(&quot;beforeunload&quot;,et),Ze.add(e)},disableNavigationPrompt:function(e){Ze.delete(e),0===Ze.size&amp;&amp;window.removeEventListener(&quot;beforeunload&quot;,et)}};function et(e){e.preventDefault(),e.returnValue=!0}const tt=new Map,nt={navigateTo:function(e,t,n=!1){Le(e,t instanceof Object?t:{forceLoad:t,replaceHistoryEntry:n})},registerCustomEventType:function(e,t){if(!t)throw new Error(&quot;The options parameter is required.&quot;);if(o.has(e))throw new Error(`The event &#39;${e}&#39; is already registered.`);if(t.browserEventName){const n=i.get(t.browserEventName);n?n.push(e):i.set(t.browserEventName,[e]),s.forEach((n=&gt;n(e,t.browserEventName)))}o.set(e,t)},rootComponents:g,runtime:{},_internal:{navigationManager:Oe,domWrapper:We,Virtualize:Ue,PageTitle:Ye,InputFile:Ge,NavigationLock:Qe,getJSDataStreamChunk:async function(e,t,n){return e instanceof Blob?await async function(e,t,n){const r=e.slice(t,t+n),o=await r.arrayBuffer();return new Uint8Array(o)}(e,t,n):function(e,t,n){return new Uint8Array(e.buffer,e.byteOffset+t,n)}(e,t,n)},attachWebRendererInterop:function(t,n,r,o){var i,s;if(E.has(t))throw new Error(`Interop methods are already registered for renderer ${t}`);E.set(t,n),r&amp;&amp;o&amp;&amp;Object.keys(r).length&gt;0&amp;&amp;function(t,n,r){if(h)throw new Error(&quot;Dynamic root components have already been enabled.&quot;);h=t,p=n;for(const[t,o]of Object.entries(r)){const r=e.findJSFunction(t,0);for(const e of o)r(e,n[e])}}(I(t),r,o),null===(s=null===(i=A.get(t))||void 0===i?void 0:i[0])||void 0===s||s.call(i),function(e){for(const t of S)t(e)}(t)}}};var rt,ot;window.Blazor=nt;const it=navigator,st=it.userAgentData&amp;&amp;it.userAgentData.brands,at=st&amp;&amp;st.length&gt;0?st.some((e=&gt;&quot;Google Chrome&quot;===e.brand||&quot;Microsoft Edge&quot;===e.brand||&quot;Chromium&quot;===e.brand)):window.chrome,ct=null!==(ot=null===(rt=it.userAgentData)||void 0===rt?void 0:rt.platform)&amp;&amp;void 0!==ot?ot:navigator.platform;function lt(e){return 0!==e.debugLevel&amp;&amp;(at||navigator.userAgent.includes(&quot;Firefox&quot;))}let ut=!1;function dt(){const e=document.querySelector(&quot;#blazor-error-ui&quot;);e&amp;&amp;(e.style.display=&quot;block&quot;),ut||(ut=!0,document.querySelectorAll(&quot;#blazor-error-ui .reload&quot;).forEach((e=&gt;{e.onclick=function(e){location.reload(),e.preventDefault()}})),document.querySelectorAll(&quot;#blazor-error-ui .dismiss&quot;).forEach((e=&gt;{e.onclick=function(e){const t=document.querySelector(&quot;#blazor-error-ui&quot;);t&amp;&amp;(t.style.display=&quot;none&quot;),e.preventDefault()}})))}var ft,mt;!function(e){e[e.Default=0]=&quot;Default&quot;,e[e.Server=1]=&quot;Server&quot;,e[e.WebAssembly=2]=&quot;WebAssembly&quot;,e[e.WebView=3]=&quot;WebView&quot;}(ft||(ft={})),function(e){e[e.Trace=0]=&quot;Trace&quot;,e[e.Debug=1]=&quot;Debug&quot;,e[e.Information=2]=&quot;Information&quot;,e[e.Warning=3]=&quot;Warning&quot;,e[e.Error=4]=&quot;Error&quot;,e[e.Critical=5]=&quot;Critical&quot;,e[e.None=6]=&quot;None&quot;}(mt||(mt={}));class ht{constructor(e=!0,t,n,r=0){this.singleRuntime=e,this.logger=t,this.webRendererId=r,this.afterStartedCallbacks=[],n&amp;&amp;this.afterStartedCallbacks.push(...n)}async importInitializersAsync(e,t){await Promise.all(e.map((e=&gt;async function(e,n){const r=function(e){const t=document.baseURI;return t.endsWith(&quot;/&quot;)?`${t}${e}`:`${t}/${e}`}(n),o=await import(r);if(void 0!==o){if(e.singleRuntime){const{beforeStart:n,afterStarted:r,beforeWebAssemblyStart:s,afterWebAssemblyStarted:a,beforeServerStart:c,afterServerStarted:l}=o;let u=n;e.webRendererId===ft.Server&amp;&amp;c&amp;&amp;(u=c),e.webRendererId===ft.WebAssembly&amp;&amp;s&amp;&amp;(u=s);let d=r;return e.webRendererId===ft.Server&amp;&amp;l&amp;&amp;(d=l),e.webRendererId===ft.WebAssembly&amp;&amp;a&amp;&amp;(d=a),i(e,u,d,t)}return function(e,t,n){var o;const s=n[0],{beforeStart:a,afterStarted:c,beforeWebStart:l,afterWebStarted:u,beforeWebAssemblyStart:d,afterWebAssemblyStarted:f,beforeServerStart:m,afterServerStarted:h}=t,p=!(l||u||d||f||m||h||!a&amp;&amp;!c),v=p&amp;&amp;s.enableClassicInitializers;if(p&amp;&amp;!s.enableClassicInitializers)null===(o=e.logger)||void 0===o||o.log(mt.Warning,`Initializer &#39;${r}&#39; will be ignored because multiple runtimes are available. use &#39;before(web|webAssembly|server)Start&#39; and &#39;after(web|webAssembly|server)Started?&#39; instead.)`);else if(v)return i(e,a,c,n);if(function(e){e.webAssembly?e.webAssembly.initializers||(e.webAssembly.initializers={beforeStart:[],afterStarted:[]}):e.webAssembly={initializers:{beforeStart:[],afterStarted:[]}},e.circuit?e.circuit.initializers||(e.circuit.initializers={beforeStart:[],afterStarted:[]}):e.circuit={initializers:{beforeStart:[],afterStarted:[]}}}(s),d&amp;&amp;s.webAssembly.initializers.beforeStart.push(d),f&amp;&amp;s.webAssembly.initializers.afterStarted.push(f),m&amp;&amp;s.circuit.initializers.beforeStart.push(m),h&amp;&amp;s.circuit.initializers.afterStarted.push(h),u&amp;&amp;e.afterStartedCallbacks.push(u),l)return l(s)}(e,o,t)}function i(e,t,n,r){if(n&amp;&amp;e.afterStartedCallbacks.push(n),t)return t(...r)}}(this,e))))}async invokeAfterStartedCallbacks(e){const t=function(e){var t;return null===(t=A.get(e))||void 0===t?void 0:t[1]}(this.webRendererId);t&amp;&amp;await t,await Promise.all(this.afterStartedCallbacks.map((t=&gt;t(e))))}}let pt,vt,gt,bt,yt,wt,Et;const St=Math.pow(2,32),At=Math.pow(2,21)-1;let Ct=null;function It(e){return vt.getI32(e)}const Nt={load:function(e,t){return async function(e,t){const{dotnet:n}=await async function(e){if(&quot;undefined&quot;==typeof WebAssembly||!WebAssembly.validate)throw new Error(&quot;This browser does not support WebAssembly.&quot;);let t=&quot;_framework/dotnet.js&quot;;if(e.loadBootResource){const n=&quot;dotnetjs&quot;,r=e.loadBootResource(n,&quot;dotnet.js&quot;,t,&quot;&quot;,&quot;js-module-dotnet&quot;);if(&quot;string&quot;==typeof r)t=r;else if(r)throw new Error(`For a ${n} resource, custom loaders must supply a URI string.`)}const n=new URL(t,document.baseURI).toString();return await import(n)}(e),r=function(e,t){const n={maxParallelDownloads:1e6,enableDownloadRetry:!1,applicationEnvironment:e.environment},r={...window.Module||{},onConfigLoaded:async n=&gt;{n.environmentVariables||(n.environmentVariables={}),&quot;sharded&quot;===n.globalizationMode&amp;&amp;(n.environmentVariables.__BLAZOR_SHARDED_ICU=&quot;1&quot;),nt._internal.getApplicationEnvironment=()=&gt;n.applicationEnvironment,null==t||t(n),Et=await async function(e,t){var n,r,o;if(e.initializers)return await Promise.all(e.initializers.beforeStart.map((t=&gt;t(e)))),new ht(!1,void 0,e.initializers.afterStarted,ft.WebAssembly);{const i=[e,null!==(r=null===(n=t.resources)||void 0===n?void 0:n.extensions)&amp;&amp;void 0!==r?r:{}],s=new ht(!0,void 0,void 0,ft.WebAssembly),a=Object.keys((null===(o=null==t?void 0:t.resources)||void 0===o?void 0:o.libraryInitializers)||{});return await s.importInitializersAsync(a,i),s}}(e,n)},onDownloadResourceProgress:_t,config:n,disableDotnet6Compatibility:!1,out:kt,err:Dt};return r}(e,t);e.applicationCulture&amp;&amp;n.withApplicationCulture(e.applicationCulture),e.environment&amp;&amp;n.withApplicationEnvironment(e.environment),e.loadBootResource&amp;&amp;n.withResourceLoader(e.loadBootResource),n.withModuleConfig(r),e.configureRuntime&amp;&amp;e.configureRuntime(n),wt=await n.create()}(e,t)},start:function(){return async function(){if(!wt)throw new Error(&quot;The runtime must be loaded it gets configured.&quot;);const{MONO:t,BINDING:n,Module:r,setModuleImports:o,INTERNAL:i,getConfig:s,invokeLibraryInitializers:a}=wt;gt=r,pt=n,vt=t,yt=i,function(e){const t=ct.match(/^Mac/i)?&quot;Cmd&quot;:&quot;Alt&quot;;lt(e)&amp;&amp;console.info(`Debugging hotkey: Shift+${t}+D (when application has focus)`),document.addEventListener(&quot;keydown&quot;,(t=&gt;{t.shiftKey&amp;&amp;(t.metaKey||t.altKey)&amp;&amp;&quot;KeyD&quot;===t.code&amp;&amp;(lt(e)?navigator.userAgent.includes(&quot;Firefox&quot;)?async function(){const e=await fetch(`_framework/debug?url=${encodeURIComponent(location.href)}&amp;isFirefox=true`);200!==e.status&amp;&amp;console.warn(await e.text())}():at?function(){const e=document.createElement(&quot;a&quot;);e.href=`_framework/debug?url=${encodeURIComponent(location.href)}`,e.target=&quot;_blank&quot;,e.rel=&quot;noopener noreferrer&quot;,e.click()}():console.error(&quot;Currently, only Microsoft Edge (80+), Google Chrome, or Chromium, are supported for debugging.&quot;):console.error(&quot;Cannot start debugging, because the application was not compiled with debugging enabled.&quot;))}))}(s()),nt.runtime=wt,nt._internal.dotNetCriticalError=Dt,o(&quot;blazor-internal&quot;,{Blazor:{_internal:nt._internal}});const c=await wt.getAssemblyExports(&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;);return Object.assign(nt._internal,{dotNetExports:{...c.Microsoft.AspNetCore.Components.WebAssembly.Services.DefaultWebAssemblyJSRuntime}}),bt=e.attachDispatcher({beginInvokeDotNetFromJS:(e,t,n,r,o)=&gt;{if(Tt(),!r&amp;&amp;!t)throw new Error(&quot;Either assemblyName or dotNetObjectId must have a non null value.&quot;);const i=r?r.toString():t;nt._internal.dotNetExports.BeginInvokeDotNet(e?e.toString():null,i,n,o)},endInvokeJSFromDotNet:(e,t,n)=&gt;{nt._internal.dotNetExports.EndInvokeJS(n)},sendByteArray:(e,t)=&gt;{nt._internal.dotNetExports.ReceiveByteArrayFromJS(e,t)},invokeDotNetFromJS:(e,t,n,r)=&gt;(Tt(),nt._internal.dotNetExports.InvokeDotNet(e||null,t,null!=n?n:0,r))}),{invokeLibraryInitializers:a}}()},callEntryPoint:async function(){try{await wt.runMain(wt.getConfig().mainAssemblyName,[])}catch(e){console.error(e),dt()}},toUint8Array:function(e){const t=Ft(e),n=It(t),r=new Uint8Array(n);return r.set(gt.HEAPU8.subarray(t+4,t+4+n)),r},getArrayLength:function(e){return It(Ft(e))},getArrayEntryPtr:function(e,t,n){return Ft(e)+4+t*n},getObjectFieldsBaseAddress:function(e){return e+8},readInt16Field:function(e,t){return n=e+(t||0),vt.getI16(n);var n},readInt32Field:function(e,t){return It(e+(t||0))},readUint64Field:function(e,t){return function(e){const t=e&gt;&gt;2,n=gt.HEAPU32[t+1];if(n&gt;At)throw new Error(`Cannot read uint64 with high order part ${n}, because the result would exceed Number.MAX_SAFE_INTEGER.`);return n*St+gt.HEAPU32[t]}(e+(t||0))},readFloatField:function(e,t){return n=e+(t||0),vt.getF32(n);var n},readObjectField:function(e,t){return It(e+(t||0))},readStringField:function(e,t,n){const r=It(e+(t||0));if(0===r)return null;if(n){const e=pt.unbox_mono_obj(r);return&quot;boolean&quot;==typeof e?e?&quot;&quot;:null:e}return pt.conv_string(r)},readStructField:function(e,t){return e+(t||0)},beginHeapLock:function(){return Tt(),Ct=Ot.create(),Ct},invokeWhenHeapUnlocked:function(e){Ct?Ct.enqueuePostReleaseAction(e):e()}};function _t(e,t){const n=e/t*100;document.documentElement.style.setProperty(&quot;--blazor-load-percentage&quot;,`${n}%`),document.documentElement.style.setProperty(&quot;--blazor-load-percentage-text&quot;,`&quot;${Math.floor(n)}%&quot;`)}const Rt=[&quot;DEBUGGING ENABLED&quot;],kt=e=&gt;Rt.indexOf(e)&lt;0&amp;&amp;console.log(e),Dt=e=&gt;{console.error(e||&quot;(null)&quot;),dt()};function Ft(e){return e+12}function Tt(){if(Ct)throw new Error(&quot;Assertion failed - heap is currently locked&quot;)}class Ot{enqueuePostReleaseAction(e){this.postReleaseActions||(this.postReleaseActions=[]),this.postReleaseActions.push(e)}release(){var e;if(Ct!==this)throw new Error(&quot;Trying to release a lock which isn&#39;t current&quot;);for(yt.mono_wasm_gc_unlock(),Ct=null;null===(e=this.postReleaseActions)||void 0===e?void 0:e.length;)this.postReleaseActions.shift()(),Tt()}static create(){return yt.mono_wasm_gc_lock(),new Ot}}let Lt;class Mt{constructor(e){this.batchAddress=e,this.arrayRangeReader=xt,this.arrayBuilderSegmentReader=Pt,this.diffReader=Bt,this.editReader=Jt,this.frameReader=jt}updatedComponents(){return Lt.readStructField(this.batchAddress,0)}referenceFrames(){return Lt.readStructField(this.batchAddress,xt.structLength)}disposedComponentIds(){return Lt.readStructField(this.batchAddress,2*xt.structLength)}disposedEventHandlerIds(){return Lt.readStructField(this.batchAddress,3*xt.structLength)}updatedComponentsEntry(e,t){return Ht(e,t,Bt.structLength)}referenceFramesEntry(e,t){return Ht(e,t,jt.structLength)}disposedComponentIdsEntry(e,t){const n=Ht(e,t,4);return Lt.readInt32Field(n)}disposedEventHandlerIdsEntry(e,t){const n=Ht(e,t,8);return Lt.readUint64Field(n)}}const xt={structLength:8,values:e=&gt;Lt.readObjectField(e,0),count:e=&gt;Lt.readInt32Field(e,4)},Pt={structLength:12,values:e=&gt;{const t=Lt.readObjectField(e,0),n=Lt.getObjectFieldsBaseAddress(t);return Lt.readObjectField(n,0)},offset:e=&gt;Lt.readInt32Field(e,4),count:e=&gt;Lt.readInt32Field(e,8)},Bt={structLength:4+Pt.structLength,componentId:e=&gt;Lt.readInt32Field(e,0),edits:e=&gt;Lt.readStructField(e,4),editsEntry:(e,t)=&gt;Ht(e,t,Jt.structLength)},Jt={structLength:20,editType:e=&gt;Lt.readInt32Field(e,0),siblingIndex:e=&gt;Lt.readInt32Field(e,4),newTreeIndex:e=&gt;Lt.readInt32Field(e,8),moveToSiblingIndex:e=&gt;Lt.readInt32Field(e,8),removedAttributeName:e=&gt;Lt.readStringField(e,16)},jt={structLength:36,frameType:e=&gt;Lt.readInt16Field(e,4),subtreeLength:e=&gt;Lt.readInt32Field(e,8),elementReferenceCaptureId:e=&gt;Lt.readStringField(e,16),componentId:e=&gt;Lt.readInt32Field(e,12),elementName:e=&gt;Lt.readStringField(e,16),textContent:e=&gt;Lt.readStringField(e,16),markupContent:e=&gt;Lt.readStringField(e,16),attributeName:e=&gt;Lt.readStringField(e,16),attributeValue:e=&gt;Lt.readStringField(e,24,!0),attributeEventHandlerId:e=&gt;Lt.readUint64Field(e,8)};function Ht(e,t,n){return Lt.getArrayEntryPtr(e,t,n)}const $t=/^\s*Blazor-WebAssembly-Component-State:(?&lt;state&gt;[a-zA-Z0-9+/=]+)$/;function zt(e,t,n=&quot;state&quot;){var r;if(e.nodeType===Node.COMMENT_NODE){const o=e.textContent||&quot;&quot;,i=t.exec(o),s=i&amp;&amp;i.groups&amp;&amp;i.groups[n];return s&amp;&amp;(null===(r=e.parentNode)||void 0===r||r.removeChild(e)),s}if(!e.hasChildNodes())return;const o=e.childNodes;for(let e=0;e&lt;o.length;e++){const r=zt(o[e],t,n);if(r)return r}}function Wt(e,t){const n=[],r=new en(e.childNodes);for(;r.next()&amp;&amp;r.currentElement;){const e=Kt(r,t);if(e)n.push(e);else if(r.currentElement.hasChildNodes()){const e=Wt(r.currentElement,t);for(let t=0;t&lt;e.length;t++){const r=e[t];n.push(r)}}}return n}const Ut=new RegExp(/^\s*Blazor:[^{]*(?&lt;descriptor&gt;.*)$/);function Kt(e,t){const n=e.currentElement;var r,o,i;if(n&amp;&amp;n.nodeType===Node.COMMENT_NODE&amp;&amp;n.textContent){const s=Ut.exec(n.textContent),a=s&amp;&amp;s.groups&amp;&amp;s.groups.descriptor;if(!a)return;!function(e){if(e.parentNode instanceof Document)throw new Error(&quot;Root components cannot be marked as interactive. The &lt;html&gt; element must be rendered statically so that scripts are not evaluated multiple times.&quot;)}(n);try{const s=function(e){const t=JSON.parse(e),{type:n}=t;if(&quot;server&quot;!==n&amp;&amp;&quot;webassembly&quot;!==n&amp;&amp;&quot;auto&quot;!==n)throw new Error(`Invalid component type &#39;${n}&#39;.`);return t}(a),c=function(e,t,n){const{prerenderId:r}=e;if(r){for(;n.next()&amp;&amp;n.currentElement;){const e=n.currentElement;if(e.nodeType!==Node.COMMENT_NODE)continue;if(!e.textContent)continue;const t=Ut.exec(e.textContent),o=t&amp;&amp;t[1];if(o)return Qt(o,r),e}throw new Error(`Could not find an end component comment for &#39;${t}&#39;.`)}}(s,n,e);if(t!==s.type)return;switch(s.type){case&quot;webassembly&quot;:return o=n,i=c,Zt(r=s),{...r,uniqueId:Gt++,start:o,end:i};case&quot;server&quot;:return function(e,t,n){return qt(e),{...e,uniqueId:Gt++,start:t,end:n}}(s,n,c);case&quot;auto&quot;:return function(e,t,n){return qt(e),Zt(e),{...e,uniqueId:Gt++,start:t,end:n}}(s,n,c)}}catch(e){throw new Error(`Found malformed component comment at ${n.textContent}`)}}}let Vt,Xt,Yt,Gt=0;function qt(e){const{descriptor:t,sequence:n}=e;if(!t)throw new Error(&quot;descriptor must be defined when using a descriptor.&quot;);if(void 0===n)throw new Error(&quot;sequence must be defined when using a descriptor.&quot;);if(!Number.isInteger(n))throw new Error(`Error parsing the sequence &#39;${n}&#39; for component &#39;${JSON.stringify(e)}&#39;`)}function Zt(e){const{assembly:t,typeName:n}=e;if(!t)throw new Error(&quot;assembly must be defined when using a descriptor.&quot;);if(!n)throw new Error(&quot;typeName must be defined when using a descriptor.&quot;);e.parameterDefinitions=e.parameterDefinitions&amp;&amp;atob(e.parameterDefinitions),e.parameterValues=e.parameterValues&amp;&amp;atob(e.parameterValues)}function Qt(e,t){const n=JSON.parse(e);if(1!==Object.keys(n).length)throw new Error(`Invalid end of component comment: &#39;${e}&#39;`);const r=n.prerenderId;if(!r)throw new Error(`End of component comment must have a value for the prerendered property: &#39;${e}&#39;`);if(r!==t)throw new Error(`End of component comment prerendered property must match the start comment prerender id: &#39;${t}&#39;, &#39;${r}&#39;`)}class en{constructor(e){this.childNodes=e,this.currentIndex=-1,this.length=e.length}next(){return this.currentIndex++,this.currentIndex&lt;this.length?(this.currentElement=this.childNodes[this.currentIndex],!0):(this.currentElement=void 0,!1)}}class tn{constructor(e){this.componentManager=e}resolveRegisteredElement(e){const t=Number.parseInt(e);if(!Number.isNaN(t))return function(e){const{start:t,end:n}=e,r=t[x];if(r){if(r!==e)throw new Error(&quot;The start component comment was already associated with another component descriptor.&quot;);return t}const o=t.parentNode;if(!o)throw new Error(`Comment not connected to the DOM ${t.textContent}`);const i=P(o,!0),s=U(i);t[M]=i,t[x]=e;const a=P(t);if(n){const e=U(a),r=Array.prototype.indexOf.call(s,a)+1;let o=null;for(;o!==n;){const n=s.splice(r,1)[0];if(!n)throw new Error(&quot;Could not find the end component comment in the parent logical node list&quot;);n[M]=t,e.push(n),o=n}}return a}(this.componentManager.resolveRootComponent(t))}getParameterValues(e){return this.componentManager.initialComponents[e].parameterValues}getParameterDefinitions(e){return this.componentManager.initialComponents[e].parameterDefinitions}getTypeName(e){return this.componentManager.initialComponents[e].typeName}getAssembly(e){return this.componentManager.initialComponents[e].assembly}getCount(){return this.componentManager.initialComponents.length}}let nn,rn,on,sn=!1,an=!1,cn=!1;new Promise((e=&gt;{rn=e}));const ln=new Promise((e=&gt;{on=e}));let un;function dn(e){if(Vt)throw new Error(&quot;WebAssembly options have already been configured.&quot;);!async function(e){const t=await e;Vt=t,un()}(e)}function fn(e){if(void 0!==nn)throw new Error(&quot;Blazor WebAssembly has already started.&quot;);return nn=new Promise(mn.bind(null,e)),nn}async function mn(e,t,n){(function(){if(window.parent!==window&amp;&amp;!window.opener&amp;&amp;window.frameElement){const e=window.sessionStorage&amp;&amp;window.sessionStorage[&quot;Microsoft.AspNetCore.Components.WebAssembly.Authentication.CachedAuthSettings&quot;],t=e&amp;&amp;JSON.parse(e);return t&amp;&amp;t.redirect_uri&amp;&amp;location.href.startsWith(t.redirect_uri)}return!1})()&amp;&amp;await new Promise((()=&gt;{}));const r=hn();!function(e){const t=N;N=(e,n,r)=&gt;{((e,t,n)=&gt;{const r=function(e){return me[e]}(e);(null==r?void 0:r.eventDelegator.getHandler(t))&amp;&amp;Nt.invokeWhenHeapUnlocked(n)})(e,n,(()=&gt;t(e,n,r)))}}(),nt._internal.applyHotReload=(e,t,n,r)=&gt;{bt.invokeDotNetStaticMethod(&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;,&quot;ApplyHotReloadDelta&quot;,e,t,n,r)},nt._internal.getApplyUpdateCapabilities=()=&gt;bt.invokeDotNetStaticMethod(&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;,&quot;GetApplyUpdateCapabilities&quot;),nt._internal.invokeJSFromDotNet=pn,nt._internal.invokeJSJson=vn,nt._internal.endInvokeDotNetFromJS=gn,nt._internal.receiveWebAssemblyDotNetDataStream=bn,nt._internal.receiveByteArray=yn;const o=(Lt=Nt,Lt);nt.platform=o,nt._internal.renderBatch=(e,t)=&gt;{const n=Nt.beginHeapLock();try{!function(e,t){const n=me[e];if(!n)throw new Error(`There is no browser renderer with ID ${e}.`);const r=t.arrayRangeReader,o=t.updatedComponents(),i=r.values(o),s=r.count(o),a=t.referenceFrames(),c=r.values(a),l=t.diffReader;for(let e=0;e&lt;s;e++){const r=t.updatedComponentsEntry(i,e),o=l.componentId(r),s=l.edits(r);n.updateComponent(t,o,s,c)}const u=t.disposedComponentIds(),d=r.values(u),f=r.count(u);for(let e=0;e&lt;f;e++){const r=t.disposedComponentIdsEntry(d,e);n.disposeComponent(r)}const m=t.disposedEventHandlerIds(),h=r.values(m),p=r.count(m);for(let e=0;e&lt;p;e++){const r=t.disposedEventHandlerIdsEntry(h,e);n.disposeEventHandler(r)}be&amp;&amp;(be=!1,window.scrollTo&amp;&amp;window.scrollTo(0,0))}(e,new Mt(t))}finally{n.release()}},nt._internal.navigationManager.listenForNavigationEvents(ft.WebAssembly,(async(e,t,n)=&gt;{await bt.invokeDotNetStaticMethodAsync(&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;,&quot;NotifyLocationChanged&quot;,e,t,n)}),(async(e,t,n,r)=&gt;{const o=await bt.invokeDotNetStaticMethodAsync(&quot;Microsoft.AspNetCore.Components.WebAssembly&quot;,&quot;NotifyLocationChangingAsync&quot;,t,n,r);nt._internal.navigationManager.endLocationChanging(e,o)}));const i=new tn(e);let s;nt._internal.registeredComponents={getRegisteredComponentsCount:()=&gt;i.getCount(),getAssembly:e=&gt;i.getAssembly(e),getTypeName:e=&gt;i.getTypeName(e),getParameterDefinitions:e=&gt;i.getParameterDefinitions(e)||&quot;&quot;,getParameterValues:e=&gt;i.getParameterValues(e)||&quot;&quot;},nt._internal.getPersistedState=()=&gt;zt(document,$t)||&quot;&quot;,nt._internal.getInitialComponentsUpdate=()=&gt;ln,nt._internal.updateRootComponents=e=&gt;{var t;return null===(t=nt._internal.dotNetExports)||void 0===t?void 0:t.UpdateRootComponentsCore(e)},nt._internal.endUpdateRootComponents=t=&gt;{var n;return null===(n=e.onAfterUpdateRootComponents)||void 0===n?void 0:n.call(e,t)},nt._internal.attachRootComponentToElement=(e,t,n)=&gt;{const r=i.resolveRegisteredElement(e);r?ye(n,r,t,!1):function(e,t,n){const r=&quot;::before&quot;;let o=!1;if(e.endsWith(&quot;::after&quot;))e=e.slice(0,-7),o=!0;else if(e.endsWith(r))throw new Error(`The &#39;${r}&#39; selector is not supported.`);const i=function(e){const t=m.get(e);if(t)return m.delete(e),t}(e)||document.querySelector(e);if(!i)throw new Error(`Could not find any element matching selector &#39;${e}&#39;.`);ye(n,P(i,!0),t,o)}(e,t,n)};try{await r,s=await o.start()}catch(e){throw new Error(`Failed to start platform. Reason: ${e}`)}o.callEntryPoint(),Et.invokeAfterStartedCallbacks(nt),an=!0,t()}function hn(){return null!=Yt||(Yt=(async()=&gt;{await Xt;const e=null!=Vt?Vt:{},t=null==Vt?void 0:Vt.configureRuntime;e.configureRuntime=e=&gt;{null==t||t(e),cn&amp;&amp;e.withEnvironmentVariable(&quot;__BLAZOR_WEBASSEMBLY_WAIT_FOR_ROOT_COMPONENTS&quot;,&quot;true&quot;)},await Nt.load(e,rn),sn=!0})()),Yt}function pn(t,n,r,o){const i=Nt.readStringField(t,0),s=Nt.readInt32Field(t,4),a=Nt.readStringField(t,8),c=Nt.readUint64Field(t,20);if(null!==a){const e=Nt.readUint64Field(t,12);if(0!==e)return bt.beginInvokeJSFromDotNet(e,i,a,s,c),0;{const e=bt.invokeJSFromDotNet(i,a,s,c);return null===e?0:pt.js_string_to_mono_string(e)}}{const t=e.findJSFunction(i,c).call(null,n,r,o);switch(s){case e.JSCallResultType.Default:return t;case e.JSCallResultType.JSObjectReference:return e.createJSObjectReference(t).__jsObjectId;case e.JSCallResultType.JSStreamReference:{const n=e.createJSStreamReference(t),r=JSON.stringify(n);return pt.js_string_to_mono_string(r)}case e.JSCallResultType.JSVoidResult:return null;default:throw new Error(`Invalid JS call result type &#39;${s}&#39;.`)}}}function vn(e,t,n,r,o){return 0!==o?(bt.beginInvokeJSFromDotNet(o,e,r,n,t),null):bt.invokeJSFromDotNet(e,r,n,t)}function gn(e,t,n){bt.endInvokeDotNetFromJS(e,t,n)}function bn(e,t,n,r){!function(e,t,n,r,o){let i=tt.get(t);if(!i){const n=new ReadableStream({start(e){tt.set(t,e),i=e}});e.supplyDotNetStream(t,n)}o?(i.error(o),tt.delete(t)):0===r?(i.close(),tt.delete(t)):i.enqueue(n.length===r?n:n.subarray(0,r))}(bt,e,t,n,r)}function yn(e,t){bt.receiveByteArray(e,t)}Xt=new Promise((e=&gt;{un=e}));class wn{constructor(e){this.initialComponents=e}resolveRootComponent(e){return this.initialComponents[e]}}class En{constructor(){this._eventListeners=new Map}static create(e){const t=new En;return e.addEventListener=t.addEventListener.bind(t),e.removeEventListener=t.removeEventListener.bind(t),t}addEventListener(e,t){let n=this._eventListeners.get(e);n||(n=new Set,this._eventListeners.set(e,n)),n.add(t)}removeEventListener(e,t){var n;null===(n=this._eventListeners.get(e))||void 0===n||n.delete(t)}dispatchEvent(e,t){const n=this._eventListeners.get(e);if(!n)return;const r={...t,type:e};for(const e of n)e(r)}}let Sn=!1;async function An(e){if(Sn)throw new Error(&quot;Blazor has already started.&quot;);Sn=!0,dn(Promise.resolve(e||{})),En.create(nt);const t=Wt(document,&quot;webassembly&quot;),n=new wn(t);await fn(n)}nt.start=An,window.DotNet=e,document&amp;&amp;document.currentScript&amp;&amp;&quot;false&quot;!==document.currentScript.getAttribute(&quot;autostart&quot;)&amp;&amp;An().catch((e=&gt;{void 0!==gt&amp;&amp;gt.err?gt.err(e):console.error(e)}))})();</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>select</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Remove all comments that return information that may help an attacker and fix any underlying problems they refer to.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-8">Loosely Scoped Cookie</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures/">OWASP_2021_A08</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/565.html">CWE-565</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes">WSTG-v42-SESS-02</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>Cookies can be scoped by domain or path. This check is only concerned with domain scope.The domain scope applied to a cookie determines which domains can access it. For example, a cookie can be scoped strictly to a subdomain e.g. www.nottrusted.com, or loosely scoped to a parent domain e.g. nottrusted.com. In the latter case, any subdomain of nottrusted.com can access the cookie. Loosely scoped cookies are common in mega-applications like google.com and live.com. Cookies set from a subdomain like app.foo.bar are transmitted only to that domain by the browser. However, cookies scoped to a parent-level domain may be transmitted to the parent, or any subdomain of the parent.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>The origin domain used for comparison was:</p>
+
+<p>minitwit-api-5ezat.ondigitalocean.app</p>
+
+<p>__cf_bm=rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (275 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (886 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx00000ebbee0ea5248c73c-00681dc036-82560268-ams3c
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-static-catchall-document: index.html
+x-do-orig-status: 200
+CF-Cache-Status: HIT
+Age: 990
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=rvyLk2QVtPkHidYEFdktqXeaeytalwfzsLZgvtEMmzo-1746781204-1.0.1.1-wCcL.uo8PAAU5NynizbSWyhIxY2KqMH3oQMfzA2H3H1UbCwGEVkHLF12R8IyfSp9IfEFwiEjlcXYDOdUAhqt3rli_K6p7U3t7596j.UEfDk; path=/; expires=Fri, 09-May-25 09:30:04 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011d699e2875-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Always scope cookies to a FQDN (Fully Qualified Domain Name).</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+								<li>
+									<h5>
+										<a
+											href="#alert-type-10">Re-examine Cache-control Directives</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET https://minitwit-api-5ezat.ondigitalocean.app/sitemap.xml</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/www-project-web-security-testing-guide/v42/4-Web_Application_Security_Testing/04-Authentication_Testing/06-Testing_for_Browser_Cache_Weaknesses">WSTG-v42-ATHN-06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/525.html">CWE-525</a></span> 
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The cache-control header has not been set properly or is missing, allowing the browser and proxies to cache content. For static assets like css, js, or image files this might be intended, however, the resources should be reviewed to ensure that no sensitive content will be cached.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (287 bytes)</summary>
+				
+				<pre><code>GET https://minitwit-api-5ezat.ondigitalocean.app/sitemap.xml HTTP/1.1
+host: minitwit-api-5ezat.ondigitalocean.app
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (911 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+Date: Fri, 09 May 2025 09:00:04 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+last-modified: Fri, 02 May 2025 14:33:52 GMT
+x-rgw-object-type: Normal
+x-amz-request-id: tx000005ea85ffd05cbdf78-00681dc414-82557b56-ams3c
+vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Cache-Control: public,max-age=10,s-maxage=86400
+x-do-app-origin: 0320ec1c-3cc0-4517-a50f-4a1a63c23a9a
+x-do-orig-status: 404
+CF-Cache-Status: MISS
+Accept-Ranges: bytes
+Set-Cookie: __cf_bm=2ZdJH.KH0ipGAOdiMix4Ni4E7m6VB6p9.gRYZ0_FXIE-1746781204-1.0.1.1-RWkVgB_v.WN7i9ErscWeK8swZRS_CKmayRWvoEvDzWpB6sVUoBLOpqdkSn8fo63yzTpFzZumgCP0fyx7ung.Or3ewrUT5cKsyCvzzt8Kic8; path=/; expires=Fri, 09-May-25 09:30:04 GMT; domain=.ondigitalocean.app; HttpOnly; Secure; SameSite=None
+Server: cloudflare
+CF-RAY: 93d0011d6a6792c2-CPH
+alt-svc: h3=&quot;:443&quot;; ma=86400
+content-length: 3048
+
+</code></pre>
+				
+				
+			</details> <details class="response-body">
+				<summary>Response body (3048 bytes)</summary>
+				
+				<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+
+&lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt;
+    &lt;title&gt;MiniTwitClient&lt;/title&gt;
+    &lt;base href=&quot;/&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/bootstrap/bootstrap.min.css&quot; /&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;css/app.css&quot; /&gt;
+    &lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; href=&quot;favicon.png&quot; /&gt;
+    &lt;link href=&quot;css/styles.css&quot; rel=&quot;stylesheet&quot;&gt;
+    &lt;link href=&quot;MiniTwitClient.styles.css&quot; rel=&quot;stylesheet&quot; /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+    &lt;div id=&quot;app&quot;&gt;
+        &lt;svg class=&quot;loading-progress&quot;&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+            &lt;circle r=&quot;40%&quot; cx=&quot;50%&quot; cy=&quot;50%&quot; /&gt;
+        &lt;/svg&gt;
+        &lt;div class=&quot;loading-progress-text&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div id=&quot;blazor-error-ui&quot;&gt;
+        An unhandled error has occurred.
+        &lt;a href=&quot;&quot; class=&quot;reload&quot;&gt;Reload&lt;/a&gt;
+        &lt;a class=&quot;dismiss&quot;&gt;🗙&lt;/a&gt;
+    &lt;/div&gt;
+    &lt;script src=&quot;_framework/blazor.webassembly.js&quot;&gt;&lt;/script&gt;
+    &lt;script&gt;
+        window.appConfig = { apiEndpoint: &quot;https://minitwit-api-5ezat.ondigitalocean.app/api&quot; };
+
+
+        window.initializeScrollListener = (dotNetHelper) =&gt; {
+            window.onscroll = () =&gt; {
+                const scrollTop = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const documentHeight = document.documentElement.scrollHeight;
+
+                if (scrollTop + windowHeight &gt;= documentHeight - 10) {
+                    // Call the .NET method if near the bottom
+                    dotNetHelper.invokeMethodAsync(&#39;OnReachedBottom&#39;);
+                }
+            };
+        };
+
+        window.isScrolledToBottom = (container) =&gt; {
+            return container.scrollTop + container.clientHeight &gt;= container.scrollHeight - 1;
+        };
+
+        window.scrollToBottom = (container) =&gt; {
+            container.scrollTop = container.scrollHeight;
+        };
+
+        window.getScrollHeight = (container) =&gt; {
+            return container.scrollHeight;
+        };
+
+        window.setScrollTop = (container, top) =&gt; {
+            container.scrollTop = top;
+        };
+
+        window.initializeTopSentinel = (dotNetHelper) =&gt; {
+            const container = document.getElementById(&#39;logContainer&#39;);
+            // create a sentinel at the very top
+            let sentinel = document.createElement(&#39;div&#39;);
+            sentinel.id = &#39;top-sentinel&#39;;
+            sentinel.style.position = &#39;absolute&#39;;
+            sentinel.style.top = &#39;0&#39;;
+            sentinel.style.width = &#39;100%&#39;;
+            sentinel.style.height = &#39;1px&#39;;
+            container.prepend(sentinel);
+
+            const observer = new IntersectionObserver(entries =&gt; {
+                entries.forEach(entry =&gt; {
+                    if (entry.isIntersecting) {
+                        dotNetHelper.invokeMethodAsync(&#39;OnReachedTop&#39;);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.1
+            });
+
+            observer.observe(sentinel);
+        };
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>cache-control</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>public,max-age=10,s-maxage=86400</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>For secure content, ensure the cache-control HTTP header is set with &quot;no-cache, no-store, must-revalidate&quot;. If an asset should be cached consider setting the directives &quot;public, max-age, immutable&quot;.</p>
+ </td>
+	</tr>
+</table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				  
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li
+						id="alert-type-0">
+						<h4>Content Security Policy (CSP) Header Not Set</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10038/">Content Security Policy (CSP) Header Not Set</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy">https://developer.mozilla.org/en-US/docs/Web/Security/CSP/Introducing_Content_Security_Policy</a></li>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html</a></li>
+										<li><a
+											href="https://www.w3.org/TR/CSP/">https://www.w3.org/TR/CSP/</a></li>
+										<li><a
+											href="https://w3c.github.io/webappsec-csp/">https://w3c.github.io/webappsec-csp/</a></li>
+										<li><a
+											href="https://web.dev/articles/csp">https://web.dev/articles/csp</a></li>
+										<li><a
+											href="https://caniuse.com/#feat=contentsecuritypolicy">https://caniuse.com/#feat=contentsecuritypolicy</a></li>
+										<li><a
+											href="https://content-security-policy.com/">https://content-security-policy.com/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-1">
+						<h4>Hidden File Found</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by an active scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/40035/">Hidden File Finder</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/538.html">538</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://blog.hboeck.de/archives/892-Introducing-Snallygaster-a-Tool-to-Scan-for-Secrets-on-Web-Servers.html">https://blog.hboeck.de/archives/892-Introducing-Snallygaster-a-Tool-to-Scan-for-Secrets-on-Web-Servers.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-2">
+						<h4>Missing Anti-clickjacking Header</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10020/">Anti-clickjacking Header</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/1021.html">1021</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-3">
+						<h4>Cookie with SameSite Attribute None</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10054/">Cookie without SameSite Attribute</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/1275.html">1275</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site">https://tools.ietf.org/html/draft-ietf-httpbis-cookie-same-site</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-4">
+						<h4>Strict-Transport-Security Header Not Set</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10035/">Strict-Transport-Security Header</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/319.html">319</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html">https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+										<li><a
+											href="https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security">https://en.wikipedia.org/wiki/HTTP_Strict_Transport_Security</a></li>
+										<li><a
+											href="https://caniuse.com/stricttransportsecurity">https://caniuse.com/stricttransportsecurity</a></li>
+										<li><a
+											href="https://datatracker.ietf.org/doc/html/rfc6797">https://datatracker.ietf.org/doc/html/rfc6797</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-5">
+						<h4>Timestamp Disclosure - Unix</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10096/">Timestamp Disclosure</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/497.html">497</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cwe.mitre.org/data/definitions/200.html">https://cwe.mitre.org/data/definitions/200.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-6">
+						<h4>X-Content-Type-Options Header Missing</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10021/">X-Content-Type-Options Header Missing</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/693.html">693</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)">https://learn.microsoft.com/en-us/previous-versions/windows/internet-explorer/ie-developer/compatibility/gg622941(v=vs.85)</a></li>
+										<li><a
+											href="https://owasp.org/www-community/Security_Headers">https://owasp.org/www-community/Security_Headers</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-7">
+						<h4>Information Disclosure - Suspicious Comments</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10027/">Information Disclosure - Suspicious Comments</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/615.html">615</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							
+						</table>
+					</li>
+					<li
+						id="alert-type-8">
+						<h4>Loosely Scoped Cookie</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/90033/">Loosely Scoped Cookie</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/565.html">565</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://tools.ietf.org/html/rfc6265#section-4.1">https://tools.ietf.org/html/rfc6265#section-4.1</a></li>
+										<li><a
+											href="https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html">https://owasp.org/www-project-web-security-testing-guide/v41/4-Web_Application_Security_Testing/06-Session_Management_Testing/02-Testing_for_Cookies_Attributes.html</a></li>
+										<li><a
+											href="https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies">https://code.google.com/p/browsersec/wiki/Part2#Same-origin_policy_for_cookies</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-9">
+						<h4>Modern Web Application</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10109/">Modern Web Application</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							
+						</table>
+					</li>
+					<li
+						id="alert-type-10">
+						<h4>Re-examine Cache-control Directives</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10015/">Re-examine Cache-control Directives</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a
+									href="https://cwe.mitre.org/data/definitions/525.html">525</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>13</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching">https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html#web-content-caching</a></li>
+										<li><a
+											href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control</a></li>
+										<li><a
+											href="https://grayduck.mn/2021/09/13/cache-control-recommendations/">https://grayduck.mn/2021/09/13/cache-control-recommendations/</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-11">
+						<h4>Retrieved from Cache</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10050/">Retrieved from Cache</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://tools.ietf.org/html/rfc7234">https://tools.ietf.org/html/rfc7234</a></li>
+										<li><a
+											href="https://tools.ietf.org/html/rfc7231">https://tools.ietf.org/html/rfc7231</a></li>
+										<li><a
+											href="https://www.rfc-editor.org/rfc/rfc9110.html">https://www.rfc-editor.org/rfc/rfc9110.html</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+					<li
+						id="alert-type-12">
+						<h4>Session Management Response Identified</h4>
+						<table class="alert-types-table">
+							<tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a
+										href="https://www.zaproxy.org/docs/alerts/10112/">Session Management Response Identified</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a
+											href="https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id">https://www.zaproxy.org/docs/desktop/addons/authentication-helper/session-mgmt-id</a></li>
+									</ol>
+								</td>
+							</tr>
+						</table>
+					</li>
+				</ol>
+			</section>
+		</section>
+		 
+	</main>
+</body>
+</html>
+
+
+

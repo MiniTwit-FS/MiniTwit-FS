@@ -1,7 +1,0 @@
-
---- MiniTwit API : ChangeLog ---
-
-1 - Setup with ASP.NET CORE API
-2 - Install Microsoft SqlServer, Design & Tools
-3 - Create initial User model and create first database migration
-4 - Setup local Database
