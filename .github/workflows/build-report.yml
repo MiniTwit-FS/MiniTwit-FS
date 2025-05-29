@@ -7,8 +7,9 @@ on:
       - 'report/**'
       - '.github/workflows/build-report.yml'
 
+# allow the default GITHUB_TOKEN to push
 permissions:
-  contents: write          # only needed if you later push the PDF back
+  contents: write
 
 jobs:
   pdf:
@@ -18,36 +19,37 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # 1.  Create the build folder once per run
+      # 1 ─ build folder
       - name: Prepare build directory
         run: mkdir -p report/build
 
-      # 2.  Compile; -outdir is relative to working_directory (report/src)
-      - name: Compile LaTeX into build/
+      # 2 ─ compile TeX
+      - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
           working_directory: report/src
-          args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error -outdir=../build
+          args: >
+            -pdf -interaction=nonstopmode -halt-on-error -file-line-error
+            -outdir=../build          # => report/build/main.pdf
 
-      # 3.  Upload the generated PDF
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: MiniTwit-PDF
-          path: report/src/build/main.pdf
-
+      # 3 ─ commit the PDF back to the repo
       - name: Commit generated PDF
-        if: github.ref == 'refs/heads/main'          # only from main
+        if: github.ref == 'refs/heads/main'
         run: |
           git config --global user.name  "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          # stage or replace the file
           git add report/build/main.pdf
-
-          # skip commit if nothing changed
-          git diff --cached --quiet && exit 0
+          # skip commit if the file is unchanged
+          git diff --cached --quiet && echo "No changes" && exit 0
 
           git commit -m "CI: update report PDF [skip ci]"
           git push
+
+      # 4 ─ also store it as an artifact (optional)
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MiniTwit-PDF
+          path: report/build/main.pdf
