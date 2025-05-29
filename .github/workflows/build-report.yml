@@ -24,7 +24,7 @@ jobs:
         with:
           root_file: main.tex
           working_directory: report/src
-          output_directory: ../build
+          output_directory: report/build
 
       - name: Check output
         run: ls -la report/build
