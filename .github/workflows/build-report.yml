@@ -1,0 +1,38 @@
+name: Build PDF Report (LaTeX)
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'report/src/**'
+      - '.github/workflows/build-report.yml'
+
+jobs:
+  build-pdf:
+    if: github.actor != 'github-actions[bot]'  # Prevent infinite loops
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build LaTeX report
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: report/src
+          output_directory: ../build
+
+      - name: Check output
+        run: ls -la report/build
+
+      - name: Commit and push generated PDF
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add report/build/*.pdf
+          git diff --cached --quiet || git commit -m "Auto-build PDF report"
+          git push
