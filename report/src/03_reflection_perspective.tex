@@ -31,7 +31,7 @@ One teammate had a broken local environment and started pushing directly to main
 \subsection{ChatGPT}
 ChatGPT was used for boiler-plate Razor code, generating Mermaid diagrams, revising our report, and also used often when debugging errors, basically as a search engine. This proved useful and greatly enhanced our production speed and ability to compare options.
 
-\subsubsection{If we had to do it again}
+\subsection{If we had to do it again}
 Looking back, our biggest delays came from infrastructure problems rather than application code. If we were to restart the MiniTwitFS project tomorrow, we would keep the .NET/ASP.NET Core + Blazor tech stack (still the fastest path for us) but change the order and discipline of our work:\\\\
 \textbf{Start with a API refactor}
 After refactoring the Flask prototype, we would create a bare-bones ASP.NET Core API, and wire it into the continuous-integration pipeline before touching the Blazor client. Every subsequent commit would require the API test-suite to pass before merging to main.\\\\
