@@ -50,4 +50,4 @@ jobs:
           git commit -m "CI: update report PDF [skip ci]"
           git push
     name: MiniTwit-PDF
-          path: report/build/main.pdf
+          path: report/src/build/main.pdf
