@@ -31,7 +31,7 @@ jobs:
           working_directory: report/src
           args: >
             -pdf -interaction=nonstopmode -halt-on-error -file-line-error
-            -outdir=../build          # => report/build/main.pdf
+            -outdir=../build
 
       # 3 ─ commit the PDF back to the repo
       - name: Commit generated PDF
