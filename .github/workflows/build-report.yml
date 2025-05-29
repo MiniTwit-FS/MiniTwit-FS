@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'report/src/**'
+      - 'report/**'
       - '.github/workflows/build-report.yml'
 
 jobs:
@@ -19,12 +19,15 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Ensure build directory exists
+        run: mkdir -p report/build
+
       - name: Build LaTeX report
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
           working_directory: report/src
-          output_directory: report/build
+          output_directory: ../build  # relative to working_directory, so this is report/build
 
       - name: Check output
         run: ls -la report/build
