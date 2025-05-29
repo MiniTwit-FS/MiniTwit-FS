@@ -7,8 +7,8 @@ on:
       - 'report/**'
       - '.github/workflows/build-report.yml'
 
-permissions:               # let the runner write or upload
-  contents: write
+permissions:
+  contents: write          # only needed if you later push the PDF back
 
 jobs:
   pdf:
@@ -18,24 +18,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Compile LaTeX
+      # 1.  Create the build folder once per run
+      - name: Prepare build directory
+        run: mkdir -p report/build
+
+      # 2.  Compile; -outdir is relative to working_directory (report/src)
+      - name: Compile LaTeX into build/
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex            # file is in report/src/
-          working_directory: report/src  # <— no output_directory key
+          root_file: main.tex
+          working_directory: report/src
+          args: -pdf -interaction=nonstopmode -halt-on-error -file-line-error -outdir=../build
 
-      - name: Upload as artifact
+      # 3.  Upload the generated PDF
+      - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
           name: MiniTwit-PDF
-          path: report/src/main.pdf      # where latexmk really wrote it
-
-      # OPTIONAL – commit the PDF back to the repo
-      # - name: Commit generated PDF
-      #   if: github.ref == 'refs/heads/main'
-      #   run: |
-      #     git config --global user.name  'github-actions[bot]'
-      #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-      #     git add report/src/main.pdf
-      #     git diff --cached --quiet || git commit -m "CI: update report PDF [skip ci]"
-      #     git push
+          path: report/build/main.pdf
