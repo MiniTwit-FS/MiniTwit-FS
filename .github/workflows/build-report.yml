@@ -35,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: MiniTwit-PDF
-                path: report/src/build/main.pdf
+          path: report/src/build/main.pdf
 
       - name: Commit generated PDF
         if: github.ref == 'refs/heads/main'          # only from main
