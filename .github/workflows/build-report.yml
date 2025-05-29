@@ -34,6 +34,8 @@ jobs:
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
         with:
+          name: MiniTwit-PDF
+                path: report/src/build/main.pdf
 
       - name: Commit generated PDF
         if: github.ref == 'refs/heads/main'          # only from main
@@ -49,5 +51,3 @@ jobs:
 
           git commit -m "CI: update report PDF [skip ci]"
           git push
-    name: MiniTwit-PDF
-          path: report/src/build/main.pdf
