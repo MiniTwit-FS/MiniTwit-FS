@@ -1,49 +1,41 @@
-name: Build PDF Report (LaTeX)
+name: Build PDF report
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
     paths:
       - 'report/**'
       - '.github/workflows/build-report.yml'
 
-# 1 – let the runner push or upload artefacts
-permissions:
+permissions:               # let the runner write or upload
   contents: write
 
 jobs:
-  build-pdf:
-    if: github.actor != 'github-actions[bot]'   # avoid loops
+  pdf:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4       # v4 = faster shallow-clone
+      - uses: actions/checkout@v4
 
-      # 2 – compile the TeX document
-      - name: Compile LaTeX → PDF
+      - name: Compile LaTeX
         uses: xu-cheng/latex-action@v3
         with:
-          root_file: main.tex
-          working_directory: report/src
-          output_directory: ../build      # => report/build/main.pdf
-          # uncomment if your project needs XeLaTeX or shell-escape, etc.
-          # latexmk_use_xelatex: true
-          # latexmk_shell_escape: true
-          # extra_system_packages: "make pygments"
+          root_file: main.tex            # file is in report/src/
+          working_directory: report/src  # <— no output_directory key
 
-      # 3 – expose the PDF in the workflow’s “Artifacts” tab
-      - name: Upload PDF as artifact
+      - name: Upload as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: MiniTwit-report # how it appears in the UI
-          path: report/build/main.pdf
+          name: MiniTwit-PDF
+          path: report/src/main.pdf      # where latexmk really wrote it
 
-      # 4 – OPTIONAL: commit the generated PDF back to the repo
-      # - name: Commit and push generated PDF
+      # OPTIONAL – commit the PDF back to the repo
+      # - name: Commit generated PDF
+      #   if: github.ref == 'refs/heads/main'
       #   run: |
-      #     git config user.name  "github-actions[bot]"
-      #     git config user.email "github-actions[bot]@users.noreply.github.com"
-      #     git add report/build/main.pdf
-      #     git commit -m "CI: auto-build PDF [skip ci]" || exit 0
+      #     git config --global user.name  'github-actions[bot]'
+      #     git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+      #     git add report/src/main.pdf
+      #     git diff --cached --quiet || git commit -m "CI: update report PDF [skip ci]"
       #     git push
