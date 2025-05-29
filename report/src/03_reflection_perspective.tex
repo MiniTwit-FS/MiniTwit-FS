@@ -1,0 +1,32 @@
+\section{Reflection Perspective}
+\begin{comment}
+Describe the biggest issues, how you solved them, and which are major lessons learned with regards to:
+
+    evolution and refactoring
+    operation, and
+    maintenance
+
+of your ITU-MiniTwit systems. Link back to respective commit messages, issues, tickets, etc. to illustrate these.
+
+Also reflect and describe what was the "DevOps" style of your work. For example, what did you do differently to previous development projects and how did it work?
+\end{comment}
+\subsection{Deployment}
+During the initial process of refactoring MiniTwit into an ASP.NET Web API and Blazor application, we had a hard time with deployment, and spend upwards of three weeks trying to get deployment to work on Azure and Google Cloud. Three weeks after the simulator started, we finally got deployment up and running on DigitalOcean, and the simulator started on our service, and ran pretty smoothly. This resulted in us being a couple of weeks behind on the simulator. Though while we had trouble with this, we could still work on the project locally, so we didn't fall too far behind.
+\\\\
+\subsection{Configuration}
+We built the API first, and the client after, and thought most of the configuration was the same. We found out, however, that Blazor does not copy appsettings.json into the wwwroot bundle, as we initially thought, so the client could not read the API base-URL in production. We fixed this in \textit{\href{https://github.com/Lukski175/MiniTwit-FS/commit/7fe71a2a26f6f5cb42b925a59eede102ae1238f5}{Commit 7fe71a2}} by creating a \textit{inject-config.js} that runs before building the wwwroot, and just updates the endpoint value in index.html.
+\\
+\subsection{Tailwind}
+Using Tailwind and Blazor greatly improved our speed in terms of creating a custom front-end, however the initial setup of getting Tailwind to work took longer than expected.
+\\\\
+\subsection{Database}
+Initially, we wanted to use SQLite, as it is a light-weight single file database, that can quickly do read/writes - even though it uses a write-lock, meaning other processes wait in queue \cite{sqlite}. However, we had trouble setting it up with our system, and instead pivoted to using MySQL. This is also a better choice for future proofing the system, as it can have multiple API instances update rows, through row locking - and has a better backup strategy coupled with DigitalOcean \cite{mysql}.
+\\\\
+\subsection{API problems}
+After going live we discovered that the API in production rejected simulator calls, which we found by seeing an empty \textit{Follows} table - and fixed it late in \textit{\href{https://github.com/Lukski175/MiniTwit-FS/commit/d3516edf5bb13276301662131f545ecd64904e19}{Commit d3516ed}}. This slip shows why monitoring and integration tests matter - a monitoring stack notifying when we have large rejected calls would have warned us earlier, and tests would have failed before going into production.
+\\
+\subsection{Branch protection}
+One teammate had a broken local environment and started pushing directly to main for every test run. In a real production setting we would enforce a “main is protected” rule with PR checks and external review-apps, for example \textit{Snyck} for automated security testing.
+
+\subsection{ChatGPT}
+ChatGPT was used for boiler-plate Razor code, generating Mermaid diagrams, revising our report, and also used often when debugging errors, basically as a search engine. This proved useful and greatly enhanced our production speed and ability to compare options.

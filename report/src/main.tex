@@ -1,0 +1,52 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{markdown}
+\usepackage{float}
+\usepackage{comment}
+\usepackage[hidelinks]{hyperref}
+\usepackage{minted}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{xparse}
+\usepackage{longtable, tabularx, booktabs, ragged2e, array}
+
+\usepackage[
+    backend=biber,
+    style=numeric,
+  ]{biblatex}
+ \addbibresource{references/references.bib}
+\setlength\bibitemsep{0.5\baselineskip}
+
+\begin{document}
+\begin{titlepage}
+  \centering
+  {\LARGE\bfseries DevOps, Software Evolution and Software Maintenance\par}
+  \vspace{1.5cm}
+  \includegraphics[width=1\textwidth]{images/Architecture.png}\par
+  \vspace{1cm}
+  {\large
+    Adrian Kari, \texttt{adrka@itu.dk}\\[0.5ex]
+    Lukas André Rasmussen, \texttt{lanr@itu.dk}\\[0.5ex]
+    Mathias Hvolgaard Darling Larsen, \texttt{mhvl@itu.dk}
+  \par}
+  \vfill
+
+  GitHub:\\
+  \url{https://github.com/Lukski175/MiniTwit-FS}
+
+  \vspace{1cm}
+  {\large 30th May 2025\par}
+\end{titlepage}
+
+%\setcounter{secnumdepth}{2}
+%\setcounter{tocdepth}{2}
+
+\tableofcontents
+
+\include{01_system_perspective}
+\include{02_process_perspective}
+\include{03_reflection_perspective}
+
+\printbibliography
+
+\end{document}
