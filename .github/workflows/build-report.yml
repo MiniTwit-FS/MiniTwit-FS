@@ -40,7 +40,7 @@ jobs:
           git config --global user.name  "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git mv main.pdf MSc_group_g.pdf
+          git mv report/build/main.pdf report/build/MSc_group_g.pdf
 
           git add report/build/MSc_group_g.pdf
           git diff --cached --quiet && echo "No changes" && exit 0
