@@ -30,3 +30,17 @@ One teammate had a broken local environment and started pushing directly to main
 
 \subsection{ChatGPT}
 ChatGPT was used for boiler-plate Razor code, generating Mermaid diagrams, revising our report, and also used often when debugging errors, basically as a search engine. This proved useful and greatly enhanced our production speed and ability to compare options.
+
+\subsubsection{If we had to do it again}
+Looking back, our biggest delays came from infrastructure problems rather than application code. If we were to restart the MiniTwitFS project tomorrow, we would keep the .NET/ASP.NET Core + Blazor tech stack (still the fastest path for us) but change the order and discipline of our work:\\\\
+\textbf{Start with a API refactor}
+After refactoring the Flask prototype, we would create a bare-bones ASP.NET Core API, and wire it into the continuous-integration pipeline before touching the Blazor client. Every subsequent commit would require the API test-suite to pass before merging to main.\\\\
+\textbf{Tag and document every milestone}
+Instead of single big deploys, we would use GitHub Releases at the end of each sprint, attach a short changelog, and potentially create a matching staging environment.\\\\
+\textbf{DigitalOcean Droplets}
+App Platform solved our immediate hosting pain, but also hid useful knobs (timeouts, custom health probes, custom deployment). Next time we would utilize Droplets, run Docker Swarm, and treat the Swarm file as infrastructure-as-code. That gives us full control over our update strategy and lets us customize the deployment.\\\\
+\textbf{Fix authentication from the outset}
+The simulator’s back-door Basic credential never got fixed, and should have never been an issue - we should never have made the client act as the simulator.\\\\
+\textbf{Introduce a dedicated identity service}
+For future scaling we would break authentication into a tiny “Auth API” that issues JWTs and manages roles. The main API would then accept Role=moderator tokens without owning password logic.\\\\
+These changes would have shaved at least three weeks off the project timeline and given us cleaner release artefacts, faster feedback from the simulator, and simpler rollbacks when a refactor went sideways.
