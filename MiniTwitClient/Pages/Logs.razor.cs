@@ -23,9 +23,11 @@ namespace MiniTwitClient.Pages
         private string? _selectedLogFile;
         private int currentPage = 1;
         private int pageSize = 100;
+        private double _previousScrollHeight;
 
-        private ElementReference logContainer;
+        private ElementReference _logContainer;
         private bool _shouldAutoScroll;
+        private bool _isLoading;
 
         [JSInvokable]
         public async Task OnReachedTop()
@@ -69,7 +71,7 @@ namespace MiniTwitClient.Pages
             _hubConnection.On<string>("ReceiveLogUpdate", async message =>
             {
                 // 1) check if we’re at bottom _before_ inserting
-                var atBottom = await JSRuntime.InvokeAsync<bool>("isScrolledToBottom", logContainer);
+                var atBottom = await JSRuntime.InvokeAsync<bool>("isScrolledToBottom", _logContainer);
 
                 // 2) insert new log and re-render
                 var converted = FormatTimestampToLocal(message);
@@ -82,7 +84,7 @@ namespace MiniTwitClient.Pages
             });
 
             await _hubConnection.StartAsync();
-            await InitialLogs();
+            await LoadInitialLogs();
         }
 
         private async Task LoadLogFiles()
@@ -138,7 +140,7 @@ namespace MiniTwitClient.Pages
         {
             // Call your API to load logs
             var time = DateTime.UtcNow;
-            var logs = await Controller.GetMoreLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
+            var logs = await Controller.GetLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
             var converted = logs.Select(FormatTimestampToLocal);
             if (logs != null) _logMessages.InsertRange(0, converted);
         }
@@ -147,7 +149,7 @@ namespace MiniTwitClient.Pages
         {
             // Call your API to load logs
             var time = DateTime.UtcNow;
-            var logs = await Controller.GetMoreLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
+            var logs = await Controller.GetLogs(time.Year.ToString() + time.Month.ToString("D2") + time.Day.ToString("D2"), currentPage, pageSize);
             var converted = logs.Select(FormatTimestampToLocal);
             if (logs != null) _logMessages.InsertRange(_logMessages.Count(), converted);
         }
@@ -163,7 +165,7 @@ namespace MiniTwitClient.Pages
             if (currentPage > 1)
             {
                 currentPage--;
-                await InitialLogs();
+                await LoadInitialLogs();
             }
         }
 
