@@ -1,12 +1,10 @@
-﻿version: '3.8'
-
+﻿version: "3.8"
 services:
   api:
-    image: minitwit-api  # or 'your-dockerhub-username/minitwit-api' if using a pushed image
-    build: .
+    image: minitwit-api
     ports:
-      - "8080:80"
+      - "8080:8080"
     environment:
-      ASPNETCORE_ENVIRONMENT: "prod"
-      ConnectionStrings__Default: "Server=minitwit-db-do-user-19193573-0.i.db.ondigitalocean.com;Port=25060;Database=defaultdb;User ID=doadmin;Password=${AVNS_HlleQVNYchp5TcN-Ay_};SslMode=Required;"
-    restart: unless-stopped
+      - ASPNETCORE_ENVIRONMENT=prod
+      - ConnectionStrings__DefaultConnection=Server=minitwit-db-do-user-19193573-0.i.db.ondigitalocean.com;Port=25060;Database=defaultdb;Uid=doadmin;Pwd=AVNS_HlleQVNYchp5TcN-Ay_;SslMode=Required;
+    restart: always
