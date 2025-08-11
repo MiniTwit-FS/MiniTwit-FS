@@ -1,16 +1,26 @@
-FROM python:3.7-alpine
+# syntax=docker/dockerfile:1
 
-RUN mkdir /minitwit
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+WORKDIR /src
 
-COPY minitwit_mysql.py /minitwit/
-COPY requirements.txt /minitwit/
-COPY static /minitwit/static
-COPY templates /minitwit/templates
+COPY ./YourProject.csproj ./
+RUN dotnet restore
 
-WORKDIR /minitwit
+COPY . .
+RUN dotnet publish ./YourProject.csproj -c Release -o /app/publish /p:UseAppHost=false
 
-RUN pip install -r requirements.txt
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
+WORKDIR /app
 
-EXPOSE 5000
+RUN apk add --no-cache icu-libs tzdata
 
-ENTRYPOINT ["python", "minitwit_mysql.py"]
+ENV ASPNETCORE_URLS=http://+:8080 \
+    DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
+RUN addgroup -S app && adduser -S app -G app
+USER app
+
+COPY --from=build /app/publish ./
+
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "YourProject.dll"]
