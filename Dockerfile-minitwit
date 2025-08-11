@@ -1,0 +1,24 @@
+### Build
+FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS build
+WORKDIR /src
+
+COPY MiniTwitAPI/*.csproj MiniTwitAPI/
+
+RUN dotnet restore MiniTwitAPI/MiniTwitAPI.csproj
+
+COPY . .
+
+# Publish
+RUN dotnet publish MiniTwitAPI/MiniTwitAPI.csproj -c Release -o /app/publish /p:UseAppHost=false
+
+### Runtime
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
+WORKDIR /app
+
+RUN apk add --no-cache icu-libs tzdata
+ENV ASPNETCORE_URLS=http://+:8080 DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+
+COPY --from=build /app/publish ./
+
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "MiniTwitAPI.dll"]
