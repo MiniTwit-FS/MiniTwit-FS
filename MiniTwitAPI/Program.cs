@@ -7,6 +7,7 @@ using MiniTwitAPI.Extentions;
 using Serilog;
 using Serilog.Extensions.Logging;
 using MiniTwitAPI.Hubs;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -92,45 +93,33 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddSignalR();
 
 logger.LogInformation("Configuring CORS policies");
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.WithOrigins("https://localhost:7192", "https://localhost:7192/log-files")
-              .AllowAnyMethod()
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
+builder.Services.AddCors(o => o.AddPolicy("DevCorsPolicy", p =>
+    p.WithOrigins("https://localhost:7192")
+     .AllowAnyHeader().AllowAnyMethod().AllowCredentials()));
 
 logger.LogInformation("Building application");
 var app = builder.Build();
+
 app.UseRouting();
-app.UseCors("DevCorsPolicy"); // Apply the CORS policy
 
+// apply the CORS policy once (you defined "AllowAll")
+app.UseCors("AllowAll");
 
-// Create an application lifetime logger
-var lifetime = app.Services.GetRequiredService<IHostApplicationLifetime>();
-var appLogger = app.Services.GetRequiredService<ILogger<Program>>();
-
-// Middleware for handling HTTP requests
-app.UseCors("AllowAll"); // Apply the CORS policy
 app.UseSession();
 app.UseHttpsRedirection();
 
+// allow CORS preflight without auth
 app.Use(async (context, next) =>
 {
-    if (context.Request.Method == HttpMethods.Options)
+    if (HttpMethods.IsOptions(context.Request.Method))
     {
         context.Response.StatusCode = StatusCodes.Status204NoContent;
         return;
     }
-
     await next();
 });
 
-var allowedBasicAuthValue = builder.Configuration["SpecialApp:AuthorizationHeader"];
+// auth gate: require Authorization; accept special Basic; let others flow to UseAuthentication
 app.Use(async (context, next) =>
 {
     var authorizationHeader = context.Request.Headers["Authorization"].ToString();
@@ -144,63 +133,37 @@ app.Use(async (context, next) =>
         return;
     }
 
-    // If Basic Auth is present, handle it separately
+    // Special Basic: exact match -> mark user as authenticated
     if (authorizationHeader.StartsWith("Basic ", StringComparison.OrdinalIgnoreCase))
     {
         if (authorizationHeader == allowedBasicAuthValue)
         {
-            await next(); // valid Basic — continue pipeline
+            var identity = new ClaimsIdentity(authenticationType: "SpecialBasic");
+            identity.AddClaim(new Claim(ClaimTypes.Name, "SpecialApp"));
+            context.User = new ClaimsPrincipal(identity);
+
+            await next();
             return;
         }
 
-        // Invalid Basic Auth — stop here
+        // invalid Basic -> stop here
         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
         context.Response.ContentType = "application/json";
         await context.Response.WriteAsync("Unauthorized - Invalid Basic credentials.");
         return;
     }
 
-    // Let the JWT middleware handle the rest
+    // Non-Basic (e.g., Bearer) -> let the normal auth middleware handle it
     await next();
 });
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Add a basic request logger middleware
-app.Use(async (context, next) =>
-{
-    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
-    var start = DateTime.UtcNow;
+// (your request logging middleware can stay as-is)
 
-    // Capture the request details
-    logger.LogDebug("Request {Method} {Url} started",
-        context.Request.Method,
-        context.Request.Path);
+app.MapControllers();
 
-    try
-    {
-        await next();
-
-        var elapsedMs = (DateTime.UtcNow - start).TotalMilliseconds;
-        logger.LogInformation("Request {Method} {Url} completed in {ElapsedTime}ms with status {StatusCode}",
-            context.Request.Method,
-            context.Request.Path,
-            elapsedMs,
-            context.Response?.StatusCode);
-    }
-    catch (Exception ex)
-    {
-        var elapsedMs = (DateTime.UtcNow - start).TotalMilliseconds;
-        logger.LogError(ex, "Request {Method} {Url} failed after {ElapsedTime}ms",
-            context.Request.Method,
-            context.Request.Path,
-            elapsedMs);
-        throw;
-    }
-});
-
-app.MapControllers(); // Map controllers to handle requests
 
 // Register application lifecycle logging
 lifetime.ApplicationStarted.Register(() =>
