@@ -7,8 +7,6 @@ services:
   minitwitimage:
     image: ${DOCKER_USERNAME}/minitwitimage
     container_name: minitwit
-    depends_on: 
-      - itusqlimage
     networks:
       - main
     ports:
