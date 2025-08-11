@@ -12,7 +12,8 @@ services:
     ports:
       - '8080:8080'
     environment:
-      - SpecialApp__AuthorizationHeader=c2ltdWxhdG9yOnN1cGVyX3NhZmUh
+      - SpecialApp__AuthorizationHeader=Basic c2ltdWxhdG9yOnN1cGVyX3NhZmUh
+      - Jwt__Key=MIHcAgEBBEIA4EOuikW5S/H5S8fZEu6vbZGrIeGdcy19UpaYwwD5wKT4AQvloLWKKq1fc0Zr30Duoz6umXo2cyAUxpCcOnDP/pCgBwYFK4EEACOhgYkDgYYABAH81vQPfItgrpXQgu63Io0YLPYI/sX6XqbMsqCrKby63vyYE1os+9vBWrt3vKMUcKYM6OuVUsk2qQxPXUuxmVxBtwGuER8jMbuCHIfvMrlFGmCLiwhZHSxiyq0nFiFTJ8UWGuOz/IOHU021t1gR11vh170y4j2pRSILl9G62FVnePAKLA==\"
       - ASPNETCORE_ENVIRONMENT=prod
       - ConnectionStrings__DefaultConnection=Server=minitwit-db-do-user-19193573-0.i.db.ondigitalocean.com;Port=25060;Database=defaultdb;Uid=doadmin;Pwd=AVNS_HlleQVNYchp5TcN-Ay_;SslMode=Required;
     restart: always
