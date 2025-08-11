@@ -50,13 +50,20 @@ jobs:
           chmod 600 ~/.ssh/do_ssh_key
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
-
+      
+      - name: Upload remote_files to server
+        run: |
+          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /minitwit"
+          scp -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no -r \
+            remote_files/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/minitwit/
+      
       - name: Deploy to server
-        # Configure the ~./bash_profile and deploy.sh file on the Vagrantfile
         run: >
-          ssh $SSH_USER@$SSH_HOST
-          -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no
-          '/minitwit/deploy.sh'
-        env:
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no
+          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
+          "chmod +x /minitwit/deploy.sh &&
+           DOCKER_USERNAME='${{ secrets.DOCKER_USERNAME }}'
+           DOCKER_PASSWORD='${{ secrets.DOCKER_PASSWORD }}'
+           /minitwit/deploy.sh"
+
