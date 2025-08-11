@@ -4,11 +4,27 @@ networks:
   main:
 
 services:
+  itusqlimage:
+    image: ${DOCKER_USERNAME}/mysqlimage
+    container_name: minitwit_mysql
+    networks:
+      - main
+    ports:
+      - '25060:25060'
+    environment:
+        - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   minitwitimage:
     image: ${DOCKER_USERNAME}/minitwitimage
     container_name: minitwit
+    depends_on: 
+      - itusqlimage
     networks:
       - main
     ports:
         - '5000:5000
+
+volumes:
+    mysql_data:
