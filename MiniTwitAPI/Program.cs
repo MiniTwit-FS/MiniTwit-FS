@@ -106,7 +106,6 @@ app.UseRouting();
 app.UseCors("AllowAll");
 
 app.UseSession();
-app.UseHttpsRedirection();
 
 // allow CORS preflight without auth
 app.Use(async (context, next) =>
