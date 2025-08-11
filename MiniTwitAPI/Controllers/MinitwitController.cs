@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Cors;
 
 namespace MiniTwitAPI.Controllers
 {
+    [Authorize]
     [ApiController]
     public class MinitwitController : ControllerBase
     {

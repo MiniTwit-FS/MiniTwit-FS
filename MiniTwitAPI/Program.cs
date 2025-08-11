@@ -144,12 +144,6 @@ app.Use(async (context, next) =>
             await next();
             return;
         }
-
-        // invalid Basic -> stop here
-        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-        context.Response.ContentType = "application/json";
-        await context.Response.WriteAsync("Unauthorized - Invalid Basic credentials.");
-        return;
     }
 
     // Non-Basic (e.g., Bearer) -> let the normal auth middleware handle it
