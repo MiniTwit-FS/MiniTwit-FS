@@ -52,18 +52,24 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
       
       - name: Upload remote_files to server
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
         run: |
-          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no \
-            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "mkdir -p /minitwit"
-          scp -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no -r \
-            remote_files/* ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/minitwit/
+          set -e
+          if [ -z "$SSH_USER" ] || [ -z "$SSH_HOST" ]; then
+            echo "SSH_USER/SSH_HOST not set (check repo Secrets or Environment)."; exit 1
+          fi
+          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "mkdir -p /minitwit"
+          rsync -az --delete -e "ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no" \
+            remote_files/ "$SSH_USER@$SSH_HOST:/minitwit/"
       
       - name: Deploy to server
-        run: >
-          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no
-          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
-          "chmod +x /minitwit/deploy.sh &&
-           DOCKER_USERNAME='${{ secrets.DOCKER_USERNAME }}'
-           DOCKER_PASSWORD='${{ secrets.DOCKER_PASSWORD }}'
-           /minitwit/deploy.sh"
-
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" \
+            "chmod +x /minitwit/deploy.sh && DOCKER_USERNAME='$DOCKER_USERNAME' DOCKER_PASSWORD='$DOCKER_PASSWORD' /minitwit/deploy.sh"
