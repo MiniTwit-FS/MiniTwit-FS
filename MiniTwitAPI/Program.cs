@@ -164,17 +164,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
-// Register application lifecycle logging
-lifetime.ApplicationStarted.Register(() =>
-    appLogger.LogInformation("Application started successfully"));
-
-lifetime.ApplicationStopping.Register(() =>
-    appLogger.LogInformation("Application is shutting down..."));
-
-lifetime.ApplicationStopped.Register(() =>
-    appLogger.LogInformation("Application has been shut down"));
-
 // Apply migrations
 if (environment == "prod")
 {
