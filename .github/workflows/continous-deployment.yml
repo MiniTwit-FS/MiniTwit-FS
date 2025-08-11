@@ -12,9 +12,9 @@ on:
 # https://github.com/your_username/itu-minitwit-ci/settings/secrets/actions
 # DOCKER_USERNAME
 # DOCKER_PASSWORD
-# SSH_USER
-# SSH_KEY
-# SSH_HOST
+# DROPLET_USER
+# DROPLET_SSH_KEY
+# DROPLET_IP
 
 jobs:
   build:
@@ -46,30 +46,30 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/do_ssh_key
-          chmod 600 ~/.ssh/do_ssh_key
+          echo "$DROPLET_SSH_KEY" > ~/.ssh/do_DROPLET_SSH_KEY
+          chmod 600 ~/.ssh/do_DROPLET_SSH_KEY
         env:
-          SSH_KEY: ${{ secrets.SSH_KEY }}
+          DROPLET_SSH_KEY: ${{ secrets.DROPLET_SSH_KEY }}
       
       - name: Upload remote_files to server
         env:
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          DROPLET_USER: ${{ secrets.DROPLET_USER }}
+          DROPLET_IP: ${{ secrets.DROPLET_IP }}
         run: |
           set -e
-          if [ -z "$SSH_USER" ] || [ -z "$SSH_HOST" ]; then
-            echo "SSH_USER/SSH_HOST not set (check repo Secrets or Environment)."; exit 1
+          if [ -z "$DROPLET_USER" ] || [ -z "$DROPLET_IP" ]; then
+            echo "DROPLET_USER/DROPLET_IP not set (check repo Secrets or Environment)."; exit 1
           fi
-          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" "mkdir -p /minitwit"
-          rsync -az --delete -e "ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no" \
-            remote_files/ "$SSH_USER@$SSH_HOST:/minitwit/"
+          ssh -i ~/.ssh/do_DROPLET_SSH_KEY -o StrictHostKeyChecking=no "$DROPLET_USER@$DROPLET_IP" "mkdir -p /minitwit"
+          rsync -az --delete -e "ssh -i ~/.ssh/do_DROPLET_SSH_KEY -o StrictHostKeyChecking=no" \
+            remote_files/ "$DROPLET_USER@$DROPLET_IP:/minitwit/"
       
       - name: Deploy to server
         env:
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+          DROPLET_USER: ${{ secrets.DROPLET_USER }}
+          DROPLET_IP: ${{ secrets.DROPLET_IP }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          ssh -i ~/.ssh/do_ssh_key -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" \
+          ssh -i ~/.ssh/do_DROPLET_SSH_KEY -o StrictHostKeyChecking=no "$DROPLET_USER@$DROPLET_IP" \
             "chmod +x /minitwit/deploy.sh && DOCKER_USERNAME='$DOCKER_USERNAME' DOCKER_PASSWORD='$DOCKER_PASSWORD' /minitwit/deploy.sh"
