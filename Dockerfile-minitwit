@@ -9,7 +9,7 @@ RUN dotnet restore MiniTwitAPI/MiniTwitAPI.csproj
 COPY . .
 
 # Publish
-RUN dotnet publish MiniTwitAPI/MiniTwitAPI.csproj -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish MiniTwitAPI/MiniTwitAPI.csproj -c Release -o /app/publish
 
 ### Runtime
 FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS final
